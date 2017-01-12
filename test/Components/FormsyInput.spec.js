@@ -6,7 +6,7 @@ import { Form } from 'formsy-react';
 
 describe('<Input/>', () => {
   it('should reander', () => {
-    const wrapper = shallow(<Form> <Input name="name"/></Form>);
+    const wrapper = shallow(<Form> <Input name="name"/> </Form>);
     assert.ok(wrapper);
   });
 });
