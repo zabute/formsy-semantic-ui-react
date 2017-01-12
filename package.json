@@ -18,7 +18,6 @@
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel ./src -d ./lib",
-    "prepublish": "npm run build",
     "lint": "eslint src test --color && echo \"eslint: no errors\"",
     "test": "mocha test/**/*.spec.js",
     "test:watch": "npm run test -- --watch"
