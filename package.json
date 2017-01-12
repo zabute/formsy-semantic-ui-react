@@ -66,6 +66,9 @@
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
+  "dependencies": {
+    "lodash": "^4.17.3"
+  },
   "keywords": [
     "formsy-react",
     "semantic-ui",
