@@ -61,7 +61,7 @@ For more information on validation, check out [Formsy-React's Dcoumentaion](http
 
 To display error messages, pass an element through the ``` errorLabel ``` prop.
 
-Example: You can display Semaintic-UI-React's ```jsx <Label/>``` compnent:
+Example: You can display Semaintic-UI-React's ``` <Label/>``` compnent:
 
 ```jsx
 <Checkbox
