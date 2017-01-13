@@ -1,4 +1,4 @@
-Lets you create [formsy-react](https://github.com/christianalfoni/formsy-react/blob/master/API.md#formnovalidate) forms with [Semantic-Ui-React](https://github.com/Semantic-Org/Semantic-UI-React) components.
+Lets you create [formsy-react](https://github.com/christianalfoni/formsy-react) forms with [Semantic-Ui-React](https://github.com/Semantic-Org/Semantic-UI-React) components.
 
 ## Installation
 
@@ -14,6 +14,12 @@ $ npm install formsy-react --save
 
 ## Usage
 
+You'll need to wrap them with Formsy.Form
+
+```js
+import { Form } from 'formsy-react';
+```
+
 The Components:
 
 ```js
@@ -26,11 +32,9 @@ import { Dropdown } from 'formsy-semantic-ui-react';
 import { Select } from 'formsy-semantic-ui-react';
 ```
 
-You'll need to wrap them with Formsy.Form
+## validation
 
-```js
-import { Form } from 'formsy-rect';
-```
+For more information on validation, check out [Formsy-React's Dcoumentaion](https://github.com/christianalfoni/formsy-react/blob/master/API.md)
 
 ```jsx
 <Form
@@ -53,11 +57,11 @@ import { Form } from 'formsy-rect';
   </Form>
 ```
 
-### Errors
+### Displaying Error Messages
 
-You need to pass an element through the ``` errorLabel ``` prop.
+To display error messages, pass an element through the ``` errorLabel ``` prop.
 
-Example:
+Example: You can display Semaintic-UI-React's ```jsx <Label/>``` compnent:
 
 ```jsx
 <Checkbox
@@ -65,6 +69,6 @@ Example:
   errorLabel={ <Label basic color="orange" pointing="left"/> }
 />
 ```
-You can also pass in a custom component and style it as you wish.
+You can also pass in a custom component with the desired styles.
 
 License: [MIT](/LICENSE)
