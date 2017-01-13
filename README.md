@@ -14,12 +14,6 @@ $ npm install formsy-react --save
 
 ## Usage
 
-You'll need to wrap them with Formsy.Form
-
-```js
-import { Form } from 'formsy-react';
-```
-
 The Components:
 
 ```js
@@ -30,6 +24,12 @@ import { Radio } from 'formsy-semantic-ui-react';
 import { RadioGroup } from 'formsy-semantic-ui-react';
 import { Dropdown } from 'formsy-semantic-ui-react';
 import { Select } from 'formsy-semantic-ui-react';
+```
+
+You'll need to wrap them with Formsy.Form
+
+```js
+import { Form } from 'formsy-react';
 ```
 
 ## validation
