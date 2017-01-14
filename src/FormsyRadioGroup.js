@@ -10,7 +10,14 @@ export default class FormsyRadioGroup extends Component {
     isValid: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    style: PropTypes.object,
     children: PropTypes.node,
+    validationError: PropTypes.string,
+    validationErrors: PropTypes.object,
+    validations: PropTypes.oneOfType(
+      [PropTypes.string, PropTypes.object]
+    ),
   }
 
   state = { allowError: false }
@@ -30,6 +37,8 @@ export default class FormsyRadioGroup extends Component {
       errorLabel,
       isValid,
       getErrorMessage,
+      className,
+      style,
     } = this.props;
 
     const { allowError } = this.state;
@@ -42,7 +51,10 @@ export default class FormsyRadioGroup extends Component {
     });
 
     return (
-      <div>
+      <div
+        className={ className }
+        style={ style }
+      >
         { clonedChildren }
         {
           !isValid() && allowError && errorLabel &&

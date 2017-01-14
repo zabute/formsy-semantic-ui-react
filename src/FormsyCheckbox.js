@@ -11,6 +11,10 @@ export default class FormsyCheckbox extends Component {
     getValue: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
     required: PropTypes.bool,
+    rootClassName: PropTypes.string,
+    rootStyle: PropTypes.object,
+    checkoxClassName: PropTypes.string,
+    checkBoxStyle: PropTypes.object,
     getErrorMessage: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
   }
@@ -26,6 +30,10 @@ export default class FormsyCheckbox extends Component {
       isPristine,
       errorLabel,
       getErrorMessage,
+      rootClassName,
+      rootStyle,
+      checkboxClassName,
+      checkboxStyle,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
@@ -45,10 +53,15 @@ export default class FormsyCheckbox extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div
+        className={ rootClassName }
+        style={ rootStyle }
+      >
         <Checkbox
           checked={this.props.getValue()}
           onChange={::this.handleChange}
+          className={ checkboxClassName }
+          style={ checkboxStyle }
           { ...otherProps }
         />
 

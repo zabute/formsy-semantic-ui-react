@@ -10,6 +10,10 @@ export default class FormsySelect extends Component {
     isPristine: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
+    rootClassName: PropTypes.string,
+    rootStyle: PropTypes.object,
+    selectClassName: PropTypes.string,
+    selectStyle: PropTypes.object,
     getErrorMessage: PropTypes.func.isRequired,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
@@ -28,6 +32,10 @@ export default class FormsySelect extends Component {
       isPristine,
       errorLabel,
       getErrorMessage,
+      rootClassName,
+      rootStyle,
+      selectClassName,
+      selectStyle,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
@@ -49,10 +57,15 @@ export default class FormsySelect extends Component {
     const error = !isValid() && !isPristine();
 
     return (
-      <div>
+      <div
+        className={ rootClassName }
+        style={ rootStyle }
+      >
         <Select
           onChange={ ::this.handleChange }
           error={ error }
+          className={ selectClassName }
+          style={ selectStyle }
           { ...otherProps }
         />
 

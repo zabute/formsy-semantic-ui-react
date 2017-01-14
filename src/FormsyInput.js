@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import { Decorator as Formsy } from 'formsy-react';
 import { Input } from 'semantic-ui-react';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 
 @Formsy()
 export default class FormsyInput extends Component {

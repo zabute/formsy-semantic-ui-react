@@ -12,7 +12,16 @@ export default class FormsyCheckbox extends Component {
     isPristine: PropTypes.func.isRequired,
     required: PropTypes.bool,
     getErrorMessage: PropTypes.func.isRequired,
+    rootClassName: PropTypes.string,
+    rootStyle: PropTypes.object,
+    radioClassName: PropTypes.string,
+    radioStyle: PropTypes.object,
     errorLabel: PropTypes.element,
+    validationError: PropTypes.string,
+    validationErrors: PropTypes.object,
+    validations: PropTypes.oneOfType(
+      [PropTypes.string, PropTypes.object]
+    ),
   }
 
   handleChange(e, input) {
@@ -26,6 +35,10 @@ export default class FormsyCheckbox extends Component {
       isPristine,
       errorLabel,
       getErrorMessage,
+      rootClassName,
+      rootStyle,
+      radioClassName,
+      radioStyle,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
@@ -45,10 +58,15 @@ export default class FormsyCheckbox extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div
+        className={ rootClassName }
+        style={ rootStyle }
+      >
         <Radio
           checked={this.props.getValue()}
           onChange={::this.handleChange}
+          className={ radioClassName }
+          style={ radioStyle }
           { ...otherProps }
         />
 
