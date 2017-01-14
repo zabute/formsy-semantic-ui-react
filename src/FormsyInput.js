@@ -29,7 +29,7 @@ export default class FormsyInput extends Component {
     if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
   }
 
-  setInputValue = debounce(value => this.props.setValue(value), 100);
+  setInputValue = debounce(value => this.props.setValue(value), 50);
 
   handleChange(e, input) {
     this.setInputValue(input.value);
