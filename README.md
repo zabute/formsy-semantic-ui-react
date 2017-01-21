@@ -1,3 +1,5 @@
+## formsy-semantic-ui-react
+
 Lets you quicky create and validate [formsy-react](https://github.com/christianalfoni/formsy-react) forms built with [Semantic-Ui-React](https://github.com/Semantic-Org/Semantic-UI-React) components.
 
 ## Installation
