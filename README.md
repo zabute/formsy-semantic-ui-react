@@ -74,7 +74,7 @@ You can also pass in a custom component with the desired styles.
 ## Examples
 Go to the [example](/example) folder to see more examples of how the components are used.
 To see the validation in action clone this repo and run
-``` npm install ``` & ``` npm run example-app ``` Then go to ```localhost:8080```
+``` npm install ``` & ``` npm run example-app ``` Then go to  ```localhost:8080 ```
 
 ## Tests
 Tests are done using Mocha, chai and enzyme on jsdom.
