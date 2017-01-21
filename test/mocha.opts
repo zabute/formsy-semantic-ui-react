@@ -1,3 +1,2 @@
---require test/dom.js
+--require test/index.js
 --require chai
---require ignore-styles
