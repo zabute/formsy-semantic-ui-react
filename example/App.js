@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { Form } from 'formsy-react';
 import { Button, Label } from 'semantic-ui-react';
-import {
-  Input,
-  TextArea,
-  Checkbox,
-  Radio,
-  RadioGroup,
-  Select,
-  Dropdown,
-} from '../src/';
+import { Input, Checkbox, Radio, RadioGroup, Dropdown } from '../src/';
 
 const styles = {
   header: {
