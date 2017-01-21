@@ -58,7 +58,7 @@ import { Form } from 'formsy-react';
 
 ### Displaying Error Messages
 
-To display error messages, pass an element through the ``` errorLabel ``` prop.
+You can quickly display error messages by passing an element to the ``` errorLabel ``` prop.
 
 Example: You can display Semaintic-UI-React's ``` <Label/> ``` compnent:
 
@@ -70,27 +70,20 @@ Example: You can display Semaintic-UI-React's ``` <Label/> ``` compnent:
 ```
 You can also pass in a custom component with the desired styles.
 
+
 ## Examples
 Go to the [example](/example) folder to see more examples of how the components are used.
 To see the validation in action clone this repo and run
-```
-npm install
-```
-then
-```
-npm run example-app
+``` npm install ``` & ``` npm run example-app ``` Then go to ```localhost:8080```
 ```
 
 ## Tests
 Tests are done using Mocha, chai and enzyme on jsdom.
-
 To run the tests,
 ```
 npm install
 ```
-then
-
-``` npm run test ``` or ``` npm run test:watch ``` for single-run or watch-mode, respectively.
+then ``` npm run test ``` or ``` npm run test:watch ``` for single-run or watch-mode, respectively.
 
 
 License: [MIT](/LICENSE)
