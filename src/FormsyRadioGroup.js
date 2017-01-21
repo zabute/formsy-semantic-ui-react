@@ -8,6 +8,7 @@ export default class FormsyRadioGroup extends Component {
     setValue: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
+    isPristine: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
     className: PropTypes.string,
@@ -20,12 +21,6 @@ export default class FormsyRadioGroup extends Component {
     ),
   }
 
-  state = { allowError: false }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
-  }
-
   handleChange(e, { value }) {
     this.props.setValue(value);
   }
@@ -36,12 +31,11 @@ export default class FormsyRadioGroup extends Component {
       getValue,
       errorLabel,
       isValid,
+      isPristine,
       getErrorMessage,
       className,
       style,
     } = this.props;
-
-    const { allowError } = this.state;
 
     const clonedChildren = Children.map(children, radio => {
       return cloneElement(radio, {
@@ -51,13 +45,10 @@ export default class FormsyRadioGroup extends Component {
     });
 
     return (
-      <div
-        className={ className }
-        style={ style }
-      >
+      <div className={ className } style={ style }>
         { clonedChildren }
         {
-          !isValid() && allowError && errorLabel &&
+          !isValid() && !isPristine() && errorLabel &&
           cloneElement(errorLabel, { children: getErrorMessage() })
         }
       </div>

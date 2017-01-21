@@ -1,11 +1,12 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import { Decorator as Formsy } from 'formsy-react';
-import { Checkbox } from 'semantic-ui-react';
+import { Checkbox, Radio } from 'semantic-ui-react';
 
 @Formsy()
 export default class FormsyCheckbox extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    as: PropTypes.oneOf(['checkbox', 'radio']),
     setValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
@@ -13,10 +14,14 @@ export default class FormsyCheckbox extends Component {
     required: PropTypes.bool,
     rootClassName: PropTypes.string,
     rootStyle: PropTypes.object,
-    checkoxClassName: PropTypes.string,
-    checkBoxStyle: PropTypes.object,
+    className: PropTypes.string,
+    style: PropTypes.object,
     getErrorMessage: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
+  }
+
+  static defaultProps = {
+    as: 'checkbox',
   }
 
   handleChange(e, input) {
@@ -26,18 +31,19 @@ export default class FormsyCheckbox extends Component {
 
   render() {
     const {
+      as,
       isValid,
       isPristine,
       errorLabel,
       getErrorMessage,
       rootClassName,
       rootStyle,
-      checkboxClassName,
-      checkboxStyle,
+      className,
+      style,
+      getValue,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
-      getValue, // eslint-disable-line
       hasValue, // eslint-disable-line
       getErrorMessages, // eslint-disable-line
       isFormDisabled, // eslint-disable-line
@@ -52,19 +58,17 @@ export default class FormsyCheckbox extends Component {
       ...otherProps,
     } = this.props;
 
-    return (
-      <div
-        className={ rootClassName }
-        style={ rootStyle }
-      >
-        <Checkbox
-          checked={this.props.getValue()}
-          onChange={::this.handleChange}
-          className={ checkboxClassName }
-          style={ checkboxStyle }
-          { ...otherProps }
-        />
+    const props = {
+      checked: getValue(),
+      onChange: ::this.handleChange,
+      className: className,
+      style: style,
+      ...otherProps,
+    };
 
+    return (
+      <div className={ rootClassName } style={ rootStyle }>
+        { cloneElement(as === 'checkbox' ? <Checkbox/> : <Radio/>, { ...props }) }
         {
           !isValid() && !isPristine() && errorLabel &&
             cloneElement(errorLabel, { children: getErrorMessage() })

@@ -1,11 +1,12 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import { Decorator as Formsy } from 'formsy-react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Select } from 'semantic-ui-react';
 
 @Formsy()
 export default class FormsyDropdown extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    as: PropTypes.oneOf(['dropdown', 'select']),
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
@@ -13,13 +14,17 @@ export default class FormsyDropdown extends Component {
     getErrorMessage: PropTypes.func.isRequired,
     rootClassName: PropTypes.string,
     rootStyle: PropTypes.object,
-    dropdownClassName: PropTypes.string,
-    dropdownStyle: PropTypes.object,
+    className: PropTypes.string,
+    style: PropTypes.object,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType(
       [PropTypes.string, PropTypes.object]
     ),
+  }
+
+  static defaultProps = {
+    as: 'dropdown',
   }
 
   handleChange(e, input) {
@@ -28,14 +33,15 @@ export default class FormsyDropdown extends Component {
 
   render() {
     const {
+      as,
       isValid,
       isPristine,
       errorLabel,
       getErrorMessage,
       rootClassName,
       rootStyle,
-      dropdownClassName,
-      dropdownStyle,
+      className,
+      style,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
@@ -56,19 +62,17 @@ export default class FormsyDropdown extends Component {
 
     const error = !isValid() && !isPristine();
 
-    return (
-      <div
-        className={ rootClassName }
-        style={ rootStyle }
-      >
-        <Dropdown
-          onChange={ ::this.handleChange }
-          error={ error }
-          className={ dropdownClassName }
-          style={ dropdownStyle }
-          { ...otherProps }
-        />
+    const props = {
+      onChange: ::this.handleChange,
+      error: error,
+      className: className,
+      style: style,
+      ...otherProps,
+    };
 
+    return (
+      <div className={ rootClassName } style={ rootStyle }>
+        { cloneElement(as === 'dropdown' ? <Dropdown/> : <Select/>, { ...props }) }
         {
           error && errorLabel &&
           cloneElement(errorLabel, { children: getErrorMessage() })

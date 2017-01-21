@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
 import { Decorator as Formsy } from 'formsy-react';
-import { Input } from 'semantic-ui-react';
+import { Input, TextArea } from 'semantic-ui-react';
 import debounce from 'lodash.debounce';
 
 @Formsy()
@@ -8,7 +8,9 @@ export default class FormsyInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     isValid: PropTypes.func.isRequired,
+    as: PropTypes.oneOf(['input', 'textarea']),
     setValue: PropTypes.func.isRequired,
+    getValue: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
     onBlur: PropTypes.func,
     rootClassName: PropTypes.string,
@@ -23,16 +25,20 @@ export default class FormsyInput extends Component {
     ),
   }
 
+  static defaultProps = {
+    as: 'input',
+  }
+
   state = { allowError: false };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
   }
 
-  setInputValue = debounce(value => this.props.setValue(value), 50);
+  setInputValue = debounce(value => this.props.setValue(value));
 
-  handleChange(e, input) {
-    this.setInputValue(input.value);
+  handleChange(e, { value }) {
+    this.setInputValue(value);
   }
 
   handleBlur() {
@@ -42,6 +48,7 @@ export default class FormsyInput extends Component {
 
   render() {
     const {
+      as,
       isValid,
       errorLabel,
       getErrorMessage,
@@ -52,7 +59,7 @@ export default class FormsyInput extends Component {
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
-      getValue, // eslint-disable-line
+      getValue,
       hasValue, // eslint-disable-line
       getErrorMessages, // eslint-disable-line
       isFormDisabled, // eslint-disable-line
@@ -69,27 +76,22 @@ export default class FormsyInput extends Component {
     } = this.props;
 
     const { allowError } = this.state;
+    const error = !isValid() && !isPristine() && allowError;
 
-    const error = !isValid() && allowError;
+    const props = {
+      error: error,
+      onBlur: ::this.handleBlur,
+      onChange: ::this.handleChange,
+      value: getValue() || '',
+      className: inputClassName,
+      style: inputStyle,
+      ...otherProps,
+    };
 
     return (
-      <div
-        className={ rootClassName }
-        style={ rootStyle }
-      >
-        <Input
-          error={ error }
-          onBlur={::this.handleBlur}
-          onChange={::this.handleChange}
-          className={ inputClassName }
-          style={ inputStyle }
-          { ...otherProps }
-        />
-
-        {
-          error && errorLabel &&
-          cloneElement(errorLabel, { children: getErrorMessage() })
-        }
+      <div className={ rootClassName } style={ rootStyle }>
+        { cloneElement(as === 'input' ? <Input/> : <TextArea/>, { ...props }) }
+        {error && errorLabel && cloneElement(errorLabel, { children: getErrorMessage() }) }
       </div>
     );
   }
