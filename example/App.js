@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from 'formsy-react';
-import { Button, Label } from 'semantic-ui-react';
+import { Button, Label, Divider } from 'semantic-ui-react';
 import { Input, Checkbox, Radio, RadioGroup, Dropdown } from '../src/';
 
 const styles = {
@@ -147,20 +147,19 @@ export default class App extends Component {
             { radioGroup }
             { dropdown }
 
-            <br/>
+            <Divider/>
             <Button
-              type="submit"
               content="Submit"
               style={ styles.formElement }
-              size="big"
               color="orange"
             />
+            <Button
+              type="button"
+              onClick={ () => this.form.reset() }
+              content="Reset"
+              color="black"
+            />
           </Form>
-          <Button
-            onClick={ () => this.form.reset() }
-            content="Reset"
-            color="black"
-          />
         </div>
      </div>
   );
