@@ -6,6 +6,8 @@ import { Form } from 'formsy-react';
 import { Dropdown } from 'semantic-ui-react';
 
 const validationError = 'Please select something';
+const errorLabel = <div className="error-label"/>;
+
 const TestForm = () => {
   return (
     <Form>
@@ -24,7 +26,7 @@ const TestForm = () => {
           { text: 'Socks', value: 'socks' },
         ]}
         required
-        errorLabel={ <div className="error-label"/> }
+        errorLabel={ errorLabel }
         validationErrors = {{
           isDefaultRequiredValue: validationError,
         }}
@@ -54,6 +56,11 @@ describe('<Dropdown/>', () => {
     it('Doesn\'t show any errors initially', () => {
       assert.notOk(dropdown.props().isValid());
       assert.equal(dropdown.find('.error-label').length, 0);
+    });
+
+    it('Shows the errorLabel component passed to it', () => {
+      submitForm();
+      assert.ok(wrapper.find(errorLabel));
     });
 
     it('Shows error text when form is submitted', () => {

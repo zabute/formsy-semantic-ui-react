@@ -6,13 +6,15 @@ import { Form } from 'formsy-react';
 import { Checkbox } from 'semantic-ui-react';
 
 const validationError = 'Please check this';
+const errorLabel = <div className="error-label"/>;
+
 const TestForm = () => {
   return (
     <Form>
       <FormsyCheckbox
         name="testInput"
         validations="isTrue"
-        errorLabel={ <div className="error-label"/> }
+        errorLabel={ errorLabel }
         validationErrors = {{
           isTrue: validationError,
         }}
@@ -43,6 +45,11 @@ describe('<Checkbox/>', () => {
       assert.notOk(checkbox.props().isValid());
       assert.notOk(checkbox.find('Checkbox').props().error);
       assert.equal(checkbox.find('.error-label').length, 0);
+    });
+
+    it('Shows the errorLabel component passed to it', () => {
+      submitForm();
+      assert.ok(wrapper.find(errorLabel));
     });
 
     it('Shows error text when form is submitted', () => {

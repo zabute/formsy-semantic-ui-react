@@ -8,6 +8,7 @@ import { Form } from 'formsy-react';
 const validValue = 'john.doe@test.com';
 const invalidValue = 'Invalid Input';
 const validationError = 'This is not a valid email';
+const errorLabel = <div className="error-label"/>;
 
 const TestForm = () => {
   return (
@@ -15,7 +16,7 @@ const TestForm = () => {
       <FormsyInput
         name="testInput"
         validations="isEmail"
-        errorLabel={ <div className="error-label"/> }
+        errorLabel={ errorLabel }
         validationErrors = {{
           isEmail: validationError,
         }}
@@ -46,19 +47,26 @@ describe('<Input/>', () => {
 
     it('Doesn\'t show any errors initially', () => {
       assert.notOk(input.props().isValid());
-      assert.notOk(input.find('Input').props().error);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
     it('Shows error text when form is submitted', () => {
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
-      assert.equal(wrapper.find('.error-label').props().children, validationError);
+    });
+
+    it('Shows the errorLabel component passed to it', () => {
+      submitForm();
+      assert.ok(wrapper.find(errorLabel));
     });
 
     it('Shows error when user clicks away', () => {
       input.find('Input').props().onBlur();
       assert.equal(wrapper.find('.error-label').length, 1);
+    });
+
+    it('Shows error text passed to it', () => {
+      submitForm();
       assert.equal(wrapper.find('.error-label').props().children, validationError);
     });
   });
@@ -68,14 +76,12 @@ describe('<Input/>', () => {
 
     it('Doesn\'t show any errors initially', () => {
       assert.ok(input.props().isValid());
-      assert.notOk(input.find('Input').props().error);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
     it('Doesn\'t show error when form is submitted', () => {
       submitForm();
       assert.ok(input.props().isValid());
-      assert.notOk(input.find('Input').props().error);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
