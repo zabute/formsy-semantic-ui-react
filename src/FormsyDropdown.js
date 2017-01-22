@@ -10,6 +10,7 @@ export default class FormsyDropdown extends Component {
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
+    getValue: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
     rootClassName: PropTypes.string,
@@ -37,6 +38,7 @@ export default class FormsyDropdown extends Component {
       isValid,
       isPristine,
       errorLabel,
+      getValue,
       getErrorMessage,
       rootClassName,
       rootStyle,
@@ -45,7 +47,6 @@ export default class FormsyDropdown extends Component {
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
-      getValue, // eslint-disable-line
       hasValue, // eslint-disable-line
       getErrorMessages, // eslint-disable-line
       isFormDisabled, // eslint-disable-line
@@ -64,6 +65,7 @@ export default class FormsyDropdown extends Component {
 
     const props = {
       onChange: ::this.handleChange,
+      value: getValue() || '',
       error: error,
       className: className,
       style: style,
