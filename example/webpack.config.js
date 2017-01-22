@@ -1,14 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
-const PATHS = {
-  node_modules: path.resolve(__dirname, 'node_modules'),
-  src: path.resolve(__dirname, 'src'),
-  app: path.join(__dirname, 'src/app/index.js'),
-  dist: path.resolve(__dirname, 'dist'),
-};
-
-const config = {
+module.exports = {
   entry: [
     'webpack/hot/dev-server',
     'webpack/hot/only-dev-server',
@@ -24,29 +17,21 @@ const config = {
   },
 
   output: {
-    path: PATHS.dist,
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
 
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('development'),
-      },
-    }),
+    new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
 
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loaders: ['react-hot', 'babel-loader'],
-        exclude: [path.resolve(__dirname, 'node_modules')],
-      },
-    ],
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['react-hot', 'babel-loader'],
+      exclude: [path.resolve(__dirname, 'node_modules')],
+    }],
   },
 };
-
-module.exports = config;
