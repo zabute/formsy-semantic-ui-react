@@ -56,10 +56,10 @@ export default class FormsyInput extends Component {
       rootStyle,
       inputClassName,
       inputStyle,
+      getValue,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
-      getValue,
       hasValue, // eslint-disable-line
       getErrorMessages, // eslint-disable-line
       isFormDisabled, // eslint-disable-line
@@ -82,8 +82,8 @@ export default class FormsyInput extends Component {
       error: error,
       onBlur: ::this.handleBlur,
       onChange: ::this.handleChange,
-      value: getValue() || '',
       className: inputClassName,
+      value: getValue() || '',
       style: inputStyle,
       ...otherProps,
     };
