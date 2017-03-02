@@ -11,6 +11,8 @@ export default class FormsyInput extends Component {
     as: PropTypes.oneOf(['input', 'textarea']),
     setValue: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
+    isPristine: PropTypes.func.isRequired,
+    defaultValue: PropTypes.string,
     errorLabel: PropTypes.element,
     onBlur: PropTypes.func,
     rootClassName: PropTypes.string,
@@ -27,9 +29,14 @@ export default class FormsyInput extends Component {
 
   static defaultProps = {
     as: 'input',
+    defaultValue: '',
   }
 
   state = { allowError: false };
+
+  componentDidMount() {
+    this.props.setValue(this.props.defaultValue);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
@@ -57,13 +64,14 @@ export default class FormsyInput extends Component {
       inputClassName,
       inputStyle,
       getValue,
+      defaultValue,
+      isPristine,
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
       hasValue, // eslint-disable-line
       getErrorMessages, // eslint-disable-line
       isFormDisabled, // eslint-disable-line
-      isPristine, // eslint-disable-line
       isFormSubmitted, // eslint-disable-line
       isRequired, // eslint-disable-line
       showRequired, // eslint-disable-line
@@ -83,7 +91,7 @@ export default class FormsyInput extends Component {
       onBlur: ::this.handleBlur,
       onChange: ::this.handleChange,
       className: inputClassName,
-      value: getValue() || '',
+      value: getValue() || isPristine() && defaultValue || '',
       style: inputStyle,
       ...otherProps,
     };
