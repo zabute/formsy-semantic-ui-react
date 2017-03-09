@@ -1,8 +1,8 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
-import { Decorator as Formsy } from 'formsy-react';
+import { Decorator as formsy } from 'formsy-react';
 import { Dropdown, Select } from 'semantic-ui-react';
 
-@Formsy()
+@formsy()
 export default class FormsyDropdown extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -10,8 +10,19 @@ export default class FormsyDropdown extends Component {
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
+    onBlur: PropTypes.func,
+    defaultValue: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ])),
+    ]),
     getValue: PropTypes.func.isRequired,
+    multiple: PropTypes.bool,
     errorLabel: PropTypes.element,
+    isFormSubmitted: PropTypes.func.isRequired,
     getErrorMessage: PropTypes.func.isRequired,
     rootClassName: PropTypes.string,
     rootStyle: PropTypes.object,
@@ -28,8 +39,24 @@ export default class FormsyDropdown extends Component {
     as: 'dropdown',
   }
 
+  state = { allowError: false };
+
+  componentDidMount() {
+    if (this.props.defaultValue) this.props.setValue(this.props.defaultValue);
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.isFormSubmitted()) this.setState({ allowError: true });
+  }
+
   handleChange(e, input) {
     this.props.setValue(input.value);
+    if (!this.props.multiple) this.setState({ allowError: true });
+  }
+
+  handleBlur = () => {
+    this.setState({ allowError: true });
+    if (this.props.onBlur) this.props.onBlur();
   }
 
   render() {
@@ -40,6 +67,8 @@ export default class FormsyDropdown extends Component {
       errorLabel,
       getErrorMessage,
       getValue,
+      defaultValue,
+      multiple,
       rootClassName,
       rootStyle,
       className,
@@ -61,13 +90,17 @@ export default class FormsyDropdown extends Component {
       ...otherProps,
     } = this.props;
 
-    const error = !isValid() && !isPristine();
+    const { allowError } = this.state;
+
+    const error = !isValid() && !isPristine() && allowError;
 
     const props = {
       onChange: ::this.handleChange,
-      value: getValue() || '',
+      value: getValue() || defaultValue || multiple && [] || '',
       error: error,
       className: className,
+      multiple: multiple,
+      onBlur: this.handleBlur,
       style: style,
       ...otherProps,
     };
