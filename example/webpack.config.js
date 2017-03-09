@@ -9,7 +9,7 @@ module.exports = {
   ],
 
   devServer: {
-    contentBase: 'example',
+    contentBase: 'example/static',
     devtool: 'eval',
     hot: true,
     port: 8080,
@@ -22,7 +22,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.DefinePlugin({ 'process.env': { 'NODE_ENV': JSON.stringify('production') } }),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ],
@@ -31,7 +30,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['react-hot', 'babel-loader'],
-      exclude: [path.resolve(__dirname, 'node_modules')],
+      exclude: /node_modules/,
     }],
   },
 };
