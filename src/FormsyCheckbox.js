@@ -1,12 +1,13 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
-import { Decorator as Formsy } from 'formsy-react';
+import { Decorator as formsy } from 'formsy-react';
 import { Checkbox, Radio } from 'semantic-ui-react';
 
-@Formsy()
+@formsy()
 export default class FormsyCheckbox extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     as: PropTypes.oneOf(['checkbox', 'radio']),
+    defaultChecked: PropTypes.bool,
     setValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
@@ -22,6 +23,10 @@ export default class FormsyCheckbox extends Component {
 
   static defaultProps = {
     as: 'checkbox',
+  }
+
+  componentDidMount() {
+    if (this.props.defaultChecked) this.props.setValue(true);
   }
 
   handleChange(e, input) {
@@ -41,6 +46,7 @@ export default class FormsyCheckbox extends Component {
       className,
       style,
       getValue,
+      defaultChecked, // eslint-disable-line
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
