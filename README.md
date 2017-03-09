@@ -82,7 +82,6 @@ npm run example-app
 ```
 Then go to ```localhost:8080```
 
-
 ## Tests
 Tests are done using Mocha, chai and enzyme on jsdom.
 To run the tests,
