@@ -3,16 +3,9 @@ import { Form } from 'formsy-react';
 import { Container, Button, Label, Segment } from 'semantic-ui-react';
 import { Dropdown } from '../src';
 
-// <Radio/> has similar behavior and props
-
 const styles = {
   root: {
     marginTop: 18,
-  },
-
-  customErrorLabel: {
-    color: '#f00',
-    textAling: 'center',
   },
 };
 

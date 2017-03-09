@@ -9,11 +9,6 @@ const styles = {
   root: {
     marginTop: 18,
   },
-
-  customErrorLabel: {
-    color: '#f00',
-    textAling: 'center',
-  },
 };
 
 export default class CheckboxExamples extends Component {

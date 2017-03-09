@@ -14,10 +14,6 @@ const styles = {
     color: '#f00',
     textAling: 'center',
   },
-
-  toolbar: {
-    float: 'right',
-  },
 };
 
 export default class InputExamples extends Component {

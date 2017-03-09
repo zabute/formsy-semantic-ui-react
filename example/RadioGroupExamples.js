@@ -8,7 +8,7 @@ const styles = {
     marginTop: 18,
   },
 
-  adioGroup: {
+  radioGroup: {
     display: 'flex',
     marginBottom: 18,
   },
