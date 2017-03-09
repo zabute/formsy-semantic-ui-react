@@ -1,7 +1,7 @@
 import React, { Component, PropTypes, Children, cloneElement } from 'react';
-import { Decorator as Formsy } from 'formsy-react';
+import { Decorator as formsy } from 'formsy-react';
 
-@Formsy()
+@formsy()
 export default class FormsyRadioGroup extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -9,6 +9,7 @@ export default class FormsyRadioGroup extends Component {
     getValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
+    defaultSelected: PropTypes.string,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
     className: PropTypes.string,
@@ -19,6 +20,10 @@ export default class FormsyRadioGroup extends Component {
     validations: PropTypes.oneOfType(
       [PropTypes.string, PropTypes.object]
     ),
+  }
+
+  componentDidMount() {
+    if (this.props.defaultSelected) this.props.setValue(this.props.defaultSelected);
   }
 
   handleChange(e, { value }) {
@@ -39,7 +44,7 @@ export default class FormsyRadioGroup extends Component {
 
     const clonedChildren = Children.map(children, radio => {
       return cloneElement(radio, {
-        checked: radio.props.value === getValue(),
+        checked: getValue() === radio.props.value,
         onChange: ::this.handleChange,
       });
     });
