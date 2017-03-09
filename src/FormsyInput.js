@@ -1,9 +1,9 @@
 import React, { Component, PropTypes, cloneElement } from 'react';
-import { Decorator as Formsy } from 'formsy-react';
+import { Decorator as formsy } from 'formsy-react';
 import { Input, TextArea } from 'semantic-ui-react';
 import debounce from 'lodash.debounce';
 
-@Formsy()
+@formsy()
 export default class FormsyInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -32,19 +32,30 @@ export default class FormsyInput extends Component {
     defaultValue: '',
   }
 
-  state = { allowError: false };
+  state = { allowError: false, currentValue: null };
 
   componentDidMount() {
+    this.setState({ currentValue: this.props.defaultValue });
     this.props.setValue(this.props.defaultValue);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
+    if (nextProps.getValue() !== this.state.currentValue) {
+      this.setState({ currentValue: this.props.getValue() });
+    }
   }
 
-  setInputValue = debounce(value => this.props.setValue(value));
+  componentWillUpdate(nextProps) {
+    if (!this.props.isPristine() && nextProps.isPristine()) {
+      this.setState({ currentValue: this.props.getValue() });
+    }
+  }
+
+  setInputValue = debounce(value => this.props.setValue(value), 100);
 
   handleChange(e, { value }) {
+    this.setState({ currentValue: value });
     this.setInputValue(value);
   }
 
@@ -63,9 +74,9 @@ export default class FormsyInput extends Component {
       rootStyle,
       inputClassName,
       inputStyle,
-      getValue,
       defaultValue,
       isPristine,
+      getValue, // eslint-disable-line
       setValidations, // eslint-disable-line
       setValue, // eslint-disable-line
       resetValue, // eslint-disable-line
@@ -83,7 +94,7 @@ export default class FormsyInput extends Component {
       ...otherProps,
     } = this.props;
 
-    const { allowError } = this.state;
+    const { allowError, currentValue } = this.state;
     const error = !isValid() && !isPristine() && allowError;
 
     const props = {
@@ -91,7 +102,7 @@ export default class FormsyInput extends Component {
       onBlur: ::this.handleBlur,
       onChange: ::this.handleChange,
       className: inputClassName,
-      value: getValue() || isPristine() && defaultValue || '',
+      value: currentValue || (isPristine() && defaultValue) || '',
       style: inputStyle,
       ...otherProps,
     };
