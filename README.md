@@ -43,7 +43,7 @@ const App = props => {
 These props give you more control over behavior/markup
 
 | Prop | Description | Type | Default | Available on | Required |
-| ------ | ----------- |
+| ------ | ----------- | ------ | ------ | ------ | ------ |
 | ```errorLabel```| Used to Show input errors next to inputs. Any ```children``` get replaced by ```getErrorMessage()```  | ```string``` or ```class/func``` | ``none`` | All except ```Form``` | No
 | ```InstantValidation```   | Whether or not to show Validation Errors as soon as user starts interacting with input | ```bool```| ```false```| ```Input``` | No
 
