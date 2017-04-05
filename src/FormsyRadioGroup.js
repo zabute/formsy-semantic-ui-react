@@ -1,10 +1,14 @@
 import React, { Component, PropTypes, Children, cloneElement } from 'react';
 import { Decorator as formsy } from 'formsy-react';
+import { Form } from 'semantic-ui-react';
 
 @formsy()
 export default class FormsyRadioGroup extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    formRadioGroup: PropTypes.bool,
+    required: PropTypes.bool,
+    label: PropTypes.string,
     setValue: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
@@ -12,8 +16,6 @@ export default class FormsyRadioGroup extends Component {
     defaultSelected: PropTypes.string,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    style: PropTypes.object,
     children: PropTypes.node,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
@@ -22,41 +24,49 @@ export default class FormsyRadioGroup extends Component {
     ),
   }
 
-  componentDidMount() {
-    if (this.props.defaultSelected) this.props.setValue(this.props.defaultSelected);
+  static defaultProps = {
+    rootElement: Form.Field,
   }
 
-  handleChange(e, { value }) {
-    this.props.setValue(value);
+  componentDidMount() {
+    const { defaultSelected, setValue } = this.props;
+    if (defaultSelected) setValue(defaultSelected);
+  }
+
+  handleChange = (e, input) => {
+    this.props.setValue(input.value);
   }
 
   render() {
     const {
+      label,
+      required,
+      formRadioGroup,
       children,
       getValue,
       errorLabel,
       isValid,
       isPristine,
       getErrorMessage,
-      className,
-      style,
     } = this.props;
 
-    const clonedChildren = Children.map(children, radio => {
-      return cloneElement(radio, {
-        checked: getValue() === radio.props.value,
-        onChange: ::this.handleChange,
-      });
-    });
+    const error = !isPristine() && !isValid();
+    const formFieldProps = { required, label, error };
 
     return (
-      <div className={ className } style={ style }>
-        { clonedChildren }
+      <Form.Group>
+        { label && <Form.Field { ...formFieldProps }/> }
         {
-          !isValid() && !isPristine() && errorLabel &&
-          cloneElement(errorLabel, { children: getErrorMessage() })
+          Children.map(children, radio => {
+            const props = {
+              checked: getValue() === radio.props.value,
+              onChange: this.handleChange,
+            }; if (formRadioGroup) props.error = error;
+            return cloneElement(radio, { ...props });
+          })
         }
-      </div>
+        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+      </Form.Group>
     );
   }
 }
