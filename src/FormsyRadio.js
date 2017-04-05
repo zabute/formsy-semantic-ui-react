@@ -1,3 +1,4 @@
 import React from 'react';
 import Checkbox from './FormsyCheckbox';
-export default (props) => <Checkbox as="radio" { ...props }/>;
+import { Radio } from 'semantic-ui-react';
+export default (props) => <Checkbox as={ Radio } { ...props }/>;
