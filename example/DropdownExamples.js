@@ -38,7 +38,7 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           isDefaultRequiredValue: 'You need to select a product',
         }}
-        errorLabel="div"
+        errorLabel={ errorLabel }
         options={ options }
       />
     );
