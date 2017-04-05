@@ -3,11 +3,10 @@ import { Form } from 'formsy-react';
 import { Container, Button, Label, Segment, Divider } from 'semantic-ui-react';
 import { Input } from '../src';
 
-// <TextArea/> has similar behavior and props
-
 const styles = {
   root: {
     marginTop: 18,
+    // padding: '0 24px 24px 24px',
   },
 
   customErrorLabel: {
@@ -19,13 +18,9 @@ const styles = {
 export default class InputExamples extends Component {
   state = { formData: null }
 
-  onSubmit = (formData) => {
-    this.setState({ formData });
-  }
+  onValidSubmit = (formData) => alert(JSON.stringify(formData));   // eslint-disable-line
 
   render() {
-    const { formData } = this.state;
-
     const errorLabel = <Label color="red" pointing="left"/>;
 
     // Shows errros with the <Label/> component
@@ -34,6 +29,7 @@ export default class InputExamples extends Component {
         name="inputWithLabel"
         placeholder="Email"
         icon="mail"
+        instantValidation
         iconPosition="left"
         required
         validations="isEmail"
@@ -67,7 +63,7 @@ export default class InputExamples extends Component {
     const inputWithCustomErrorLabel = (
       <Input
         name="inputWithCustomErrorLabel"
-        placeholder="Some Value"
+        placeholder="Password"
         icon="lock"
         iconPosition="left"
         required
@@ -85,7 +81,7 @@ export default class InputExamples extends Component {
       <Container style={ styles.root }>
         <Form
           noValidate
-          onSubmit={ this.onSubmit }
+          onValidSubmit={ this.onValidSubmit }
           ref={ref => this.form = ref }
         >
           <Segment>
@@ -119,12 +115,6 @@ export default class InputExamples extends Component {
             color="black"
           />
         </Form>
-
-        <Segment>
-          <h5> Form Data </h5>
-          { JSON.stringify(formData) }
-        </Segment>
-
       </Container>
     );
   }

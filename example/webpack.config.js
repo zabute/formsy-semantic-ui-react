@@ -9,7 +9,7 @@ module.exports = {
   ],
 
   devServer: {
-    contentBase: 'example/static',
+    contentBase: 'example',
     devtool: 'eval',
     hot: true,
     port: 8080,

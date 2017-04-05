@@ -20,15 +20,9 @@ const styles = {
 };
 
 export default class RadioGroupExamples extends Component {
-  state = { formData: null }
-
-  onSubmit = (formData) => {
-    this.setState({ formData });
-  }
+  onValidSubmit = (formData) => alert(JSON.stringify(formData)) // eslint-disable-line
 
   render() {
-    const { formData } = this.state;
-
     const errorLabel = <Label color="red" pointing="left"/>;
 
     const radioGroup = (
@@ -104,7 +98,7 @@ export default class RadioGroupExamples extends Component {
       <Container style={ styles.root }>
         <Form
           noValidate
-          onSubmit={ this.onSubmit }
+          onValidSubmit={ this.onValidSubmit }
           ref={ref => this.form = ref }
         >
           <Segment>
@@ -141,11 +135,6 @@ export default class RadioGroupExamples extends Component {
             color="black"
           />
         </Form>
-
-        <Segment>
-          <h5> Form Data </h5>
-          { JSON.stringify(formData) }
-        </Segment>
 
       </Container>
     );

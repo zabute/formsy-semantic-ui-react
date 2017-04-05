@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Menu } from 'semantic-ui-react';
+import FormExamples from './FormExamples';
 import InputExamples from './InputExamples';
 import CheckboxExamples from './CheckboxExamples';
 import RadioGroupExamples from './RadioGroupExamples';
@@ -13,14 +14,15 @@ const styles = {
 };
 
 const tabs = {
-  Inputs: <InputExamples/>,
+  Form: <FormExamples/>,
+  Input: <InputExamples/>,
   Checkbox: <CheckboxExamples/>,
   RadioGroup: <RadioGroupExamples/>,
   Dropdown: <DropdownExamples/>,
 };
 
 export default class App extends Component {
-  state = { selectedTab: 'Inputs' }
+  state = { selectedTab: 'Form' }
 
   handleChangeTab = (e, { name }) => {
     this.setState({ selectedTab: name });
@@ -36,9 +38,15 @@ export default class App extends Component {
 
         <Container style={{ marginTop: 24 }}>
           <Menu pointing secondary>
+            <Menu.Item
+              name="Form"
+              active={selectedTab === 'Form'}
+              onClick={this.handleChangeTab}
+            />
+
            <Menu.Item
-             name="Inputs"
-             active={selectedTab === 'Inputs'}
+             name="Input"
+             active={selectedTab === 'Input'}
              onClick={this.handleChangeTab}
            />
 

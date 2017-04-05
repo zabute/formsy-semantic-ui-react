@@ -23,15 +23,9 @@ const options = [
 ];
 
 export default class CheckboxExamples extends Component {
-  state = { formData: null }
-
-  onSubmit = (formData) => {
-    this.setState({ formData });
-  }
+  onValidSubmit = (formData) => alert(JSON.stringify(formData)) // eslint-disable-line
 
   render() {
-    const { formData } = this.state;
-
     const errorLabel = <Label color="red" pointing="left"/>;
 
     const dropdownSingle = (
@@ -44,7 +38,7 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           isDefaultRequiredValue: 'You need to select a product',
         }}
-        errorLabel={ errorLabel }
+        errorLabel="div"
         options={ options }
       />
     );
@@ -106,7 +100,7 @@ export default class CheckboxExamples extends Component {
       <Container style={ styles.root }>
         <Form
           noValidate
-          onSubmit={ this.onSubmit }
+          onValidSubmit={ this.onValidSubmit }
           ref={ref => this.form = ref }
         >
           <Segment>
@@ -144,12 +138,6 @@ export default class CheckboxExamples extends Component {
             color="black"
           />
         </Form>
-
-        <Segment>
-          <h5> Form Data </h5>
-          { JSON.stringify(formData) }
-        </Segment>
-
       </Container>
     );
   }
