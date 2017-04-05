@@ -1,24 +1,24 @@
-import React, { Component, PropTypes, cloneElement } from 'react';
+import React, { Component, PropTypes, createElement, cloneElement } from 'react';
 import { Decorator as formsy } from 'formsy-react';
-import { Input, TextArea } from 'semantic-ui-react';
+import { Form, Input, TextArea } from 'semantic-ui-react';
 import debounce from 'lodash.debounce';
+import { filterSuirElementProps } from './utils';
 
 @formsy()
 export default class FormsyInput extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    as: PropTypes.oneOf([
+      Input, TextArea, Form.Input, Form.TextArea,
+    ]),
+    errorLabel: PropTypes.element,
+    instantValidation: PropTypes.bool,
+    defaultValue: PropTypes.string,
+    onBlur: PropTypes.func,
     isValid: PropTypes.func.isRequired,
-    as: PropTypes.oneOf(['input', 'textarea']),
     setValue: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
-    defaultValue: PropTypes.string,
-    errorLabel: PropTypes.element,
-    onBlur: PropTypes.func,
-    rootClassName: PropTypes.string,
-    rootStyle: PropTypes.object,
-    inputClassName: PropTypes.string,
-    inputStyle: PropTypes.object,
     getErrorMessage: PropTypes.func.isRequired,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
@@ -27,91 +27,61 @@ export default class FormsyInput extends Component {
     ),
   }
 
-  static defaultProps = {
-    as: 'input',
-    defaultValue: '',
-  }
+  static defaultProps = { as: Input }
 
-  state = { allowError: false, currentValue: null };
+  state = { allowError: false, value: null };
 
   componentDidMount() {
-    this.setState({ currentValue: this.props.defaultValue });
-    this.props.setValue(this.props.defaultValue);
+    const { defaultValue, setValue } = this.props;
+    if (defaultValue) setValue(defaultValue);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isFormSubmitted()) this.setState({ allowError: true });
-    if (nextProps.getValue() !== this.state.currentValue) {
-      this.setState({ currentValue: this.props.getValue() });
-    }
-  }
-
-  componentWillUpdate(nextProps) {
-    if (!this.props.isPristine() && nextProps.isPristine()) {
-      this.setState({ currentValue: this.props.getValue() });
-    }
+    if (nextProps.isFormSubmitted()) this.showError();
+    this.setState({ value: this.props.getValue() });
   }
 
   setInputValue = debounce(value => this.props.setValue(value), 100);
 
-  handleChange(e, { value }) {
-    this.setState({ currentValue: value });
+  handleChange = (e, { value }) => {
+    this.setState({ value });
     this.setInputValue(value);
+    if (this.props.instantValidation) this.showError();
   }
 
-  handleBlur() {
-    this.setState({ allowError: true });
+  handleBlur = () => {
+    this.showError();
     if (this.props.onBlur) this.props.onBlur();
   }
+
+  showError = () => this.setState({ allowError: true });
 
   render() {
     const {
       as,
-      isValid,
-      errorLabel,
-      getErrorMessage,
-      rootClassName,
-      rootStyle,
-      inputClassName,
-      inputStyle,
       defaultValue,
+      isValid,
       isPristine,
-      getValue, // eslint-disable-line
-      setValidations, // eslint-disable-line
-      setValue, // eslint-disable-line
-      resetValue, // eslint-disable-line
-      hasValue, // eslint-disable-line
-      getErrorMessages, // eslint-disable-line
-      isFormDisabled, // eslint-disable-line
-      isFormSubmitted, // eslint-disable-line
-      isRequired, // eslint-disable-line
-      showRequired, // eslint-disable-line
-      showError, // eslint-disable-line
-      isValidValue, // eslint-disable-line
-      validations, // eslint-disable-line
-      validationError, // eslint-disable-line
-      validationErrors, // eslint-disable-line
-      ...otherProps,
+      getErrorMessage,
+      errorLabel,
     } = this.props;
 
-    const { allowError, currentValue } = this.state;
-    const error = !isValid() && !isPristine() && allowError;
+    const { allowError, value } = this.state;
+    const error = !isPristine() && !isValid() && allowError;
 
-    const props = {
-      error: error,
-      onBlur: ::this.handleBlur,
-      onChange: ::this.handleChange,
-      className: inputClassName,
-      value: currentValue || (isPristine() && defaultValue) || '',
-      style: inputStyle,
-      ...otherProps,
+    const inputProps = {
+      value: value || isPristine() && defaultValue || '',
+      onChange: this.handleChange,
+      onBlur: this.handleBlur,
+      error,
+      ...filterSuirElementProps(this.props),
     };
 
     return (
-      <div className={ rootClassName } style={ rootStyle }>
-        { cloneElement(as === 'input' ? <Input/> : <TextArea/>, { ...props }) }
-        {error && errorLabel && cloneElement(errorLabel, { children: getErrorMessage() }) }
-      </div>
+      <Form.Field>
+        { createElement(as, { ...inputProps }) }
+        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+      </Form.Field>
     );
   }
 }
