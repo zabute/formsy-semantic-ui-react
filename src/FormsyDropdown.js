@@ -1,16 +1,15 @@
-import React, { Component, PropTypes, cloneElement } from 'react';
+import React, { Component, PropTypes, createElement, cloneElement } from 'react';
 import { Decorator as formsy } from 'formsy-react';
-import { Dropdown, Select } from 'semantic-ui-react';
+import { Form, Dropdown, Select } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
 
 @formsy()
 export default class FormsyDropdown extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    as: PropTypes.oneOf(['dropdown', 'select']),
-    isValid: PropTypes.func.isRequired,
-    isPristine: PropTypes.func.isRequired,
-    setValue: PropTypes.func.isRequired,
-    onBlur: PropTypes.func,
+    as: PropTypes.oneOf([
+      Dropdown, Select, Form.Dropdown, Form.Select,
+    ]),
     defaultValue: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
@@ -19,15 +18,15 @@ export default class FormsyDropdown extends Component {
         PropTypes.number,
       ])),
     ]),
+    errorLabel: PropTypes.element,
+    isValid: PropTypes.func.isRequired,
+    isPristine: PropTypes.func.isRequired,
+    setValue: PropTypes.func.isRequired,
+    onBlur: PropTypes.func,
     getValue: PropTypes.func.isRequired,
     multiple: PropTypes.bool,
-    errorLabel: PropTypes.element,
     isFormSubmitted: PropTypes.func.isRequired,
     getErrorMessage: PropTypes.func.isRequired,
-    rootClassName: PropTypes.string,
-    rootStyle: PropTypes.object,
-    className: PropTypes.string,
-    style: PropTypes.object,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType(
@@ -36,83 +35,58 @@ export default class FormsyDropdown extends Component {
   }
 
   static defaultProps = {
-    as: 'dropdown',
+    as: Dropdown,
+    rootElement: Form.Field,
   }
 
   state = { allowError: false };
 
   componentDidMount() {
-    if (this.props.defaultValue) this.props.setValue(this.props.defaultValue);
+    const { defaultValue, setValue } = this.props;
+    if (defaultValue) setValue(defaultValue);
   }
 
-  componentWillReceiveProps() {
-    if (this.props.isFormSubmitted()) this.setState({ allowError: true });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isFormSubmitted()) this.showError();
   }
 
-  handleChange(e, input) {
-    this.props.setValue(input.value);
-    if (!this.props.multiple) this.setState({ allowError: true });
+  handleChange = (e, { value }) => {
+    const { multiple, getValue, setValue } = this.props;
+    if (multiple && getValue() && getValue().length > value.length) this.showError();
+    setValue(value);
   }
 
-  handleBlur = () => {
-    this.setState({ allowError: true });
-    if (this.props.onBlur) this.props.onBlur();
-  }
+  showError = () => this.setState({ allowError: true });
+  handleClose = () => this.showError();
 
   render() {
     const {
       as,
-      isValid,
-      isPristine,
-      errorLabel,
-      getErrorMessage,
       getValue,
       defaultValue,
       multiple,
-      rootClassName,
-      rootStyle,
-      className,
-      style,
-      setValidations, // eslint-disable-line
-      setValue, // eslint-disable-line
-      resetValue, // eslint-disable-line
-      hasValue, // eslint-disable-line
-      getErrorMessages, // eslint-disable-line
-      isFormDisabled, // eslint-disable-line
-      isFormSubmitted, // eslint-disable-line
-      isRequired, // eslint-disable-line
-      showRequired, // eslint-disable-line
-      showError, // eslint-disable-line
-      isValidValue, // eslint-disable-line
-      validations, // eslint-disable-line
-      validationError, // eslint-disable-line
-      validationErrors, // eslint-disable-line
-      ...otherProps,
+      errorLabel,
+      getErrorMessage,
+      isValid,
+      isPristine,
     } = this.props;
 
-    const { allowError } = this.state;
+    const error = !isPristine() && !isValid() && this.state.allowError;
 
-    const error = !isValid() && !isPristine() && allowError;
-
-    const props = {
-      onChange: ::this.handleChange,
-      value: getValue() || defaultValue || multiple && [] || '',
-      error: error,
-      className: className,
-      multiple: multiple,
+    const dropdownProps = {
+      onChange: this.handleChange,
       onBlur: this.handleBlur,
-      style: style,
-      ...otherProps,
+      onClose: this.handleClose,
+      value: getValue() || defaultValue || multiple && [],
+      error,
+      ...filterSuirElementProps(this.props),
     };
 
     return (
-      <div className={ rootClassName } style={ rootStyle }>
-        { cloneElement(as === 'dropdown' ? <Dropdown/> : <Select/>, { ...props }) }
-        {
-          error && errorLabel &&
-          cloneElement(errorLabel, { children: getErrorMessage() })
-        }
-      </div>
+      <Form.Field>
+        { createElement(as, { ...dropdownProps }) }
+        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+      </Form.Field>
     );
   }
 }
