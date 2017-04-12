@@ -6,6 +6,7 @@ import Form from '../src/Form';
 import { Form as SemanticUIForm } from 'semantic-ui-react';
 import FormsyInput from '../src/FormsyInput';
 import FormsyTextArea from '../src/FormsyTextArea';
+import FormsyCheckbox from '../src/FormsyCheckbox';
 
 describe('<Form/>', () => {
   it('Renders Semantic-UI-React\'s Form', () => {
@@ -33,11 +34,11 @@ describe('<Form/>', () => {
       assert.isTrue(textArea.is(FormsyTextArea));
     });
 
-    it('should render <FormsyCheckbox/> as <Form.Checkbox/>', () => {
+    it('should render <Form.Checkbox/> as <FormsyCheckbox/>', () => {
       const wrapper = mountForm(<Form.Checkbox name="formInput"/>);
-      const checkbox = wrapper.find('FormCheckbox');
+      const checkbox = wrapper.find(FormsyCheckbox);
       assert.equal(checkbox.length, 1);
-      assert.isTrue(checkbox.is(SemanticUIForm.Checkbox));
+      assert.isTrue(checkbox.is(FormsyCheckbox));
     });
 
     it('should render <FormsyCheckbox/> as <Form.Radio/>', () => {
