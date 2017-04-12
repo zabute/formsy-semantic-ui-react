@@ -5,6 +5,7 @@ import { spy } from 'sinon';
 import Form from '../src/Form';
 import { Form as SemanticUIForm } from 'semantic-ui-react';
 import FormsyInput from '../src/FormsyInput';
+import FormsyTextArea from '../src/FormsyTextArea';
 
 describe('<Form/>', () => {
   it('Renders Semantic-UI-React\'s Form', () => {
@@ -18,19 +19,19 @@ describe('<Form/>', () => {
       return mount(<TestForm/>);
     };
 
-    it('should render <FormsyInput/> as <FormsyInput/>', () => {
+    it('should render <Form.Input/> as <FormsyInput/>', () => {
       const wrapper = mountForm(<Form.Input name="input"/>);
       const input = wrapper.find(FormsyInput);
       assert.equal(input.length, 1);
       assert.isTrue(input.is(FormsyInput));
     });
 
-    // it('should render <FormsyTextArea/> as <Form.TextArea/>', () => {
-    //   const wrapper = mountForm(<Form.TextArea name="formInput"/>);
-    //   const textArea = wrapper.find('FormTextArea');
-    //   assert.equal(textArea.length, 1);
-    //   assert.isTrue(textArea.is(SemanticUIForm.TextArea));
-    // });
+    it('should render <Form.TextArea/> as <FormsyTextArea/>', () => {
+      const wrapper = mountForm(<Form.TextArea name="formInput"/>);
+      const textArea = wrapper.find(FormsyTextArea);
+      assert.equal(textArea.length, 1);
+      assert.isTrue(textArea.is(FormsyTextArea));
+    });
 
     it('should render <FormsyCheckbox/> as <Form.Checkbox/>', () => {
       const wrapper = mountForm(<Form.Checkbox name="formInput"/>);
