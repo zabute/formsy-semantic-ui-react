@@ -7,6 +7,7 @@ import { Form as SemanticUIForm } from 'semantic-ui-react';
 import FormsyInput from '../src/FormsyInput';
 import FormsyTextArea from '../src/FormsyTextArea';
 import FormsyCheckbox from '../src/FormsyCheckbox';
+import FormsyDropdown from '../src/FormsyDropdown';
 
 describe('<Form/>', () => {
   it('Renders Semantic-UI-React\'s Form', () => {
@@ -48,19 +49,19 @@ describe('<Form/>', () => {
       assert.isTrue(radio.is(SemanticUIForm.Radio));
     });
 
-    it('should render <FormsyDropdown/> as <Form.Dropdown/>', () => {
+    it('should render <Form.Dropdown/> as <FormsyDropdown/>', () => {
       const wrapper = mountForm(<Form.Dropdown name="formInput"/>);
-      const dropdown = wrapper.find('FormDropdown');
+      const dropdown = wrapper.find(FormsyDropdown);
       assert.equal(dropdown.length, 1);
-      assert.isTrue(dropdown.is(SemanticUIForm.Dropdown));
+      assert.isTrue(dropdown.is(FormsyDropdown));
     });
 
-    it('should render <FormsySelect/> as <Form.Select/>', () => {
-      const wrapper = mountForm(<Form.Select name="formInput"/>);
-      const select = wrapper.find('FormSelect');
-      assert.equal(select.length, 1);
-      assert.isTrue(select.is(SemanticUIForm.Select));
-    });
+    // it('should render <FormsySelect/> as <Form.Select/>', () => {
+    //   const wrapper = mountForm(<Form.Select name="formInput"/>);
+    //   const select = wrapper.find('FormSelect');
+    //   assert.equal(select.length, 1);
+    //   assert.isTrue(select.is(SemanticUIForm.Select));
+    // });
   });
 
   context('When Submitting', () => {
