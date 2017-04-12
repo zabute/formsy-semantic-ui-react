@@ -83,7 +83,7 @@ export default class FormExamples extends Component {
           name="terms"
           label="I agree to the Terms and Conditions"
           validations="isTrue"
-          errorLabel={ <Label color="red" pointing/> }
+          errorLabel={ <Label color="red" pointing="left"/> }
           validationErrors={{
             isTrue: 'You\'ll have to agree to the Terms and Conditions',
           }}

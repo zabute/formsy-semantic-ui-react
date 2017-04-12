@@ -27,10 +27,28 @@ export default class InputExamples extends Component {
     const inputWithLabel = (
       <Input
         name="inputWithLabel"
-        placeholder="Email"
+        placeholder="Your primary email"
+        icon="mail"
+        label="Email"
+        required
+        validations="isEmail"
+        validationErrors={{
+          isEmail: 'This is not a valid email',
+          isDefaultRequiredValue: 'Email is Required',
+        }}
+        errorLabel={ errorLabel }
+        style={ styles.formElement }
+      />
+    );
+
+    const instantValidation = (
+      <Input
+        instantValidation
+        name="inputWithLabel"
+        placeholder="Your primary email"
+        label="Email"
         icon="mail"
         instantValidation
-        iconPosition="left"
         required
         validations="isEmail"
         validationErrors={{
@@ -88,6 +106,12 @@ export default class InputExamples extends Component {
             <h5> Input With Error Label </h5>
             { inputWithLabel }
           </Segment>
+
+          <Segment>
+            <h5> Instant Validation </h5>
+            { instantValidation }
+          </Segment>
+
 
           <Segment>
             <h5> Input With Custorm Error Label </h5>
