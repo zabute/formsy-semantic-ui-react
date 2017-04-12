@@ -18,6 +18,8 @@ export default class FormsyDropdown extends Component {
         PropTypes.number,
       ])),
     ]),
+    required: PropTypes.bool,
+    label: PropTypes.string,
     errorLabel: PropTypes.element,
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
@@ -62,6 +64,8 @@ export default class FormsyDropdown extends Component {
   render() {
     const {
       as,
+      required,
+      label,
       getValue,
       defaultValue,
       multiple,
@@ -71,6 +75,7 @@ export default class FormsyDropdown extends Component {
       isPristine,
     } = this.props;
 
+    const shortHandMode = (as === Form.Dropdown || as === Form.Select);
     const error = !isPristine() && !isValid() && this.state.allowError;
 
     const dropdownProps = {
@@ -82,9 +87,12 @@ export default class FormsyDropdown extends Component {
       ...filterSuirElementProps(this.props),
     };
 
+    const dropdownNode = shortHandMode ? createElement(as).props.control : as;
+
     return (
-      <Form.Field>
-        { createElement(as, { ...dropdownProps }) }
+      <Form.Field required={ required } error={ error }>
+        { shortHandMode && <label> { label } </label> }
+        { createElement(dropdownNode, { ...dropdownProps }) }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
     );
