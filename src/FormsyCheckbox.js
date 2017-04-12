@@ -34,6 +34,7 @@ export default class FormsyCheckbox extends Component {
   render() {
     const {
       as,
+      required,
       isValid,
       isPristine,
       errorLabel,
@@ -49,12 +50,10 @@ export default class FormsyCheckbox extends Component {
       ...filterSuirElementProps(this.props),
     };
 
-    if (as === Form.Checkbox || as === Form.Radio) {
-      checkboxProps.error = error;
-    }
+    if (as === Checkbox || as === Radio) delete checkboxProps.error;
 
     return (
-      <Form.Field>
+      <Form.Field required={ required } error={ error }>
         { createElement(as, { ...checkboxProps }) }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
