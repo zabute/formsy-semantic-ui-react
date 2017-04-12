@@ -21,10 +21,10 @@ export default class Form extends Component {
 
   static Input = props => <FormsyInput as={ SemanticUIForm.Input } { ...props }/>;;
   static TextArea = props => <FormsyTextArea as={ SemanticUIForm.TextArea } { ...props }/>;
-  static Checkbox = props => <FormsyCheckbox as={ SemanticUIForm.Checkbox } { ...props }/>;
   static Select = props => <FormsySelect as={ SemanticUIForm.Select } { ...props }/>;
   static RadioGroup = props => <FormsyRadioGroup formRadioGroup { ...props }/>;
   static Dropdown = props => <FormsyDropdown as={ SemanticUIForm.Dropdown } { ...props }/>;
+  static Checkbox = FormsyCheckbox;
   static Button = SemanticUIForm.Button;
   static Radio = SemanticUIForm.Radio;
   static Field = SemanticUIForm.Field;
