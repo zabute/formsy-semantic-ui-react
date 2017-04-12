@@ -1,8 +1,9 @@
-import React, { Component, PropTypes, createElement, cloneElement } from 'react';
+import React, { Component, createElement, cloneElement } from 'react';
 import { Decorator as formsy } from 'formsy-react';
 import { Form, Input, TextArea } from 'semantic-ui-react';
 import debounce from 'lodash.debounce';
 import { filterSuirElementProps } from './utils';
+import PropTypes from 'prop-types';
 
 @formsy()
 export default class FormsyInput extends Component {
