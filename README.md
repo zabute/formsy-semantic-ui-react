@@ -16,23 +16,32 @@ npm install (or yarn add) formsy-react
 ```
 
 ## Usage
-```js
-// ES6 imports
-import { Form, Input, TextArea, Checkbox,
-  Radio, RadioGroup, Dropdown, Select } from 'formsy-semantic-ui-react';
-
+```jsx
+// ES6
+import {
+  Form, Input, TextArea, Checkbox, Radio, RadioGroup, Dropdown, Select,
+} from 'formsy-semantic-ui-react';
+```
+```jsx
 // ES5
-var Input = require('formsy-semantic-ui-react').Input;
+var Form = require('formsy-semantic-ui-react').Form;
 /** and so on for the rest of the Components **/
+```
+```jsx
+const App = (props) => {
+  const errorLabel = <Label color="red" pointing/>
 
-const App = props => {
   return (
-    <Form onValidSubmit={ onValidSubmit } loading={ props.isLoading }>
+    <Form
+      onValidSubmit={ props.onValidSubmit }
+      loading={ props.isLoading }
+    >
       <Form.Input
         name="email"
         label="Email"
-        validations={isEmail}
-        validationErrors={{ isEmail: 'Not a valid email' }}
+        validations="isEmail"
+        validationErrors={{ isEmail: 'Email not valid' }}
+        errorLabel={ errorLabel }
       />
     </Form>
   )
@@ -40,18 +49,33 @@ const App = props => {
 ```
 
 ## Props
-These props give you more control over behavior/markup
+This library defines a couple of (non-required) props for more control over behavior/markup:
 
-| Prop | Description | Type | Default | Available on | Required |
-| ------ | ----------- | ------ | ------ | ------ | ------ |
-| ```errorLabel```| Used to Show input errors next to inputs. Any ```children``` get replaced by ```getErrorMessage()```  | ```string``` or ```class/func``` | ``none`` | All except ```Form``` | No
-| ```InstantValidation```   | Whether or not to show Validation Errors as soon as user starts interacting with input | ```bool```| ```false```| ```Input``` | No
+- ```errorLabel``` (type: ```function``` default: ```none```)
+
+  Used to Show validation errors next to the inputs. Any ```children``` get replaced by ```getErrorMessage()```
+
+```jsx
+  <Checkbox
+    errorLabel={ <Label color="red" pointing="left" }/>
+  />
+```
+
+- ```instantValidation``` (type: ```bool``` default: ```false```)
+
+ Whether or not to show validation errors as soon as user starts typing. Only available on ```Input``` and ```Form.Input```
+
+```jsx
+  <Input
+    instantValidation
+  />
+```
 
 ## Examples
-Go to the [example](/example) folder to see some examples of how the components are used.
+Go to the [example](/example) folder to see more examples of how the components are used.
 For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/christianalfoni/formsy-react/blob/master/API.md)
 
-To run the example app, clone this repo and run:
+To run the example app:
 ```
 npm/yarn install
 npm/yarn run example-app
