@@ -60,6 +60,8 @@ export default class FormsyInput extends Component {
   render() {
     const {
       as,
+      required,
+      label,
       defaultValue,
       isValid,
       isPristine,
@@ -75,12 +77,22 @@ export default class FormsyInput extends Component {
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       error,
+      label,
       ...filterSuirElementProps(this.props),
     };
 
+    const shortHandMode = (as === Form.Input || as === Form.TextArea);
+    const inputNode = shortHandMode ? createElement(as).props.control : as;
+
+    if (shortHandMode) {
+      delete inputProps.label;
+      if (as === Form.TextArea) delete inputProps.error;
+    }
+
     return (
-      <Form.Field>
-        { createElement(as, { ...inputProps }) }
+      <Form.Field required={ required } error={ error }>
+        { shortHandMode && <label> { label } </label> }
+        { createElement(inputNode, { ...inputProps }) }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
     );
