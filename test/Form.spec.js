@@ -8,6 +8,7 @@ import FormsyInput from '../src/FormsyInput';
 import FormsyTextArea from '../src/FormsyTextArea';
 import FormsyCheckbox from '../src/FormsyCheckbox';
 import FormsyDropdown from '../src/FormsyDropdown';
+import FormsySelect from '../src/FormsySelect';
 
 describe('<Form/>', () => {
   it('Renders Semantic-UI-React\'s Form', () => {
@@ -56,12 +57,12 @@ describe('<Form/>', () => {
       assert.isTrue(dropdown.is(FormsyDropdown));
     });
 
-    // it('should render <FormsySelect/> as <Form.Select/>', () => {
-    //   const wrapper = mountForm(<Form.Select name="formInput"/>);
-    //   const select = wrapper.find('FormSelect');
-    //   assert.equal(select.length, 1);
-    //   assert.isTrue(select.is(SemanticUIForm.Select));
-    // });
+    it('should render <Form.Select/> as <FormsySelect/>', () => {
+      const wrapper = mountForm(<Form.Select name="formInput"/>);
+      const select = wrapper.find(FormsySelect);
+      assert.equal(select.length, 1);
+      assert.isTrue(select.is(FormsySelect));
+    });
   });
 
   context('When Submitting', () => {
