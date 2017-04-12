@@ -13,6 +13,8 @@ export default class FormsyInput extends Component {
       Input, TextArea, Form.Input, Form.TextArea,
     ]),
     errorLabel: PropTypes.element,
+    required: PropTypes.bool,
+    label: PropTypes.string,
     instantValidation: PropTypes.bool,
     defaultValue: PropTypes.string,
     onBlur: PropTypes.func,
