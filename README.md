@@ -57,13 +57,13 @@ This library defines a couple of (non-required) props for more control over beha
 
 ```jsx
   <Checkbox
-    errorLabel={ <Label color="red" pointing="left" }/>
+    errorLabel={ <Label color="red" pointing="left"/> }/>
   />
 ```
 
 - ```instantValidation``` (type: ```bool``` default: ```false```)
 
- Whether or not to show validation errors as soon as user starts typing. Only available on ```Input``` and ```Form.Input```
+  Whether or not to show validation errors as soon as user starts typing. Only available on ```Input``` and ```Form.Input```
 
 ```jsx
   <Input
@@ -73,8 +73,6 @@ This library defines a couple of (non-required) props for more control over beha
 
 ## Examples
 Go to the [example](/example) folder to see more examples of how the components are used.
-For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/christianalfoni/formsy-react/blob/master/API.md)
-
 To run the example app:
 ```
 npm/yarn install
@@ -82,12 +80,14 @@ npm/yarn run example-app
 ```
 Then go to ```localhost:8080```
 
+For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/christianalfoni/formsy-react/blob/master/API.md)
+
 ## Tests
 Tests are done using Mocha, chai, sinon, and enzyme on jsdom.
 To run the tests,
 ```
 npm/yarn install
-npm/yarn run test // or npm run test:watch
+npm/yarn run test (or test:watch)
 ```
 
 License: [MIT](/LICENSE)
