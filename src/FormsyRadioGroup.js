@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, Children, cloneElement } from 'react';
+import React, { Component, Children, cloneElement } from 'react';
+import PropTypes from 'prop-types';
 import { Decorator as formsy } from 'formsy-react';
 import { Form } from 'semantic-ui-react';
 
