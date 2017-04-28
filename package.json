@@ -1,6 +1,6 @@
 {
   "name": "formsy-semantic-ui-react",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Formsy-React wrappers for Semantic-Ui-React's form Components",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel ./src -d ./lib",
+    "build": "rimraf lib && babel ./src -d ./lib",
     "lint": "eslint src example test --color",
     "test": "mocha test/**/*.spec.js",
     "test:watch": "npm run test -- --watch",
@@ -28,7 +28,7 @@
     "formsy-react": "^0.19.0",
     "react": "^0.14.0 || ^15.0.0",
     "react-dom": "^0.14.0 || ^15.0.0",
-    "semantic-ui-react": "^0.67.0"
+    "semantic-ui-react": "^0.68.0"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
