@@ -83,7 +83,7 @@ export default class FormsyDropdown extends Component {
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       onClose: this.handleClose,
-      value: getValue() || defaultValue || multiple && [],
+      value: getValue() || defaultValue || multiple && [] || '',
       error,
       ...filterSuirElementProps(this.props),
     };
