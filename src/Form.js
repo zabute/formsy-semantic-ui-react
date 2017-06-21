@@ -31,7 +31,7 @@ export default class Form extends Component {
   static Field = SemanticUIForm.Field;
   static Group = SemanticUIForm.Group;
 
-  updateInputWithErrors = errors => this.formsyForm.updateInputWithErrors(errors);
+  updateInputsWithError = errors => this.formsyForm.updateInputsWithError(errors);
   reset = mapping => this.formsyForm.reset(mapping);
 
   render() {
