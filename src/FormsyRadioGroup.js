@@ -14,6 +14,7 @@ export default class FormsyRadioGroup extends Component {
     getValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     defaultSelected: PropTypes.string,
     errorLabel: PropTypes.element,
     getErrorMessage: PropTypes.func.isRequired,
@@ -36,6 +37,7 @@ export default class FormsyRadioGroup extends Component {
 
   handleChange = (e, input) => {
     this.props.setValue(input.value);
+    if (this.props.onChange) this.props.onChange();
   }
 
   render() {

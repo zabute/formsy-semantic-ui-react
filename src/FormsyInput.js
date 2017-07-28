@@ -21,6 +21,7 @@ export default class FormsyInput extends Component {
     isValid: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
     getValue: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     isPristine: PropTypes.func.isRequired,
     getErrorMessage: PropTypes.func.isRequired,
     validationError: PropTypes.string,
@@ -49,6 +50,7 @@ export default class FormsyInput extends Component {
   handleChange = (e, { value }) => {
     this.setState({ value });
     this.setInputValue(value);
+    if (this.props.onChange) this.props.onChange();
     if (this.props.instantValidation) this.showError();
   }
 
@@ -75,12 +77,12 @@ export default class FormsyInput extends Component {
     const error = !isPristine() && !isValid() && allowError;
 
     const inputProps = {
+      ...filterSuirElementProps(this.props),
       value: value || isPristine() && defaultValue || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       error,
       label,
-      ...filterSuirElementProps(this.props),
     };
 
     const shortHandMode = (as === Form.Input || as === Form.TextArea);

@@ -17,6 +17,7 @@ export default class FormsyCheckbox extends Component {
     required: PropTypes.bool,
     getErrorMessage: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
+    onChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -28,8 +29,9 @@ export default class FormsyCheckbox extends Component {
     if (defaultChecked) setValue(true);
   }
 
-  handleChange(e, { checked }) {
+  handleChange = (e, { checked }) => {
     this.props.setValue(checked);
+    if (this.props.onChange) this.props.onChange();
   }
 
   render() {
@@ -46,9 +48,9 @@ export default class FormsyCheckbox extends Component {
     const error = !isPristine() && !isValid();
 
     const checkboxProps = {
+      ...filterSuirElementProps(this.props),
       checked: getValue(),
       onChange: ::this.handleChange,
-      ...filterSuirElementProps(this.props),
     };
 
     if (as === Checkbox || as === Radio) delete checkboxProps.error;

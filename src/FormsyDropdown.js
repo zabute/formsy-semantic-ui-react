@@ -30,6 +30,7 @@ export default class FormsyDropdown extends Component {
     multiple: PropTypes.bool,
     isFormSubmitted: PropTypes.func.isRequired,
     getErrorMessage: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType(
@@ -54,9 +55,10 @@ export default class FormsyDropdown extends Component {
   }
 
   handleChange = (e, { value }) => {
-    const { multiple, getValue, setValue } = this.props;
+    const { multiple, getValue, setValue, onChange } = this.props;
     if (multiple && getValue() && getValue().length > value.length) this.showError();
     setValue(value);
+    if (onChange) onChange();
   }
 
   showError = () => this.setState({ allowError: true });
@@ -80,12 +82,12 @@ export default class FormsyDropdown extends Component {
     const error = !isPristine() && !isValid() && this.state.allowError;
 
     const dropdownProps = {
+      ...filterSuirElementProps(this.props),
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       onClose: this.handleClose,
       value: getValue() || defaultValue || multiple && [] || '',
       error,
-      ...filterSuirElementProps(this.props),
     };
 
     const dropdownNode = shortHandMode ? createElement(as).props.control : as;
