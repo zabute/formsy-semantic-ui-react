@@ -2,11 +2,13 @@ import React, { Component, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { Decorator as formsy } from 'formsy-react';
 import { Form } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
 
 @formsy()
 export default class FormsyRadioGroup extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     formRadioGroup: PropTypes.bool,
     required: PropTypes.bool,
     label: PropTypes.string,
@@ -42,9 +44,11 @@ export default class FormsyRadioGroup extends Component {
 
   render() {
     const {
+      as,
       label,
       required,
       formRadioGroup,
+      defaultSelected, // eslint-disable-line
       children,
       getValue,
       errorLabel,
@@ -57,7 +61,7 @@ export default class FormsyRadioGroup extends Component {
     const formFieldProps = { required, label, error };
 
     return (
-      <Form.Group>
+      <Form.Group as={as} {...filterSuirElementProps(this.props)}>
         { label && <Form.Field { ...formFieldProps }/> }
         {
           Children.map(children, radio => {
@@ -65,7 +69,7 @@ export default class FormsyRadioGroup extends Component {
               checked: getValue() === radio.props.value,
               onChange: this.handleChange,
             }; if (formRadioGroup) props.error = error;
-            return cloneElement(radio, { ...props });
+            return <Form.Field> { cloneElement(radio, { ...props }) } </Form.Field>;
           })
         }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }

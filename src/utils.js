@@ -4,6 +4,7 @@ export function filterSuirElementProps(props) {
     instantValidation, // eslint-disable-line
     error, // eslint-disable-line
     defaultChecked, // eslint-disable-line
+    defaultSelected, // eslint-disable-line
     rootClassName, // eslint-disable-line
     rootStyle, // eslint-disable-line
     defaultValue, // eslint-disable-line

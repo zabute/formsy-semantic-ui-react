@@ -50,7 +50,7 @@ describe('<RadioGroup/>', () => {
 
   it('Should show a selected radio when defualtSelected is specified', () => {
     wrapper = mountTestForm('two');
-    assert.isTrue(wrapper.find('FormGroup').childAt(1).props().checked);
+    assert.isTrue(wrapper.find('FormGroup').childAt(1).childAt(0).props().checked);
   });
 
   context('When value is valid', () => {
