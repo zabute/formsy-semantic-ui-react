@@ -37,9 +37,10 @@ export default class FormsyRadioGroup extends Component {
     if (defaultSelected) setValue(defaultSelected);
   }
 
-  handleChange = (e, input) => {
-    this.props.setValue(input.value);
-    if (this.props.onChange) this.props.onChange();
+  handleChange = (e, data) => {
+    const { value } = data;
+    this.props.setValue(value);
+    if (this.props.onChange) this.props.onChange(e, data);
   }
 
   render() {

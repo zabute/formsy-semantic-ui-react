@@ -54,11 +54,12 @@ export default class FormsyDropdown extends Component {
     if (nextProps.isFormSubmitted()) this.showError();
   }
 
-  handleChange = (e, { value }) => {
+  handleChange = (e, data) => {
     const { multiple, getValue, setValue, onChange } = this.props;
+    const { value } = data;
     if (multiple && getValue() && getValue().length > value.length) this.showError();
     setValue(value);
-    if (onChange) onChange();
+    if (onChange) onChange(e, data);
   }
 
   showError = () => this.setState({ allowError: true });

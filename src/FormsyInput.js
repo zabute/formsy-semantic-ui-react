@@ -47,10 +47,11 @@ export default class FormsyInput extends Component {
 
   setInputValue = debounce(value => this.props.setValue(value), 100);
 
-  handleChange = (e, { value }) => {
+  handleChange = (e, data) => {
+    const { value } = data;
     this.setState({ value });
     this.setInputValue(value);
-    if (this.props.onChange) this.props.onChange();
+    if (this.props.onChange) this.props.onChange(e, data);
     if (this.props.instantValidation) this.showError();
   }
 
