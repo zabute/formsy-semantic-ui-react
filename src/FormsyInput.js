@@ -8,8 +8,16 @@ import PropTypes from 'prop-types';
 @formsy()
 export default class FormsyInput extends Component {
   static propTypes = {
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
-    as: PropTypes.oneOf([
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    width: PropTypes.number,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    disabled: PropTypes.bool,
+    inline: PropTypes.bool,
+    passRequiredToField: PropTypes.bool,
+    inputAs: PropTypes.oneOf([
       Input, TextArea, Form.Input, Form.TextArea,
     ]),
     errorLabel: PropTypes.element,
@@ -31,7 +39,10 @@ export default class FormsyInput extends Component {
     ),
   }
 
-  static defaultProps = { as: Input }
+  static defaultProps = {
+    inputAs: Input,
+    passRequiredToField: true,
+  }
 
   state = { allowError: false, value: null };
 
@@ -64,7 +75,9 @@ export default class FormsyInput extends Component {
 
   render() {
     const {
-      as,
+      id,
+      inputAs,
+      inputClassName,
       required,
       label,
       defaultValue,
@@ -72,6 +85,13 @@ export default class FormsyInput extends Component {
       isPristine,
       getErrorMessage,
       errorLabel,
+      // Form.Field props
+      as,
+      width,
+      className,
+      disabled,
+      inline,
+      passRequiredToField,
     } = this.props;
 
     const { allowError, value } = this.state;
@@ -82,23 +102,33 @@ export default class FormsyInput extends Component {
       value: value || isPristine() && defaultValue || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
-      error,
+      className: inputClassName,
+      error: !disabled && error,
       label,
+      id,
     };
 
-    const shortHandMode = (as === Form.Input || as === Form.TextArea);
-    const inputNode = shortHandMode ? createElement(as).props.control : as;
+    const shortHandMode = (inputAs === Form.Input || inputAs === Form.TextArea);
+    const inputNode = shortHandMode ? createElement(inputAs).props.control : inputAs;
 
     if (shortHandMode) {
       delete inputProps.label;
-      if (as === Form.TextArea) delete inputProps.error;
+      if (inputAs === Form.TextArea) delete inputProps.error;
     }
 
     return (
-      <Form.Field required={ required } error={ error }>
-        { shortHandMode && <label> { label } </label> }
+      <Form.Field
+        as={ as }
+        className={ className }
+        required={ required && passRequiredToField }
+        error={ !disabled && error }
+        width={ width }
+        inline={ inline }
+        disabled={disabled}
+      >
+        { shortHandMode && <label htmlFor={id}> { label } </label> }
         { createElement(inputNode, { ...inputProps }) }
-        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+        { !disabled && error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
     );
   }

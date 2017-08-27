@@ -29,6 +29,9 @@ export function filterSuirElementProps(props) {
     validations, // eslint-disable-line
     validationError, // eslint-disable-line
     validationErrors, // eslint-disable-line
+    width, // eslint-disable-line
+    passRequiredToField, // eslint-disable-line
+    inputAs, // eslint-disable-line
     ...suirProps,
   } = props;
 

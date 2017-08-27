@@ -14,24 +14,25 @@ export default class Form extends Component {
     as: PropTypes.any,
     children: PropTypes.node,
     onSubmit: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     as: 'div',
-  }
+  };
 
-  static Input = props => <FormsyInput as={ SemanticUIForm.Input } { ...props }/>;;
-  static TextArea = props => <FormsyTextArea as={ SemanticUIForm.TextArea } { ...props }/>;
-  static Select = props => <FormsySelect as={ SemanticUIForm.Select } { ...props }/>;
-  static RadioGroup = props => <FormsyRadioGroup formRadioGroup { ...props }/>;
-  static Dropdown = props => <FormsyDropdown as={ SemanticUIForm.Dropdown } { ...props }/>;
+  static Input = props => <FormsyInput inputAs={SemanticUIForm.Input} {...props} />;
+  static TextArea = props => <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />;
+  static Select = props => <FormsySelect inputAs={SemanticUIForm.Select} {...props} />;
+  static RadioGroup = props => <FormsyRadioGroup formRadioGroup {...props} />;
+  static Dropdown = props => <FormsyDropdown inputAs={SemanticUIForm.Dropdown} {...props} />;
   static Checkbox = FormsyCheckbox;
   static Button = SemanticUIForm.Button;
   static Radio = SemanticUIForm.Radio;
   static Field = SemanticUIForm.Field;
   static Group = SemanticUIForm.Group;
 
-  updateInputsWithError = errors => this.formsyForm.updateInputsWithError(errors);
+  updateInputsWithError = errors =>
+    this.formsyForm.updateInputsWithError(errors);
   reset = mapping => this.formsyForm.reset(mapping);
 
   render() {
@@ -68,12 +69,12 @@ export default class Form extends Component {
     return (
       <Formsy.Form
         noValidate
-        ref={ ref => this.formsyForm = ref }
-        onSubmit= { onSubmit }
-        { ...nonSemanticUIFormProps }
+        ref={ref => (this.formsyForm = ref)}
+        onSubmit={onSubmit}
+        {...nonSemanticUIFormProps}
       >
-        <SemanticUIForm as={ as } { ...nonFormsyReactFormProps }>
-          { children }
+        <SemanticUIForm as={as} {...nonFormsyReactFormProps}>
+          {children}
         </SemanticUIForm>
       </Formsy.Form>
     );

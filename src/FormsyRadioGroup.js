@@ -9,6 +9,8 @@ export default class FormsyRadioGroup extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    passRequiredToField: PropTypes.bool,
+    disabled: PropTypes.bool,
     formRadioGroup: PropTypes.bool,
     required: PropTypes.bool,
     label: PropTypes.string,
@@ -29,7 +31,7 @@ export default class FormsyRadioGroup extends Component {
   }
 
   static defaultProps = {
-    rootElement: Form.Field,
+    passRequiredToField: true,
   }
 
   componentDidMount() {
@@ -56,10 +58,16 @@ export default class FormsyRadioGroup extends Component {
       isValid,
       isPristine,
       getErrorMessage,
+      passRequiredToField,
+      disabled,
     } = this.props;
 
     const error = !isPristine() && !isValid();
-    const formFieldProps = { required, label, error };
+    const formFieldProps = {
+      required: required && passRequiredToField,
+      error: !disabled && error,
+      label,
+    };
 
     return (
       <Form.Group as={as} {...filterSuirElementProps(this.props)}>

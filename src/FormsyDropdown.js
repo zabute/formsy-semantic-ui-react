@@ -7,8 +7,16 @@ import { filterSuirElementProps } from './utils';
 @formsy()
 export default class FormsyDropdown extends Component {
   static propTypes = {
+    id: PropTypes.string,
     name: PropTypes.string.isRequired,
-    as: PropTypes.oneOf([
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    width: PropTypes.number,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    disabled: PropTypes.bool,
+    inline: PropTypes.bool,
+    passRequiredToField: PropTypes.bool,
+    inputAs: PropTypes.oneOf([
       Dropdown, Select, Form.Dropdown, Form.Select,
     ]),
     defaultValue: PropTypes.oneOfType([
@@ -39,8 +47,8 @@ export default class FormsyDropdown extends Component {
   }
 
   static defaultProps = {
-    as: Dropdown,
-    rootElement: Form.Field,
+    inputAs: Dropdown,
+    passRequiredToField: true,
   }
 
   state = { allowError: false };
@@ -67,7 +75,8 @@ export default class FormsyDropdown extends Component {
 
   render() {
     const {
-      as,
+      inputAs,
+      id,
       required,
       label,
       getValue,
@@ -77,9 +86,16 @@ export default class FormsyDropdown extends Component {
       getErrorMessage,
       isValid,
       isPristine,
+      // Form.Field props
+      as,
+      width,
+      className,
+      disabled,
+      inline,
+      passRequiredToField,
     } = this.props;
 
-    const shortHandMode = (as === Form.Dropdown || as === Form.Select);
+    const shortHandMode = (inputAs === Form.Dropdown || inputAs === Form.Select);
     const error = !isPristine() && !isValid() && this.state.allowError;
 
     const dropdownProps = {
@@ -88,14 +104,23 @@ export default class FormsyDropdown extends Component {
       onBlur: this.handleBlur,
       onClose: this.handleClose,
       value: getValue() || defaultValue || multiple && [] || '',
-      error,
+      error: !disabled && error,
+      id,
     };
 
-    const dropdownNode = shortHandMode ? createElement(as).props.control : as;
+    const dropdownNode = shortHandMode ? createElement(inputAs).props.control : inputAs;
 
     return (
-      <Form.Field required={ required } error={ error }>
-        { shortHandMode && <label> { label } </label> }
+      <Form.Field
+        as={ as }
+        className={ className }
+        required={ required && passRequiredToField }
+        error={ !disabled && error }
+        width={ width }
+        inline={ inline }
+        disabled={disabled}
+      >
+        { shortHandMode && <label htmlFor={id}> { label } </label> }
         { createElement(dropdownNode, { ...dropdownProps }) }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>

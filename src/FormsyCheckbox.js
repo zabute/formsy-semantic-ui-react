@@ -8,7 +8,14 @@ import { filterSuirElementProps } from './utils';
 export default class FormsyCheckbox extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    as: PropTypes.oneOf([Form.Checkbox, Form.Radio, Checkbox, Radio]),
+    as: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    width: PropTypes.number,
+    className: PropTypes.string,
+    inputClassName: PropTypes.string,
+    disabled: PropTypes.bool,
+    inline: PropTypes.bool,
+    passRequiredToField: PropTypes.bool,
+    inputAs: PropTypes.oneOf([Form.Checkbox, Form.Radio, Checkbox, Radio]),
     defaultChecked: PropTypes.bool,
     setValue: PropTypes.func.isRequired,
     isValid: PropTypes.func.isRequired,
@@ -21,7 +28,7 @@ export default class FormsyCheckbox extends Component {
   }
 
   static defaultProps = {
-    as: Checkbox,
+    inputAs: Checkbox,
   }
 
   componentDidMount() {
@@ -37,13 +44,20 @@ export default class FormsyCheckbox extends Component {
 
   render() {
     const {
-      as,
+      inputAs,
       required,
       isValid,
       isPristine,
       errorLabel,
       getErrorMessage,
       getValue,
+      // Form.Field props
+      as,
+      width,
+      className,
+      disabled,
+      inline,
+      passRequiredToField,
     } = this.props;
 
     const error = !isPristine() && !isValid();
@@ -54,11 +68,19 @@ export default class FormsyCheckbox extends Component {
       onChange: this.handleChange,
     };
 
-    if (as === Checkbox || as === Radio) delete checkboxProps.error;
+    if (inputAs === Checkbox || inputAs === Radio) delete checkboxProps.error;
 
     return (
-      <Form.Field required={ required } error={ error }>
-        { createElement(as, { ...checkboxProps }) }
+      <Form.Field
+        as={ as }
+        className={ className }
+        required={ required && passRequiredToField }
+        error={ error }
+        width={ width }
+        inline={ inline }
+        disabled={disabled}
+      >
+        { createElement(inputAs, { ...checkboxProps }) }
         { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
     );
