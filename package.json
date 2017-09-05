@@ -1,6 +1,6 @@
 {
   "name": "formsy-semantic-ui-react",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "Formsy-React wrappers for Semantic-Ui-React's form Components",
   "repository": {
     "type": "git",
@@ -67,7 +67,6 @@
     "webpack-dev-server": "1.14.0"
   },
   "dependencies": {
-    "lodash.debounce": "^4.0.8",
     "prop-types": "^15.5.8"
   },
   "keywords": [
