@@ -1,7 +1,6 @@
 import React, { Component, createElement, cloneElement } from 'react';
 import { Decorator as formsy } from 'formsy-react';
 import { Form, Input, TextArea } from 'semantic-ui-react';
-import debounce from 'lodash.debounce';
 import { filterSuirElementProps } from './utils';
 import PropTypes from 'prop-types';
 
@@ -44,7 +43,7 @@ export default class FormsyInput extends Component {
     passRequiredToField: true,
   }
 
-  state = { allowError: false, value: null };
+  state = { allowError: false };
 
   componentDidMount() {
     const { defaultValue, setValue } = this.props;
@@ -53,15 +52,11 @@ export default class FormsyInput extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isFormSubmitted()) this.showError();
-    this.setState({ value: this.props.getValue() });
   }
-
-  setInputValue = debounce(value => this.props.setValue(value), 100);
 
   handleChange = (e, data) => {
     const { value } = data;
-    this.setState({ value });
-    this.setInputValue(value);
+    this.props.setValue(value);
     if (this.props.onChange) this.props.onChange(e, data);
     if (this.props.instantValidation) this.showError();
   }
@@ -81,6 +76,7 @@ export default class FormsyInput extends Component {
       required,
       label,
       defaultValue,
+      getValue,
       isValid,
       isPristine,
       getErrorMessage,
@@ -94,12 +90,12 @@ export default class FormsyInput extends Component {
       passRequiredToField,
     } = this.props;
 
-    const { allowError, value } = this.state;
+    const { allowError } = this.state;
     const error = !isPristine() && !isValid() && allowError;
 
     const inputProps = {
       ...filterSuirElementProps(this.props),
-      value: value || isPristine() && defaultValue || '',
+      value: getValue() || isPristine() && defaultValue || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       className: inputClassName,
