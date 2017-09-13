@@ -70,8 +70,14 @@ export default class FormsyDropdown extends Component {
     if (onChange) onChange(e, data);
   }
 
-  showError = () => this.setState({ allowError: true });
+  handleBlur = (e, data) => {
+    const { onBlur } = this.props;
+    if (onBlur) onBlur(e, data);
+  }
+
   handleClose = () => this.showError();
+
+  showError = () => this.setState({ allowError: true });
 
   render() {
     const {
