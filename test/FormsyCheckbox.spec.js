@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { assert } from 'chai';
 import { Checkbox as FormsyCheckbox } from '../src';
-import { Form } from 'formsy-react';
+import Form from 'formsy-react';
 import { Checkbox } from 'semantic-ui-react';
 
 const validationError = 'Please check this';
@@ -33,7 +33,7 @@ describe('<Checkbox/>', () => {
   });
 
   const submitForm = () => {
-    wrapper.find(Form).node.submit();
+    wrapper.find(Form).simulate('submit');
   };
 
   it('Renders Semantic-UI-React\'s <Checkbox/>', () => {
@@ -49,13 +49,20 @@ describe('<Checkbox/>', () => {
 
     it('Shows the errorLabel component passed to it', () => {
       submitForm();
-      assert.ok(wrapper.find(errorLabel));
+      assert.equal(wrapper.find('.error-label').length, 1);
+      assert.equal(
+        wrapper.find('.error-label').props().children,
+        validationError
+      );
     });
 
     it('Shows error text when form is submitted', () => {
       submitForm();
-      assert.equal(checkbox.find('.error-label').length, 1);
-      assert.equal(checkbox.find('.error-label').props().children, validationError);
+      assert.equal(wrapper.find('.error-label').length, 1);
+      assert.equal(
+        wrapper.find('.error-label').props().children,
+        validationError
+      );
     });
   });
 
@@ -77,6 +84,7 @@ describe('<Checkbox/>', () => {
       checkbox.props().setValue(true);
       assert.equal(wrapper.find('.error-label').length, 0);
       checkbox.props().setValue(false);
+      submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
       assert.equal(wrapper.find('.error-label').props().children, validationError);
     });

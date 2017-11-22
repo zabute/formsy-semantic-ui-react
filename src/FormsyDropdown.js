@@ -1,11 +1,10 @@
 import React, { Component, createElement, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import { Decorator as formsy } from 'formsy-react';
+import { withFormsy } from 'formsy-react';
 import { Form, Dropdown, Select } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-@formsy()
-export default class FormsyDropdown extends Component {
+class FormsyDropdown extends Component {
   static propTypes = {
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -133,3 +132,5 @@ export default class FormsyDropdown extends Component {
     );
   }
 }
+
+export default withFormsy(FormsyDropdown);

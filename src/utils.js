@@ -32,6 +32,7 @@ export function filterSuirElementProps(props) {
     width, // eslint-disable-line
     passRequiredToField, // eslint-disable-line
     inputAs, // eslint-disable-line
+    innerRef, //eslint-disable-line
     ...suirProps,
   } = props;
 

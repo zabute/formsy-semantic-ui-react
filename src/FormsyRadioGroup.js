@@ -1,11 +1,10 @@
 import React, { Component, Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import { Decorator as formsy } from 'formsy-react';
+import { withFormsy } from 'formsy-react';
 import { Form } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-@formsy()
-export default class FormsyRadioGroup extends Component {
+class FormsyRadioGroup extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
@@ -86,3 +85,5 @@ export default class FormsyRadioGroup extends Component {
     );
   }
 }
+
+export default withFormsy(FormsyRadioGroup);

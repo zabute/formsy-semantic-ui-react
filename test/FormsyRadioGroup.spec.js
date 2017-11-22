@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { assert } from 'chai';
 import { RadioGroup } from '../src';
-import { Form } from 'formsy-react';
+import Form from 'formsy-react';
 import { Radio } from 'semantic-ui-react';
 
 const validationError = 'Vaidation Error';
@@ -36,7 +36,7 @@ describe('<RadioGroup/>', () => {
   let radioGroup;
 
   const submitForm = () => {
-    wrapper.find(Form).node.submit();
+    wrapper.find(Form).simulate('submit');
   };
 
   beforeEach(() => {
@@ -50,7 +50,7 @@ describe('<RadioGroup/>', () => {
 
   it('Should show a selected radio when defualtSelected is specified', () => {
     wrapper = mountTestForm('two');
-    assert.isTrue(wrapper.find('FormGroup').childAt(1).childAt(0).props().checked);
+    assert.isTrue(wrapper.find('FormGroup').childAt(0).childAt(1).find('Radio').props().checked);
   });
 
   context('When value is valid', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { assert } from 'chai';
 import { Dropdown as FormsyDropdown } from '../src';
-import { Form } from 'formsy-react';
+import Form from 'formsy-react';
 import { Dropdown } from 'semantic-ui-react';
 
 const validationError = 'Please select something';
@@ -45,7 +45,7 @@ describe('<Dropdown/>', () => {
   });
 
   const submitForm = () => {
-    wrapper.find(Form).node.submit();
+    wrapper.find(Form).simulate('submit');
   };
 
   it('Renders Semantic-UI-React\'s <Checkbox/>', () => {
@@ -65,8 +65,8 @@ describe('<Dropdown/>', () => {
 
     it('Shows error text when form is submitted', () => {
       submitForm();
-      assert.equal(dropdown.find('.error-label').length, 1);
-      assert.equal(dropdown.find('.error-label').props().children, validationError);
+      assert.equal(wrapper.find('.error-label').length, 1);
+      assert.equal(wrapper.find('.error-label').props().children, validationError);
     });
   });
 
