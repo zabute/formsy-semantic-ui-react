@@ -13,7 +13,7 @@ import FormsySelect from '../src/FormsySelect';
 describe('<Form/>', () => {
   it('Renders Semantic-UI-React\'s Form', () => {
     const wrapper = mount(<Form> <Form.Input name="input"/> </Form>);
-    assert.isTrue(wrapper.childAt(0).is(SemanticUIForm));
+    assert.isDefined(wrapper.find(SemanticUIForm));
   });
 
   context('When using shorthands', () => {
@@ -51,14 +51,14 @@ describe('<Form/>', () => {
     });
 
     it('should render <Form.Dropdown/> as <FormsyDropdown/>', () => {
-      const wrapper = mountForm(<Form.Dropdown name="formInput"/>);
+      const wrapper = mountForm(<Form.Dropdown name="formInput" options={[]}/>);
       const dropdown = wrapper.find(FormsyDropdown);
       assert.equal(dropdown.length, 1);
       assert.isTrue(dropdown.is(FormsyDropdown));
     });
 
     it('should render <Form.Select/> as <FormsySelect/>', () => {
-      const wrapper = mountForm(<Form.Select name="formInput"/>);
+      const wrapper = mountForm(<Form.Select name="formInput" options={[]}/>);
       const select = wrapper.find(FormsySelect);
       assert.equal(select.length, 1);
       assert.isTrue(select.is(FormsySelect));
@@ -99,7 +99,7 @@ describe('<Form/>', () => {
     };
 
     const submitForm = () => {
-      wrapper.find('Formsy').node.submit();
+      wrapper.find('Formsy').simulate('submit');
     };
 
     const validateSubmitCall = (formData) => {

@@ -1,11 +1,10 @@
 import React, { Component, createElement, cloneElement } from 'react';
-import { Decorator as formsy } from 'formsy-react';
+import { withFormsy } from 'formsy-react';
 import { Form, Input, TextArea } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 import PropTypes from 'prop-types';
 
-@formsy()
-export default class FormsyInput extends Component {
+class FormsyInput extends Component {
   static propTypes = {
     id: PropTypes.string,
     name: PropTypes.string.isRequired,
@@ -129,3 +128,5 @@ export default class FormsyInput extends Component {
     );
   }
 }
+
+export default withFormsy(FormsyInput);

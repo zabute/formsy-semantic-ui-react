@@ -3,8 +3,8 @@ const path = require('path');
 
 module.exports = {
   entry: [
-    'webpack/hot/dev-server',
-    'webpack/hot/only-dev-server',
+    'babel-polyfill',
+    'react-hot-loader/patch',
     path.join(__dirname, '/index.js'),
   ],
 
@@ -29,7 +29,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['react-hot', 'babel-loader'],
+      loaders: ['babel-loader'],
       exclude: /node_modules/,
     }],
   },

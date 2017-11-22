@@ -34,6 +34,7 @@ export default class Form extends Component {
   updateInputsWithError = errors =>
     this.formsyForm.updateInputsWithError(errors);
   reset = mapping => this.formsyForm.reset(mapping);
+  submit = (event) => this.formsyForm.submit(event);
 
   render() {
     const { children, onSubmit } = this.props;
@@ -67,7 +68,7 @@ export default class Form extends Component {
     } = this.props;
 
     return (
-      <Formsy.Form
+      <Formsy
         noValidate
         ref={ref => (this.formsyForm = ref)}
         onSubmit={onSubmit}
@@ -76,7 +77,7 @@ export default class Form extends Component {
         <SemanticUIForm as={as} {...nonFormsyReactFormProps}>
           {children}
         </SemanticUIForm>
-      </Formsy.Form>
+      </Formsy>
     );
   }
 }

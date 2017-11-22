@@ -1,11 +1,10 @@
 import React, { Component, createElement, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import { Decorator as formsy } from 'formsy-react';
+import { withFormsy } from 'formsy-react';
 import { Form, Checkbox, Radio } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-@formsy()
-export default class FormsyCheckbox extends Component {
+class FormsyCheckbox extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     as: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -86,3 +85,5 @@ export default class FormsyCheckbox extends Component {
     );
   }
 }
+
+export default withFormsy(FormsyCheckbox);

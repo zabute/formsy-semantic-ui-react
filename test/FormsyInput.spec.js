@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { assert } from 'chai';
 import FormsyInput from '../src/FormsyInput';
 import { Input } from 'semantic-ui-react';
-import { Form } from 'formsy-react';
+import Form from 'formsy-react';
 
 const validValue = 'john.doe@test.com';
 const invalidValue = 'Invalid Input';
@@ -35,7 +35,7 @@ describe('<Input/>', () => {
   });
 
   const submitForm = () => {
-    wrapper.find(Form).node.submit();
+    wrapper.find(Form).simulate('submit');
   };
 
   it('Renders Semantic-UI-React\'s <Input/>', () => {
@@ -62,6 +62,7 @@ describe('<Input/>', () => {
 
     it('Shows error when user clicks away', () => {
       input.find('Input').props().onBlur();
+      submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
     });
 

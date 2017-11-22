@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form } from 'formsy-react';
+import Form from 'formsy-react';
 import { Container, Button, Label, Segment } from 'semantic-ui-react';
 import { Checkbox } from '../src';
 
