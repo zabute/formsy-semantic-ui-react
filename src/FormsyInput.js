@@ -60,9 +60,9 @@ class FormsyInput extends Component {
     if (this.props.instantValidation) this.showError();
   }
 
-  handleBlur = () => {
+  handleBlur = (e, data) => {
     this.showError();
-    if (this.props.onBlur) this.props.onBlur();
+    if (this.props.onBlur) this.props.onBlur(e, data);
   }
 
   showError = () => this.setState({ allowError: true });
