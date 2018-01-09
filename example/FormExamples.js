@@ -26,7 +26,7 @@ export default class FormExamples extends Component {
             errorLabel={ <Label color="red" pointing/> }
             validationErrors={{
               isWords: 'No numbers or special characters allowed',
-              isDefaultRequiredValue: 'Fist Name is Required',
+              isDefaultRequiredValue: 'First Name is Required',
             }}
           />
           <Form.Input
