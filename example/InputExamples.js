@@ -11,7 +11,7 @@ const styles = {
 
   customErrorLabel: {
     color: '#f00',
-    textAling: 'center',
+    textAlign: 'center',
   },
 };
 
