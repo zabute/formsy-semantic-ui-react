@@ -12,6 +12,7 @@ const TestForm = () => {
   return (
     <Form>
       <FormsyDropdown
+        label={<span>Clothing</span>}
         name="testInput"
         options={[
           { text: 'Hat', value: 'hat' },

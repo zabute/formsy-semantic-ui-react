@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'test';
 
 require('babel-register')();
+require('./helpers.unit.js');
 const Enzyme = require('enzyme');
 const Adapter = require('enzyme-adapter-react-16');
 const jsdom = require('jsdom').jsdom;

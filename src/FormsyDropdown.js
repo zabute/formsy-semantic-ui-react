@@ -27,7 +27,7 @@ class FormsyDropdown extends Component {
       ])),
     ]),
     required: PropTypes.bool,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     errorLabel: PropTypes.element,
     isValid: PropTypes.func.isRequired,
     isPristine: PropTypes.func.isRequired,

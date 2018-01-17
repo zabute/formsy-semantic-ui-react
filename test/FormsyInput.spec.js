@@ -14,6 +14,7 @@ const TestForm = () => {
   return (
     <Form>
       <FormsyInput
+        label={<span>Email</span>}
         name="testInput"
         validations="isEmail"
         errorLabel={ errorLabel }
