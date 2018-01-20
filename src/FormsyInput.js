@@ -20,7 +20,7 @@ class FormsyInput extends Component {
     ]),
     errorLabel: PropTypes.element,
     required: PropTypes.bool,
-    label: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     instantValidation: PropTypes.bool,
     defaultValue: PropTypes.string,
     onBlur: PropTypes.func,
