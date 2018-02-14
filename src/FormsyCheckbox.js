@@ -24,10 +24,12 @@ class FormsyCheckbox extends Component {
     getErrorMessage: PropTypes.func.isRequired,
     errorLabel: PropTypes.element,
     onChange: PropTypes.func,
+    checked: PropTypes.bool,
   }
 
   static defaultProps = {
     inputAs: Checkbox,
+    checked: false,
   }
 
   componentDidMount() {
@@ -49,7 +51,8 @@ class FormsyCheckbox extends Component {
       isPristine,
       errorLabel,
       getErrorMessage,
-      getValue,
+      defaultChecked,
+      checked,
       // Form.Field props
       as,
       width,
@@ -63,7 +66,7 @@ class FormsyCheckbox extends Component {
 
     const checkboxProps = {
       ...filterSuirElementProps(this.props),
-      checked: getValue(),
+      checked: checked || defaultChecked,
       onChange: this.handleChange,
     };
 
