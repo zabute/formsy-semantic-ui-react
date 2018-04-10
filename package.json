@@ -26,8 +26,8 @@
   },
   "peerDependencies": {
     "formsy-react": ">=1.1.1",
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0 || ^16.0.0",
+    "react": "^15.6.1 || ^16.0.0",
+    "react-dom": "^15.6.1 || ^16.0.0",
     "semantic-ui-react": ">=0.68.0"
   },
   "devDependencies": {
