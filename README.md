@@ -1,7 +1,7 @@
 # formsy-semantic-ui-react [![Build Status](https://travis-ci.org/zabute/formsy-semantic-ui-react.svg?branch=master)](https://travis-ci.org/zabute/formsy-semantic-ui-react) [![npm version](https://badge.fury.io/js/formsy-semantic-ui-react.svg)](https://badge.fury.io/js/formsy-semantic-ui-react)
 
 
-Quicky create  [formsy-react](https://github.com/christianalfoni/formsy-react) forms with [Semantic-Ui-React's](https://github.com/Semantic-Org/Semantic-UI-React) Form Components.
+Quicky create  [formsy-react](https://github.com/formsy/formsy-react) forms with [Semantic-Ui-React's](https://github.com/Semantic-Org/Semantic-UI-React) Form Components.
 
 ## Installation
 
@@ -51,7 +51,7 @@ const App = (props) => {
 ## Props
 This library defines a couple of (non-required) props for more control over behavior/markup:
 
-- ```errorLabel``` (type: ```function``` default: ```none```)
+- ```errorLabel``` (type: ```Node``` default: ```none```)
 
   Used to Show validation errors next to the inputs. Any ```children``` get replaced by ```getErrorMessage()```
 
@@ -80,7 +80,7 @@ npm/yarn run example-app
 ```
 Then go to ```localhost:8080```
 
-For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/christianalfoni/formsy-react/blob/master/API.md)
+For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/formsy/formsy-react/blob/master/API.md)
 
 ## Tests
 Tests are done using Mocha, chai, sinon, and enzyme on jsdom.
