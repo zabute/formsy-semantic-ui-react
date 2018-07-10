@@ -72,7 +72,7 @@ describe('<Dropdown/>', () => {
   });
 
   context('When value is valid', () => {
-    beforeEach(() => dropdown.props().setValue('hat'));
+    beforeEach(() => dropdown.find('DropdownItem').at(0).simulate('click'));
 
     it('Doesn\'t show any errors initially', () => {
       assert.ok(dropdown.props().isValid());
