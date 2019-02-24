@@ -16,6 +16,7 @@
     "url": "https://github.com/zabute/formsy-semantic-ui-react/issues"
   },
   "main": "./lib/index.js",
+  "types": "./types.d.ts",
   "scripts": {
     "build": "rimraf lib && babel ./src -d ./lib",
     "lint": "eslint src example test --color",
