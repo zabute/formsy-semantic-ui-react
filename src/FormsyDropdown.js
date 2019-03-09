@@ -113,7 +113,7 @@ class FormsyDropdown extends Component {
       id,
     };
 
-    const dropdownNode = shortHandMode ? createElement(inputAs).props.control : inputAs;
+    const dropdownNode = shortHandMode ? createElement(inputAs, dropdownProps).props.control : inputAs;
 
     return (
       <Form.Field
