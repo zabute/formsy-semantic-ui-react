@@ -63,6 +63,32 @@ describe('<Form/>', () => {
       assert.equal(select.length, 1);
       assert.isTrue(select.is(FormsySelect));
     });
+
+    context('Layout structure', () => {
+      it('should render label for a Input', () => {
+        const wrapper = mountForm(<Form.Input name="input" label="input-label"/>);
+        const inputLabel = wrapper.find('label');
+        assert.equal(inputLabel.length, 1);
+      });
+
+      it('should not render label for a Input if none given', () => {
+        const wrapper = mountForm(<Form.Input name="input"/>);
+        const inputLabel = wrapper.find('label');
+        assert.equal(inputLabel.length, 0);
+      });
+
+      it('should render label for a DropDown', () => {
+        const wrapper = mountForm(<Form.Dropdown name="formInput" options={[]} label="drop-down-label"/>);
+        const inputLabel = wrapper.find('label');
+        assert.equal(inputLabel.length, 1);
+      });
+
+      it('should not render label for a DropDown', () => {
+        const wrapper = mountForm(<Form.Dropdown name="formInput" options={[]}/>);
+        const inputLabel = wrapper.find('label');
+        assert.equal(inputLabel.length, 0);
+      });
+    });
   });
 
   context('When Submitting', () => {

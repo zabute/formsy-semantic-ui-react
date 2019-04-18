@@ -121,7 +121,7 @@ class FormsyInput extends Component {
         inline={ inline }
         disabled={disabled}
       >
-        { shortHandMode && <label htmlFor={id}> { label } </label> }
+        { shortHandMode && label && <label htmlFor={id}> { label } </label> }
         { createElement(inputNode, { ...inputProps }) }
         { !disabled && error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
       </Form.Field>
