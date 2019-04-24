@@ -54,6 +54,11 @@ export default class FormExamples extends Component {
           />
         </Form.Group>
 
+        <Form.Group inline>
+          <Form.Input name="phonePrefix" width={2} inline label="Phone" placeholder="+1" />
+          <Form.Input name="phone" width={4} inline label="-" placeholder="000-000-0000" />
+        </Form.Group>
+
         <Form.RadioGroup
           name="size"
           required
