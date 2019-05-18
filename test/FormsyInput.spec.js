@@ -46,6 +46,13 @@ describe('<Input/>', () => {
     assert.ok(mount(<TestForm />).find(FormsyInput).find('Input').is(Input));
   });
 
+  context('Layout structure', () => {
+    it('should not render form label', () => {
+      const formLabel = wrapper.find('.field > label');
+      assert.equal(formLabel.length, 0);
+    });
+  });
+
   context('When value is invalid', () => {
     beforeEach(() => {
       wrapper = mount(<TestForm value={invalidValue} />);
