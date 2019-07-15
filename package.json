@@ -36,6 +36,7 @@
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
+    "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-polyfill": "^6.13.0",
     "babel-preset-airbnb": "^2.0.0",
