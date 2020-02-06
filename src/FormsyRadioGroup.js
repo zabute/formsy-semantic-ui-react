@@ -14,13 +14,13 @@ class FormsyRadioGroup extends Component {
     required: PropTypes.bool,
     label: PropTypes.string,
     setValue: PropTypes.func.isRequired,
-    getValue: PropTypes.func.isRequired,
-    isValid: PropTypes.func.isRequired,
-    isPristine: PropTypes.func.isRequired,
+    value: PropTypes.any,
+    isValid: PropTypes.bool.isRequired,
+    isPristine: PropTypes.bool.isRequired,
     onChange: PropTypes.func,
     defaultSelected: PropTypes.string,
     errorLabel: PropTypes.element,
-    getErrorMessage: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
     children: PropTypes.node,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
@@ -52,16 +52,16 @@ class FormsyRadioGroup extends Component {
       formRadioGroup,
       defaultSelected, // eslint-disable-line
       children,
-      getValue,
+      value,
       errorLabel,
       isValid,
       isPristine,
-      getErrorMessage,
+      errorMessage,
       passRequiredToField,
       disabled,
     } = this.props;
 
-    const error = !isPristine() && !isValid();
+    const error = !isPristine && !isValid;
     const formFieldProps = {
       required: required && passRequiredToField,
       error: !disabled && error,
@@ -74,13 +74,13 @@ class FormsyRadioGroup extends Component {
         {
           Children.map(children, radio => {
             const props = {
-              checked: getValue() === radio.props.value,
+              checked: value === radio.props.value,
               onChange: this.handleChange,
             }; if (formRadioGroup) props.error = error;
             return <Form.Field> { cloneElement(radio, { ...props }) } </Form.Field>;
           })
         }
-        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
       </Form.Group>
     );
   }

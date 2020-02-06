@@ -1,7 +1,7 @@
-import React, { Component, createElement, cloneElement } from 'react';
+import React, { cloneElement, Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import { withFormsy } from 'formsy-react';
-import { Form, Checkbox, Radio } from 'semantic-ui-react';
+import { Checkbox, Form, Radio } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
 class FormsyCheckbox extends Component {
@@ -17,11 +17,11 @@ class FormsyCheckbox extends Component {
     inputAs: PropTypes.oneOf([Form.Checkbox, Form.Radio, Checkbox, Radio]),
     defaultChecked: PropTypes.bool,
     setValue: PropTypes.func.isRequired,
-    isValid: PropTypes.func.isRequired,
-    getValue: PropTypes.func.isRequired,
-    isPristine: PropTypes.func.isRequired,
+    value: PropTypes.any,
+    isValid: PropTypes.bool.isRequired,
+    isPristine: PropTypes.bool.isRequired,
     required: PropTypes.bool,
-    getErrorMessage: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
     errorLabel: PropTypes.element,
     onChange: PropTypes.func,
   }
@@ -48,8 +48,8 @@ class FormsyCheckbox extends Component {
       isValid,
       isPristine,
       errorLabel,
-      getErrorMessage,
-      getValue,
+      errorMessage,
+      value,
       // Form.Field props
       as,
       width,
@@ -59,11 +59,11 @@ class FormsyCheckbox extends Component {
       passRequiredToField,
     } = this.props;
 
-    const error = !isPristine() && !isValid();
+    const error = !isPristine && !isValid;
 
     const checkboxProps = {
       ...filterSuirElementProps(this.props),
-      checked: getValue(),
+      checked: !!value,
       onChange: this.handleChange,
     };
 
@@ -80,7 +80,7 @@ class FormsyCheckbox extends Component {
         disabled={disabled}
       >
         { createElement(inputAs, { ...checkboxProps }) }
-        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
       </Form.Field>
     );
   }

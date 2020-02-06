@@ -42,7 +42,7 @@ describe('<Checkbox/>', () => {
 
   context('When value is invalid', () => {
     it('Doesn\'t show any errors initially', () => {
-      assert.notOk(checkbox.props().isValid());
+      assert.notOk(checkbox.props().isValid);
       assert.notOk(checkbox.find('Checkbox').props().error);
       assert.equal(checkbox.find('.error-label').length, 0);
     });
@@ -67,16 +67,14 @@ describe('<Checkbox/>', () => {
   });
 
   context('When value is valid', () => {
-    beforeEach(() => checkbox.props().setValue(true));
+    beforeEach(() => checkbox.find('input').simulate('change', { target: { checked: true } }));
 
     it('Doesn\'t show any errors initially', () => {
-      assert.ok(checkbox.props().isValid());
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
     it('Doesn\'t show error when form is submitted', () => {
       submitForm();
-      assert.ok(checkbox.props().isValid());
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 

@@ -1,7 +1,7 @@
-import React, { Component, createElement, cloneElement } from 'react';
+import React, { cloneElement, Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 import { withFormsy } from 'formsy-react';
-import { Form, Dropdown, Select } from 'semantic-ui-react';
+import { Dropdown, Form, Select } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
 class FormsyDropdown extends Component {
@@ -29,14 +29,14 @@ class FormsyDropdown extends Component {
     required: PropTypes.bool,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     errorLabel: PropTypes.element,
-    isValid: PropTypes.func.isRequired,
-    isPristine: PropTypes.func.isRequired,
+    isValid: PropTypes.bool.isRequired,
+    isPristine: PropTypes.bool.isRequired,
+    isFormSubmitted: PropTypes.bool.isRequired,
     setValue: PropTypes.func.isRequired,
     onBlur: PropTypes.func,
-    getValue: PropTypes.func.isRequired,
+    value: PropTypes.any,
     multiple: PropTypes.bool,
-    isFormSubmitted: PropTypes.func.isRequired,
-    getErrorMessage: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
     onChange: PropTypes.func,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
@@ -57,16 +57,22 @@ class FormsyDropdown extends Component {
     if (defaultValue) setValue(defaultValue);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isFormSubmitted()) this.showError();
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
+      this.showError();
+    }
   }
 
   handleChange = (e, data) => {
-    const { multiple, getValue, setValue, onChange } = this.props;
-    const { value } = data;
-    if (multiple && getValue() && getValue().length > value.length) this.showError();
-    setValue(value);
-    if (onChange) onChange(e, data);
+    const { multiple, value, setValue, onChange } = this.props;
+
+    if (multiple && value && value.length > data.value.length) {
+      this.showError();
+    }
+    setValue(data.value);
+    if (onChange) {
+      onChange(e, data);
+    }
   }
 
   handleBlur = (e, data) => {
@@ -84,11 +90,11 @@ class FormsyDropdown extends Component {
       id,
       required,
       label,
-      getValue,
+      value,
       defaultValue,
       multiple,
       errorLabel,
-      getErrorMessage,
+      errorMessage,
       isValid,
       isPristine,
       // Form.Field props
@@ -101,14 +107,14 @@ class FormsyDropdown extends Component {
     } = this.props;
 
     const shortHandMode = (inputAs === Form.Dropdown || inputAs === Form.Select);
-    const error = !isPristine() && !isValid() && this.state.allowError;
+    const error = !isPristine && !isValid && this.state.allowError;
 
     const dropdownProps = {
       ...filterSuirElementProps(this.props),
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       onClose: this.handleClose,
-      value: getValue() || defaultValue || multiple && [] || '',
+      value: value || defaultValue || multiple && [] || '',
       error: !disabled && error,
       id,
     };
@@ -127,7 +133,7 @@ class FormsyDropdown extends Component {
       >
         { shortHandMode && label && <label htmlFor={id}> { label } </label> }
         { createElement(dropdownNode, { ...dropdownProps }) }
-        { error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
       </Form.Field>
     );
   }

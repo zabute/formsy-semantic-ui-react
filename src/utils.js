@@ -11,15 +11,15 @@ export function filterSuirElementProps(props) {
     rootElement, // eslint-disable-line
     errorLabel, // eslint-disable-line
     formRadioGroup, // eslint-disable-line
-    getValue, // eslint-disable-line
     isPristine, // eslint-disable-line
     isValid, // eslint-disable-line
-    getErrorMessage, // eslint-disable-line
+    errorMessage, // eslint-disable-line
     setValidations, // eslint-disable-line
     setValue, // eslint-disable-line
+    value, // eslint-disable-line
     resetValue, // eslint-disable-line
     hasValue, // eslint-disable-line
-    getErrorMessages, // eslint-disable-line
+    errorMessages, // eslint-disable-line
     isFormDisabled, // eslint-disable-line
     isFormSubmitted, // eslint-disable-line
     isRequired, // eslint-disable-line

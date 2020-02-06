@@ -1,4 +1,4 @@
-import React, { Component, createElement, cloneElement } from 'react';
+import React, { cloneElement, Component, createElement } from 'react';
 import { withFormsy } from 'formsy-react';
 import { Form, Input, TextArea } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
@@ -24,12 +24,13 @@ class FormsyInput extends Component {
     instantValidation: PropTypes.bool,
     defaultValue: PropTypes.string,
     onBlur: PropTypes.func,
-    isValid: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
-    getValue: PropTypes.func.isRequired,
+    value: PropTypes.any,
     onChange: PropTypes.func,
-    isPristine: PropTypes.func.isRequired,
-    getErrorMessage: PropTypes.func.isRequired,
+    isValid: PropTypes.bool.isRequired,
+    isPristine: PropTypes.bool.isRequired,
+    isFormSubmitted: PropTypes.bool.isRequired,
+    errorMessage: PropTypes.string,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
     validations: PropTypes.oneOfType(
@@ -49,8 +50,10 @@ class FormsyInput extends Component {
     if (defaultValue) setValue(defaultValue);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isFormSubmitted()) this.showError();
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
+      this.showError();
+    }
   }
 
   handleChange = (e, data) => {
@@ -75,10 +78,10 @@ class FormsyInput extends Component {
       required,
       label,
       defaultValue,
-      getValue,
+      value,
       isValid,
       isPristine,
-      getErrorMessage,
+      errorMessage,
       errorLabel,
       // Form.Field props
       as,
@@ -90,11 +93,11 @@ class FormsyInput extends Component {
     } = this.props;
 
     const { allowError } = this.state;
-    const error = !isPristine() && !isValid() && allowError;
+    const error = !isPristine && !isValid && allowError;
 
     const inputProps = {
       ...filterSuirElementProps(this.props),
-      value: getValue() || isPristine() && defaultValue || '',
+      value: value || isPristine && defaultValue || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       className: inputClassName,
@@ -123,7 +126,7 @@ class FormsyInput extends Component {
       >
         { shortHandMode && label && <label htmlFor={id}> { label } </label> }
         { createElement(inputNode, { ...inputProps }) }
-        { !disabled && error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()) }
+        { !disabled && error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
       </Form.Field>
     );
   }
