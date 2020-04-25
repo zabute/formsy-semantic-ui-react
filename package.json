@@ -1,6 +1,6 @@
 {
   "name": "formsy-semantic-ui-react",
-  "version": "0.3.5",
+  "version": "1.0.0",
   "description": "Formsy-React wrappers for Semantic-Ui-React's form Components",
   "repository": {
     "type": "git",
@@ -20,13 +20,13 @@
   "scripts": {
     "build": "rimraf lib && babel ./src -d ./lib",
     "lint": "eslint src example test --color",
-    "test": "mocha test/**/*.spec.js",
+    "test": "mocha test/**/*.spec.js --require test/index.js --require chai",
     "test:watch": "npm run test -- --watch",
     "example-app": "webpack-dev-server --config example/webpack.config.js --inline --progress --colors",
     "prepublish": "npm run build"
   },
   "peerDependencies": {
-    "formsy-react": ">=1.1.1",
+    "formsy-react": "2.0.0",
     "react": "^15.6.1 || ^16.0.0",
     "react-dom": "^15.6.1 || ^16.0.0",
     "semantic-ui-react": ">=0.68.0"
@@ -45,17 +45,17 @@
     "babel-register": "6.9.0",
     "babel-runtime": "^6.9.2",
     "bundle-loader": "^0.5.4",
-    "chai": "^3.5.0",
-    "enzyme": "^3.2.0",
-    "enzyme-adapter-react-16": "^1.1.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.1.1",
     "eslint-plugin-mocha": "^1.0.0",
     "eslint-plugin-react": "^3.13.0",
-    "formsy-react": "1.1.1",
+    "formsy-react": "2.0.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.5.0",
-    "mocha": "^2.5.3",
+    "mocha": "^7.0.1",
     "react": "16.1.1",
     "react-addons-test-utils": "^15.0.0",
     "react-dom": "16.1.1",

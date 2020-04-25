@@ -55,7 +55,7 @@ describe('<Dropdown/>', () => {
 
   context('When value is invalid', () => {
     it('Doesn\'t show any errors initially', () => {
-      assert.notOk(dropdown.props().isValid());
+      assert.notOk(dropdown.props().isValid);
       assert.equal(dropdown.find('.error-label').length, 0);
     });
 
@@ -75,13 +75,11 @@ describe('<Dropdown/>', () => {
     beforeEach(() => dropdown.props().setValue('hat'));
 
     it('Doesn\'t show any errors initially', () => {
-      assert.ok(dropdown.props().isValid());
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
     it('Doesn\'t show error when form is submitted', () => {
       submitForm();
-      assert.ok(dropdown.props().isValid());
       assert.equal(wrapper.find('.error-label').length, 0);
     });
   });

@@ -48,13 +48,13 @@ describe('<RadioGroup/>', () => {
     assert.equal(wrapper.find(Radio).length, 3);
   });
 
-  it('Should show a selected radio when defualtSelected is specified', () => {
+  it('Should show a selected radio when defaultSelected is specified', () => {
     wrapper = mountTestForm('two');
     assert.isTrue(wrapper.find('FormGroup').childAt(0).childAt(1).find('Radio').props().checked);
   });
 
   context('When value is valid', () => {
-    it('Should not show erros when form is submitted', () => {
+    it('Should not show errors when form is submitted', () => {
       radioGroup.props().setValue('two');
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 0);
@@ -62,7 +62,7 @@ describe('<RadioGroup/>', () => {
   });
 
   context('When value is Invalid', () => {
-    it('Should show erros when form is submitted', () => {
+    it('Should show errors when form is submitted', () => {
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
     });
