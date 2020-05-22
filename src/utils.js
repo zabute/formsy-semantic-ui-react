@@ -34,7 +34,7 @@ export function filterSuirElementProps(props) {
     inputAs, // eslint-disable-line
     innerRef, //eslint-disable-line
     inline, // eslint-disable-line
-    ...suirProps,
+    ...suirProps
   } = props;
 
   return suirProps;

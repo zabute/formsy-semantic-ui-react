@@ -1,27 +1,12 @@
-"use strict";
-
-exports.__esModule = true;
-exports["default"] = void 0;
-
-var _Form3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\collections\\Form/Form"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _formsyReact = require("formsy-react");
-
-var _utils = require("./utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+import React, { Component, Children, cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import { withFormsy } from 'formsy-react';
+import { Form } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
 
 var FormsyRadioGroup = /*#__PURE__*/function (_Component) {
   _inheritsLoose(FormsyRadioGroup, _Component);
@@ -78,25 +63,22 @@ var FormsyRadioGroup = /*#__PURE__*/function (_Component) {
       error: !disabled && error,
       label: label
     };
-    return /*#__PURE__*/_react["default"].createElement(_Form3["default"].Group, _extends({
+    return /*#__PURE__*/React.createElement(Form.Group, _extends({
       as: as
-    }, (0, _utils.filterSuirElementProps)(this.props)), label && /*#__PURE__*/_react["default"].createElement(_Form3["default"].Field, formFieldProps), _react.Children.map(children, function (radio) {
+    }, filterSuirElementProps(this.props)), label && /*#__PURE__*/React.createElement(Form.Field, formFieldProps), Children.map(children, function (radio) {
       var props = {
         checked: getValue() === radio.props.value,
         onChange: _this2.handleChange
       };
       if (formRadioGroup) props.error = error;
-      return /*#__PURE__*/_react["default"].createElement(_Form3["default"].Field, null, " ", (0, _react.cloneElement)(radio, _extends({}, props)), " ");
-    }), error && errorLabel && (0, _react.cloneElement)(errorLabel, {}, getErrorMessage()));
+      return /*#__PURE__*/React.createElement(Form.Field, null, " ", cloneElement(radio, _extends({}, props)), " ");
+    }), error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()));
   };
 
   return FormsyRadioGroup;
-}(_react.Component);
+}(Component);
 
 FormsyRadioGroup.defaultProps = {
   passRequiredToField: true
 };
-
-var _default = (0, _formsyReact.withFormsy)(FormsyRadioGroup);
-
-exports["default"] = _default;
+export default withFormsy(FormsyRadioGroup);

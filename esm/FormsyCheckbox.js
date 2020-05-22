@@ -1,31 +1,12 @@
-"use strict";
-
-exports.__esModule = true;
-exports["default"] = void 0;
-
-var _Radio3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\addons\\Radio/Radio"));
-
-var _Checkbox3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\modules\\Checkbox/Checkbox"));
-
-var _Form3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\collections\\Form/Form"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _formsyReact = require("formsy-react");
-
-var _utils = require("./utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+import React, { Component, createElement, cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import { withFormsy } from 'formsy-react';
+import { Form, Checkbox, Radio } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
 
 var FormsyCheckbox = /*#__PURE__*/function (_Component) {
   _inheritsLoose(FormsyCheckbox, _Component);
@@ -76,13 +57,13 @@ var FormsyCheckbox = /*#__PURE__*/function (_Component) {
         passRequiredToField = _this$props2.passRequiredToField;
     var error = !isPristine() && !isValid();
 
-    var checkboxProps = _extends(_extends({}, (0, _utils.filterSuirElementProps)(this.props)), {}, {
+    var checkboxProps = _extends(_extends({}, filterSuirElementProps(this.props)), {}, {
       checked: getValue(),
       onChange: this.handleChange
     });
 
-    if (inputAs === _Checkbox3["default"] || inputAs === _Radio3["default"]) delete checkboxProps.error;
-    return /*#__PURE__*/_react["default"].createElement(_Form3["default"].Field, {
+    if (inputAs === Checkbox || inputAs === Radio) delete checkboxProps.error;
+    return /*#__PURE__*/React.createElement(Form.Field, {
       as: as,
       className: className,
       required: required && passRequiredToField,
@@ -90,16 +71,13 @@ var FormsyCheckbox = /*#__PURE__*/function (_Component) {
       width: width,
       inline: inline,
       disabled: disabled
-    }, (0, _react.createElement)(inputAs, _extends({}, checkboxProps)), error && errorLabel && (0, _react.cloneElement)(errorLabel, {}, getErrorMessage()));
+    }, createElement(inputAs, _extends({}, checkboxProps)), error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()));
   };
 
   return FormsyCheckbox;
-}(_react.Component);
+}(Component);
 
 FormsyCheckbox.defaultProps = {
-  inputAs: _Checkbox3["default"]
+  inputAs: Checkbox
 };
-
-var _default = (0, _formsyReact.withFormsy)(FormsyCheckbox);
-
-exports["default"] = _default;
+export default withFormsy(FormsyCheckbox);

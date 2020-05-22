@@ -1,31 +1,12 @@
-"use strict";
-
-exports.__esModule = true;
-exports["default"] = void 0;
-
-var _Select3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\addons\\Select/Select"));
-
-var _Dropdown3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\modules\\Dropdown/Dropdown"));
-
-var _Form3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\collections\\Form/Form"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _formsyReact = require("formsy-react");
-
-var _utils = require("./utils");
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+import React, { Component, createElement, cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import { withFormsy } from 'formsy-react';
+import { Form, Dropdown, Select } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
 
 var FormsyDropdown = /*#__PURE__*/function (_Component) {
   _inheritsLoose(FormsyDropdown, _Component);
@@ -104,10 +85,10 @@ var FormsyDropdown = /*#__PURE__*/function (_Component) {
         disabled = _this$props3.disabled,
         inline = _this$props3.inline,
         passRequiredToField = _this$props3.passRequiredToField;
-    var shortHandMode = inputAs === _Form3["default"].Dropdown || inputAs === _Form3["default"].Select;
+    var shortHandMode = inputAs === Form.Dropdown || inputAs === Form.Select;
     var error = !isPristine() && !isValid() && this.state.allowError;
 
-    var dropdownProps = _extends(_extends({}, (0, _utils.filterSuirElementProps)(this.props)), {}, {
+    var dropdownProps = _extends(_extends({}, filterSuirElementProps(this.props)), {}, {
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       onClose: this.handleClose,
@@ -116,8 +97,8 @@ var FormsyDropdown = /*#__PURE__*/function (_Component) {
       id: id
     });
 
-    var dropdownNode = shortHandMode ? (0, _react.createElement)(inputAs, dropdownProps).props.control : inputAs;
-    return /*#__PURE__*/_react["default"].createElement(_Form3["default"].Field, {
+    var dropdownNode = shortHandMode ? createElement(inputAs, dropdownProps).props.control : inputAs;
+    return /*#__PURE__*/React.createElement(Form.Field, {
       as: as,
       className: className,
       required: required && passRequiredToField,
@@ -125,19 +106,16 @@ var FormsyDropdown = /*#__PURE__*/function (_Component) {
       width: width,
       inline: inline,
       disabled: disabled
-    }, shortHandMode && label && /*#__PURE__*/_react["default"].createElement("label", {
+    }, shortHandMode && label && /*#__PURE__*/React.createElement("label", {
       htmlFor: id
-    }, " ", label, " "), (0, _react.createElement)(dropdownNode, _extends({}, dropdownProps)), error && errorLabel && (0, _react.cloneElement)(errorLabel, {}, getErrorMessage()));
+    }, " ", label, " "), createElement(dropdownNode, _extends({}, dropdownProps)), error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()));
   };
 
   return FormsyDropdown;
-}(_react.Component);
+}(Component);
 
 FormsyDropdown.defaultProps = {
-  inputAs: _Dropdown3["default"],
+  inputAs: Dropdown,
   passRequiredToField: true
 };
-
-var _default = (0, _formsyReact.withFormsy)(FormsyDropdown);
-
-exports["default"] = _default;
+export default withFormsy(FormsyDropdown);

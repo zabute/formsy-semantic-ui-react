@@ -1,39 +1,19 @@
-"use strict";
-
-exports.__esModule = true;
-exports["default"] = void 0;
-
-var _Form2 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\collections\\Form/Form"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _formsyReact = _interopRequireDefault(require("formsy-react"));
-
-var _FormsyInput = _interopRequireDefault(require("./FormsyInput"));
-
-var _FormsyTextArea = _interopRequireDefault(require("./FormsyTextArea"));
-
-var _FormsyCheckbox = _interopRequireDefault(require("./FormsyCheckbox"));
-
-var _FormsyDropdown = _interopRequireDefault(require("./FormsyDropdown"));
-
-var _FormsySelect = _interopRequireDefault(require("./FormsySelect"));
-
-var _FormsyRadioGroup = _interopRequireDefault(require("./FormsyRadioGroup"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Formsy from 'formsy-react';
+import { Form as SemanticUIForm } from 'semantic-ui-react';
+import FormsyInput from './FormsyInput';
+import FormsyTextArea from './FormsyTextArea';
+import FormsyCheckbox from './FormsyCheckbox';
+import FormsyDropdown from './FormsyDropdown';
+import FormsySelect from './FormsySelect';
+import FormsyRadioGroup from './FormsyRadioGroup';
 
 var Form = /*#__PURE__*/function (_Component) {
   _inheritsLoose(Form, _Component);
@@ -97,57 +77,57 @@ var Form = /*#__PURE__*/function (_Component) {
         width = _this$props3.width,
         nonSemanticUIFormProps = _objectWithoutPropertiesLoose(_this$props3, ["as", "error", "inverted", "loading", "reply", "size", "success", "warning", "width"]);
 
-    return /*#__PURE__*/_react["default"].createElement(_formsyReact["default"], _extends({
+    return /*#__PURE__*/React.createElement(Formsy, _extends({
       noValidate: true,
       ref: function ref(_ref) {
         return _this2.formsyForm = _ref;
       },
       onSubmit: onSubmit
-    }, nonSemanticUIFormProps), /*#__PURE__*/_react["default"].createElement(_Form2["default"], _extends({
+    }, nonSemanticUIFormProps), /*#__PURE__*/React.createElement(SemanticUIForm, _extends({
       as: as
     }, nonFormsyReactFormProps), children));
   };
 
   return Form;
-}(_react.Component);
+}(Component);
 
-exports["default"] = Form;
 Form.defaultProps = {
   as: 'div'
 };
 
 Form.Input = function (props) {
-  return /*#__PURE__*/_react["default"].createElement(_FormsyInput["default"], _extends({
-    inputAs: _Form2["default"].Input
+  return /*#__PURE__*/React.createElement(FormsyInput, _extends({
+    inputAs: SemanticUIForm.Input
   }, props));
 };
 
 Form.TextArea = function (props) {
-  return /*#__PURE__*/_react["default"].createElement(_FormsyTextArea["default"], _extends({
-    inputAs: _Form2["default"].TextArea
+  return /*#__PURE__*/React.createElement(FormsyTextArea, _extends({
+    inputAs: SemanticUIForm.TextArea
   }, props));
 };
 
 Form.Select = function (props) {
-  return /*#__PURE__*/_react["default"].createElement(_FormsySelect["default"], _extends({
-    inputAs: _Form2["default"].Select
+  return /*#__PURE__*/React.createElement(FormsySelect, _extends({
+    inputAs: SemanticUIForm.Select
   }, props));
 };
 
 Form.RadioGroup = function (props) {
-  return /*#__PURE__*/_react["default"].createElement(_FormsyRadioGroup["default"], _extends({
+  return /*#__PURE__*/React.createElement(FormsyRadioGroup, _extends({
     formRadioGroup: true
   }, props));
 };
 
 Form.Dropdown = function (props) {
-  return /*#__PURE__*/_react["default"].createElement(_FormsyDropdown["default"], _extends({
-    inputAs: _Form2["default"].Dropdown
+  return /*#__PURE__*/React.createElement(FormsyDropdown, _extends({
+    inputAs: SemanticUIForm.Dropdown
   }, props));
 };
 
-Form.Checkbox = _FormsyCheckbox["default"];
-Form.Button = _Form2["default"].Button;
-Form.Radio = _Form2["default"].Radio;
-Form.Field = _Form2["default"].Field;
-Form.Group = _Form2["default"].Group;
+Form.Checkbox = FormsyCheckbox;
+Form.Button = SemanticUIForm.Button;
+Form.Radio = SemanticUIForm.Radio;
+Form.Field = SemanticUIForm.Field;
+Form.Group = SemanticUIForm.Group;
+export { Form as default };
