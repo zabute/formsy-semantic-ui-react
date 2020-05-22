@@ -51,7 +51,7 @@ export default class Form extends Component {
       preventExternalInvalidation, // eslint-disable-line
       onSuccess, // eslint-disable-line
       onError, // eslint-disable-line
-      ...nonFormsyReactFormProps,
+      ...nonFormsyReactFormProps
     } = this.props;
 
     const {
@@ -64,7 +64,7 @@ export default class Form extends Component {
       success, // eslint-disable-line
       warning, // eslint-disable-line
       width, // eslint-disable-line
-      ...nonSemanticUIFormProps,
+      ...nonSemanticUIFormProps
     } = this.props;
 
     return (

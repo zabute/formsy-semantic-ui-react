@@ -1,31 +1,12 @@
-"use strict";
-
-exports.__esModule = true;
-exports["default"] = void 0;
-
-var _TextArea3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\addons\\TextArea/TextArea"));
-
-var _Input3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\elements\\Input/Input"));
-
-var _Form3 = _interopRequireDefault(require("semantic-ui-react/dist\\commonjs\\collections\\Form/Form"));
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _formsyReact = require("formsy-react");
-
-var _utils = require("./utils");
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+import React, { Component, createElement, cloneElement } from 'react';
+import { withFormsy } from 'formsy-react';
+import { Form, Input, TextArea } from 'semantic-ui-react';
+import { filterSuirElementProps } from './utils';
+import PropTypes from 'prop-types';
 
 var FormsyInput = /*#__PURE__*/function (_Component) {
   _inheritsLoose(FormsyInput, _Component);
@@ -101,7 +82,7 @@ var FormsyInput = /*#__PURE__*/function (_Component) {
     var allowError = this.state.allowError;
     var error = !isPristine() && !isValid() && allowError;
 
-    var inputProps = _extends(_extends({}, (0, _utils.filterSuirElementProps)(this.props)), {}, {
+    var inputProps = _extends(_extends({}, filterSuirElementProps(this.props)), {}, {
       value: getValue() || isPristine() && defaultValue || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
@@ -111,15 +92,15 @@ var FormsyInput = /*#__PURE__*/function (_Component) {
       id: id
     });
 
-    var shortHandMode = inputAs === _Form3["default"].Input || inputAs === _Form3["default"].TextArea;
-    var inputNode = shortHandMode ? (0, _react.createElement)(inputAs).props.control : inputAs;
+    var shortHandMode = inputAs === Form.Input || inputAs === Form.TextArea;
+    var inputNode = shortHandMode ? createElement(inputAs).props.control : inputAs;
 
     if (shortHandMode) {
       delete inputProps.label;
-      if (inputAs === _Form3["default"].TextArea) delete inputProps.error;
+      if (inputAs === Form.TextArea) delete inputProps.error;
     }
 
-    return /*#__PURE__*/_react["default"].createElement(_Form3["default"].Field, {
+    return /*#__PURE__*/React.createElement(Form.Field, {
       as: as,
       className: className,
       required: required && passRequiredToField,
@@ -127,19 +108,16 @@ var FormsyInput = /*#__PURE__*/function (_Component) {
       width: width,
       inline: inline,
       disabled: disabled
-    }, shortHandMode && label && /*#__PURE__*/_react["default"].createElement("label", {
+    }, shortHandMode && label && /*#__PURE__*/React.createElement("label", {
       htmlFor: id
-    }, " ", label, " "), (0, _react.createElement)(inputNode, _extends({}, inputProps)), !disabled && error && errorLabel && (0, _react.cloneElement)(errorLabel, {}, getErrorMessage()));
+    }, " ", label, " "), createElement(inputNode, _extends({}, inputProps)), !disabled && error && errorLabel && cloneElement(errorLabel, {}, getErrorMessage()));
   };
 
   return FormsyInput;
-}(_react.Component);
+}(Component);
 
 FormsyInput.defaultProps = {
-  inputAs: _Input3["default"],
+  inputAs: Input,
   passRequiredToField: true
 };
-
-var _default = (0, _formsyReact.withFormsy)(FormsyInput);
-
-exports["default"] = _default;
+export default withFormsy(FormsyInput);
