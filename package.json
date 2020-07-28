@@ -58,7 +58,7 @@
     "mocha": "^7.0.1",
     "react": "16.1.1",
     "react-addons-test-utils": "^15.0.0",
-    "react-dom": "16.1.1",
+    "react-dom": "16.1.2",
     "react-test-renderer": "^15.5.4",
     "rimraf": "^2.5.4",
     "semantic-ui-react": "^0.76.0",
