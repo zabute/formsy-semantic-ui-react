@@ -34,6 +34,10 @@ export function filterSuirElementProps(props) {
     inputAs, // eslint-disable-line
     innerRef, //eslint-disable-line
     inline, // eslint-disable-line
+    attachToForm, // eslint-disable-line
+    detachFromForm, // eslint-disable-line
+    runValidation, // eslint-disable-line
+    validate, // eslint-disable-line
     ...suirProps,
   } = props;
 
