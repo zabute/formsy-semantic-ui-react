@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { assert } from 'chai';
 import { spy } from 'sinon';
 import Form from '../src/Form';
-import { Form as SemanticUIForm } from 'semantic-ui-react';
+import { Form as SemanticUIForm, Input } from 'semantic-ui-react';
 import FormsyInput from '../src/FormsyInput';
 import FormsyTextArea from '../src/FormsyTextArea';
 import FormsyCheckbox from '../src/FormsyCheckbox';
@@ -11,17 +11,17 @@ import FormsyDropdown from '../src/FormsyDropdown';
 import FormsySelect from '../src/FormsySelect';
 
 describe('<Form/>', () => {
+  const mountForm = (formElement) => {
+    const TestForm = () => <Form> { formElement } </Form>;
+    return mount(<TestForm/>);
+  };
+
   it('Renders Semantic-UI-React\'s Form', () => {
     const wrapper = mount(<Form> <Form.Input name="input"/> </Form>);
     assert.isDefined(wrapper.find(SemanticUIForm));
   });
 
   context('When using shorthands', () => {
-    const mountForm = (formElement) => {
-      const TestForm = () => <Form> { formElement } </Form>;
-      return mount(<TestForm/>);
-    };
-
     it('should render <Form.Input/> as <FormsyInput/>', () => {
       const wrapper = mountForm(<Form.Input name="input"/>);
       const input = wrapper.find(FormsyInput);
@@ -88,6 +88,20 @@ describe('<Form/>', () => {
         const inputLabel = wrapper.find('label');
         assert.equal(inputLabel.length, 0);
       });
+    });
+  });
+
+  context('When using custom inputAs', () => {
+    it('should allow render custom input', () => {
+      const wrapper = mountForm(<Form.Input name="input" label="form field"
+        inputAs={<Input label="prefix" />}
+      />);
+
+      const inputLabel = wrapper.find('.field > label');
+      assert.equal(inputLabel.text().trim(), 'form field');
+
+      const prefixLabel = wrapper.find('.ui.label.label');
+      assert.equal(prefixLabel.text().trim(), 'prefix');
     });
   });
 

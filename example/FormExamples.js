@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form } from '../src';
-import { Label } from 'semantic-ui-react';
+import { Label, Input } from 'semantic-ui-react';
 
 const options = [
   { key: 'm', text: 'Male', value: 'male' },
@@ -57,6 +57,10 @@ export default class FormExamples extends Component {
         <Form.Group inline>
           <Form.Input name="phonePrefix" width={2} inline label="Phone" placeholder="+1" />
           <Form.Input name="phone" width={4} inline label="-" placeholder="000-000-0000" />
+        </Form.Group>
+
+        <Form.Group widths="equal">
+          <Form.Input name="email" label="Email" required inputAs={<Input label="@gmail.com" labelPosition="right" placeholder="John" />} />
         </Form.Group>
 
         <Form.RadioGroup
