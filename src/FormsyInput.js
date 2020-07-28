@@ -1,6 +1,6 @@
-import React, { cloneElement, Component, createElement } from 'react';
+import React, { cloneElement, Component, createElement, isValidElement } from 'react';
 import { withFormsy } from 'formsy-react';
-import { Form, Input, TextArea } from 'semantic-ui-react';
+import { Form, Input } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 import PropTypes from 'prop-types';
 
@@ -15,9 +15,7 @@ class FormsyInput extends Component {
     disabled: PropTypes.bool,
     inline: PropTypes.bool,
     passRequiredToField: PropTypes.bool,
-    inputAs: PropTypes.oneOf([
-      Input, TextArea, Form.Input, Form.TextArea,
-    ]),
+    inputAs: PropTypes.any,
     errorLabel: PropTypes.element,
     required: PropTypes.bool,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -106,13 +104,19 @@ class FormsyInput extends Component {
       id,
     };
 
-    const shortHandMode = (inputAs === Form.Input || inputAs === Form.TextArea);
-    const inputNode = shortHandMode ? createElement(inputAs).props.control : inputAs;
+    const isFormField = (inputAs === Form.Input || inputAs === Form.TextArea);
+    const inputNode = isFormField ? createElement(inputAs).props.control : inputAs;
 
-    if (shortHandMode) {
+    if (isFormField) {
       delete inputProps.label;
       if (inputAs === Form.TextArea) delete inputProps.error;
     }
+
+    const inputElement = !isFormField && isValidElement(inputAs)
+      ? cloneElement(inputAs, { ...inputProps, ...inputAs.props })
+      : createElement(inputNode, { ...inputProps });
+
+    const shouldShowFormLabel = isFormField || isValidElement(inputAs);
 
     return (
       <Form.Field
@@ -124,8 +128,8 @@ class FormsyInput extends Component {
         inline={ inline }
         disabled={disabled}
       >
-        { shortHandMode && label && <label htmlFor={id}> { label } </label> }
-        { createElement(inputNode, { ...inputProps }) }
+        { shouldShowFormLabel && label && <label htmlFor={id}> { label } </label> }
+        { inputElement }
         { !disabled && error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
       </Form.Field>
     );
