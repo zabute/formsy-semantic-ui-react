@@ -1,16 +1,15 @@
-const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDev = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    path.join(__dirname, '/index.js'),
-  ],
+  entry: path.join(__dirname, '/index.js'),
 
   devServer: {
     contentBase: 'example',
-    devtool: 'eval',
     hot: true,
+    open: true,
     port: 8080,
     host: 'localhost',
   },
@@ -21,15 +20,18 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'index.html') }),
   ],
 
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel-loader'],
-      exclude: /node_modules/,
-    }],
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+        },
+        exclude: /node_modules/,
+      },
+    ],
   },
 };
