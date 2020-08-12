@@ -15,6 +15,7 @@
   "bugs": {
     "url": "https://github.com/zabute/formsy-semantic-ui-react/issues"
   },
+  "files": ["lib/*.js", "types.d.ts", "LICENSE"],
   "main": "./lib/index.js",
   "types": "./types.d.ts",
   "scripts": {
