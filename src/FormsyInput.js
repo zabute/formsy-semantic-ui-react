@@ -1,4 +1,9 @@
-import React, { cloneElement, Component, createElement, isValidElement } from 'react';
+import React, {
+  cloneElement,
+  Component,
+  createElement,
+  isValidElement,
+} from 'react';
 import { withFormsy } from 'formsy-react';
 import { Form, Input } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
@@ -31,15 +36,13 @@ class FormsyInput extends Component {
     errorMessage: PropTypes.string,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
-    validations: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.object]
-    ),
-  }
+    validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  };
 
   static defaultProps = {
     inputAs: Input,
     passRequiredToField: true,
-  }
+  };
 
   state = { allowError: false };
 
@@ -49,7 +52,10 @@ class FormsyInput extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
+    if (
+      prevProps.isFormSubmitted !== this.props.isFormSubmitted &&
+      this.props.isFormSubmitted
+    ) {
       this.showError();
     }
   }
@@ -59,12 +65,12 @@ class FormsyInput extends Component {
     this.props.setValue(value);
     if (this.props.onChange) this.props.onChange(e, data);
     if (this.props.instantValidation) this.showError();
-  }
+  };
 
   handleBlur = (e, data) => {
     this.showError();
     if (this.props.onBlur) this.props.onBlur(e, data);
-  }
+  };
 
   showError = () => this.setState({ allowError: true });
 
@@ -95,7 +101,7 @@ class FormsyInput extends Component {
 
     const inputProps = {
       ...filterSuirElementProps(this.props),
-      value: value || isPristine && defaultValue || '',
+      value: value || (isPristine && defaultValue) || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       className: inputClassName,
@@ -104,33 +110,39 @@ class FormsyInput extends Component {
       id,
     };
 
-    const isFormField = (inputAs === Form.Input || inputAs === Form.TextArea);
-    const inputNode = isFormField ? createElement(inputAs).props.control : inputAs;
+    const isFormField = inputAs === Form.Input || inputAs === Form.TextArea;
+    const inputNode = isFormField
+      ? createElement(inputAs).props.control
+      : inputAs;
 
     if (isFormField) {
       delete inputProps.label;
       if (inputAs === Form.TextArea) delete inputProps.error;
     }
 
-    const inputElement = !isFormField && isValidElement(inputAs)
-      ? cloneElement(inputAs, { ...inputProps, ...inputAs.props })
-      : createElement(inputNode, { ...inputProps });
+    const inputElement =
+      !isFormField && isValidElement(inputAs)
+        ? cloneElement(inputAs, { ...inputProps, ...inputAs.props })
+        : createElement(inputNode, { ...inputProps });
 
     const shouldShowFormLabel = isFormField || isValidElement(inputAs);
 
     return (
       <Form.Field
-        as={ as }
-        className={ className }
-        required={ required && passRequiredToField }
-        error={ !disabled && error }
-        width={ width }
-        inline={ inline }
+        as={as}
+        className={className}
+        required={required && passRequiredToField}
+        error={!disabled && error}
+        width={width}
+        inline={inline}
         disabled={disabled}
       >
-        { shouldShowFormLabel && label && <label htmlFor={id}> { label } </label> }
-        { inputElement }
-        { !disabled && error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
+        {shouldShowFormLabel && label && <label htmlFor={id}> {label} </label>}
+        {inputElement}
+        {!disabled &&
+          error &&
+          errorLabel &&
+          cloneElement(errorLabel, {}, errorMessage)}
       </Form.Field>
     );
   }

@@ -15,16 +15,13 @@ class FormsyDropdown extends Component {
     disabled: PropTypes.bool,
     inline: PropTypes.bool,
     passRequiredToField: PropTypes.bool,
-    inputAs: PropTypes.oneOf([
-      Dropdown, Select, Form.Dropdown, Form.Select,
-    ]),
+    inputAs: PropTypes.oneOf([Dropdown, Select, Form.Dropdown, Form.Select]),
     defaultValue: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ])),
+      PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      ),
     ]),
     required: PropTypes.bool,
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
@@ -40,15 +37,13 @@ class FormsyDropdown extends Component {
     onChange: PropTypes.func,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
-    validations: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.object]
-    ),
-  }
+    validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  };
 
   static defaultProps = {
     inputAs: Dropdown,
     passRequiredToField: true,
-  }
+  };
 
   state = { allowError: false };
 
@@ -58,7 +53,10 @@ class FormsyDropdown extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
+    if (
+      prevProps.isFormSubmitted !== this.props.isFormSubmitted &&
+      this.props.isFormSubmitted
+    ) {
       this.showError();
     }
   }
@@ -73,12 +71,12 @@ class FormsyDropdown extends Component {
     if (onChange) {
       onChange(e, data);
     }
-  }
+  };
 
   handleBlur = (e, data) => {
     const { onBlur } = this.props;
     if (onBlur) onBlur(e, data);
-  }
+  };
 
   handleClose = () => this.showError();
 
@@ -106,7 +104,7 @@ class FormsyDropdown extends Component {
       passRequiredToField,
     } = this.props;
 
-    const shortHandMode = (inputAs === Form.Dropdown || inputAs === Form.Select);
+    const shortHandMode = inputAs === Form.Dropdown || inputAs === Form.Select;
     const error = !isPristine && !isValid && this.state.allowError;
 
     const dropdownProps = {
@@ -114,26 +112,28 @@ class FormsyDropdown extends Component {
       onChange: this.handleChange,
       onBlur: this.handleBlur,
       onClose: this.handleClose,
-      value: value || defaultValue || multiple && [] || '',
+      value: value || defaultValue || (multiple && []) || '',
       error: !disabled && error,
       id,
     };
 
-    const dropdownNode = shortHandMode ? createElement(inputAs, dropdownProps).props.control : inputAs;
+    const dropdownNode = shortHandMode
+      ? createElement(inputAs, dropdownProps).props.control
+      : inputAs;
 
     return (
       <Form.Field
-        as={ as }
-        className={ className }
-        required={ required && passRequiredToField }
-        error={ !disabled && error }
-        width={ width }
-        inline={ inline }
+        as={as}
+        className={className}
+        required={required && passRequiredToField}
+        error={!disabled && error}
+        width={width}
+        inline={inline}
         disabled={disabled}
       >
-        { shortHandMode && label && <label htmlFor={id}> { label } </label> }
-        { createElement(dropdownNode, { ...dropdownProps }) }
-        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
+        {shortHandMode && label && <label htmlFor={id}> {label} </label>}
+        {createElement(dropdownNode, { ...dropdownProps })}
+        {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Field>
     );
   }

@@ -16,12 +16,12 @@ const styles = {
 };
 
 export default class InputExamples extends Component {
-  state = { formData: null }
+  state = { formData: null };
 
   onValidSubmit = (formData) => alert(JSON.stringify(formData));   // eslint-disable-line
 
   render() {
-    const errorLabel = <Label color="red" pointing="left"/>;
+    const errorLabel = <Label color="red" pointing="left" />;
 
     // Shows errros with the <Label/> component
     const inputWithLabel = (
@@ -36,8 +36,8 @@ export default class InputExamples extends Component {
           isEmail: 'This is not a valid email',
           isDefaultRequiredValue: 'Email is Required',
         }}
-        errorLabel={ errorLabel }
-        style={ styles.formElement }
+        errorLabel={errorLabel}
+        style={styles.formElement}
       />
     );
 
@@ -48,15 +48,14 @@ export default class InputExamples extends Component {
         placeholder="Your primary email"
         label="Email"
         icon="mail"
-        instantValidation
         required
         validations="isEmail"
         validationErrors={{
           isEmail: 'This is not a valid email',
           isDefaultRequiredValue: 'Email is Required',
         }}
-        errorLabel={ errorLabel }
-        style={ styles.formElement }
+        errorLabel={errorLabel}
+        style={styles.formElement}
       />
     );
 
@@ -73,8 +72,8 @@ export default class InputExamples extends Component {
           isEmail: 'This is not a valid email',
           isDefaultRequiredValue: 'Email is Required',
         }}
-        errorLabel={ errorLabel }
-        style={ styles.formElement }
+        errorLabel={errorLabel}
+        style={styles.formElement}
       />
     );
 
@@ -90,51 +89,48 @@ export default class InputExamples extends Component {
           minLength: 'Minimin of 8 characters',
           isDefaultRequiredValue: 'Password is Required',
         }}
-        errorLabel={ <div style={ styles.customErrorLabel }/> }
-        rootStyle={ styles.formElement }
+        errorLabel={<div style={styles.customErrorLabel} />}
+        rootStyle={styles.formElement}
       />
     );
 
     return (
-      <Container style={ styles.root }>
+      <Container style={styles.root}>
         <Form
           noValidate
-          onValidSubmit={ this.onValidSubmit }
-          ref={ref => this.form = ref }
+          onValidSubmit={this.onValidSubmit}
+          ref={(ref) => (this.form = ref)}
         >
           <Segment>
             <h5> Input With Error Label </h5>
-            { inputWithLabel }
+            {inputWithLabel}
           </Segment>
 
           <Segment>
             <h5> Instant Validation </h5>
-            { instantValidation }
+            {instantValidation}
           </Segment>
-
 
           <Segment>
             <h5> Input With Custorm Error Label </h5>
-            { inputWithCustomErrorLabel }
+            {inputWithCustomErrorLabel}
           </Segment>
 
           <Segment>
             <h5> Input With Default Value </h5>
-            { inputWithDefaultValue }
+            {inputWithDefaultValue}
           </Segment>
 
-          <Divider/>
+          <Divider />
 
-          <Button
-            content="Submit"
-            style={ styles.formElement }
-            color="orange"
-          />
+          <Button content="Submit" style={styles.formElement} color="orange" />
           <Button
             type="button"
-            onClick={ () => this.form.reset({
-              inputWithDefaultValue: 'john.doe@test.com',
-            })}
+            onClick={() =>
+              this.form.reset({
+                inputWithDefaultValue: 'john.doe@test.com',
+              })
+            }
             content="Reset"
             color="black"
           />

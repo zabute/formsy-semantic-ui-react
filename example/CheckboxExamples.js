@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from 'formsy-react';
-import { Container, Button, Label, Segment } from 'semantic-ui-react';
+import { Button, Container, Label, Segment } from 'semantic-ui-react';
 import { Checkbox } from '../src';
 
 // <Radio/> has similar behavior and props
@@ -12,10 +12,10 @@ const styles = {
 };
 
 export default class CheckboxExamples extends Component {
-  onValidSubmit = (formData) => alert(JSON.stringify(formData));   // eslint-disable-line
+  onValidSubmit = (formData) => alert(JSON.stringify(formData)); // eslint-disable-line
 
   render() {
-    const errorLabel = <Label color="red" pointing="left"/>;
+    const errorLabel = <Label color="red" pointing="left" />;
 
     const requiredCheckbox = (
       <Checkbox
@@ -25,10 +25,10 @@ export default class CheckboxExamples extends Component {
         validations="isTrue"
         validationErrors={{
           isTrue: 'This is non-negotiable',
-          isDefaultRequiredValue: 'You\'ll have to check this box',
+          isDefaultRequiredValue: "You'll have to check this box",
         }}
-        errorLabel={ errorLabel }
-        style={ styles.formElement }
+        errorLabel={errorLabel}
+        style={styles.formElement}
       />
     );
 
@@ -40,41 +40,39 @@ export default class CheckboxExamples extends Component {
         defaultChecked
         validations="isTrue"
         validationErrors={{
-          isTrue: 'You\'ll have to check this box',
-          isDefaultRequiredValue: 'You\'ll have to check this box',
+          isTrue: "You'll have to check this box",
+          isDefaultRequiredValue: "You'll have to check this box",
         }}
-        errorLabel={ errorLabel }
-        style={ styles.formElement }
+        errorLabel={errorLabel}
+        style={styles.formElement}
       />
     );
 
     return (
-      <Container style={ styles.root }>
+      <Container style={styles.root}>
         <Form
           noValidate
-          onValidSubmit={ this.onValidSubmit }
-          ref={ref => this.form = ref }
+          onValidSubmit={this.onValidSubmit}
+          ref={(ref) => (this.form = ref)}
         >
           <Segment>
             <h5> Required Checkbox</h5>
-            { requiredCheckbox }
+            {requiredCheckbox}
           </Segment>
 
           <Segment>
             <h5> Default Checked </h5>
-            { defaultChecked }
+            {defaultChecked}
           </Segment>
 
-          <Button
-            content="Submit"
-            style={ styles.formElement }
-            color="orange"
-          />
+          <Button content="Submit" style={styles.formElement} color="orange" />
           <Button
             type="button"
-            onClick={ () => this.form.reset({
-              defaultChecked: true,
-            })}
+            onClick={() =>
+              this.form.reset({
+                defaultChecked: true,
+              })
+            }
             content="Reset"
             color="black"
           />

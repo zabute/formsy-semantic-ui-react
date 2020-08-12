@@ -24,11 +24,11 @@ class FormsyCheckbox extends Component {
     errorMessage: PropTypes.string,
     errorLabel: PropTypes.element,
     onChange: PropTypes.func,
-  }
+  };
 
   static defaultProps = {
     inputAs: Checkbox,
-  }
+  };
 
   componentDidMount() {
     const { defaultChecked, setValue } = this.props;
@@ -39,7 +39,7 @@ class FormsyCheckbox extends Component {
     const { checked } = data;
     this.props.setValue(checked);
     if (this.props.onChange) this.props.onChange(e, data);
-  }
+  };
 
   render() {
     const {
@@ -71,16 +71,16 @@ class FormsyCheckbox extends Component {
 
     return (
       <Form.Field
-        as={ as }
-        className={ className }
-        required={ required && passRequiredToField }
-        error={ error }
-        width={ width }
-        inline={ inline }
+        as={as}
+        className={className}
+        required={required && passRequiredToField}
+        error={error}
+        width={width}
+        inline={inline}
         disabled={disabled}
       >
-        { createElement(inputAs, { ...checkboxProps }) }
-        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
+        {createElement(inputAs, { ...checkboxProps })}
+        {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Field>
     );
   }

@@ -6,7 +6,7 @@ import Form from 'formsy-react';
 import { Radio } from 'semantic-ui-react';
 
 const validationError = 'Vaidation Error';
-const errorLabel = <div className="error-label"/>;
+const errorLabel = <div className="error-label" />;
 
 const mountTestForm = (defaultSelected) => {
   const TestForm = () => {
@@ -15,20 +15,20 @@ const mountTestForm = (defaultSelected) => {
         <RadioGroup
           name="radioGroup"
           required
-          defaultSelected={ defaultSelected }
-          errorLabel={ errorLabel }
-          validationErrors = {{
+          defaultSelected={defaultSelected}
+          errorLabel={errorLabel}
+          validationErrors={{
             isDefaultRequiredValue: validationError,
           }}
         >
-          <Radio label="One" value="one"/>
-          <Radio label="Two" value="two"/>
-          <Radio label="Three" value="three"/>
+          <Radio label="One" value="one" />
+          <Radio label="Two" value="two" />
+          <Radio label="Three" value="three" />
         </RadioGroup>
       </Form>
     );
   };
-  return mount(<TestForm/>);
+  return mount(<TestForm />);
 };
 
 describe('<RadioGroup/>', () => {
@@ -50,7 +50,10 @@ describe('<RadioGroup/>', () => {
 
   it('Should show a selected radio when defaultSelected is specified', () => {
     wrapper = mountTestForm('two');
-    assert.isTrue(wrapper.find('FormGroup').childAt(0).childAt(1).find('Radio').props().checked);
+    assert.isTrue(
+      wrapper.find('FormGroup').childAt(0).childAt(1).find('Radio').props()
+        .checked
+    );
   });
 
   context('When value is valid', () => {

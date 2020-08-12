@@ -26,7 +26,7 @@ export default class CheckboxExamples extends Component {
   onValidSubmit = (formData) => alert(JSON.stringify(formData)) // eslint-disable-line
 
   render() {
-    const errorLabel = <Label color="red" pointing="left"/>;
+    const errorLabel = <Label color="red" pointing="left" />;
 
     const dropdownSingle = (
       <Dropdown
@@ -38,8 +38,8 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           isDefaultRequiredValue: 'You need to select a product',
         }}
-        errorLabel={ errorLabel }
-        options={ options }
+        errorLabel={errorLabel}
+        options={options}
       />
     );
 
@@ -54,8 +54,8 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           isDefaultRequiredValue: 'You need to select a product',
         }}
-        errorLabel={ errorLabel }
-        options={ options }
+        errorLabel={errorLabel}
+        options={options}
       />
     );
 
@@ -72,8 +72,8 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           customValidation: 'You need to select at least FOUR products',
         }}
-        errorLabel={ errorLabel }
-        options={ options }
+        errorLabel={errorLabel}
+        options={options}
       />
     );
 
@@ -91,49 +91,47 @@ export default class CheckboxExamples extends Component {
         validationErrors={{
           customValidation: 'You need to select at least TWO products',
         }}
-        errorLabel={ errorLabel }
-        options={ options }
+        errorLabel={errorLabel}
+        options={options}
       />
     );
 
     return (
-      <Container style={ styles.root }>
+      <Container style={styles.root}>
         <Form
           noValidate
-          onValidSubmit={ this.onValidSubmit }
-          ref={ref => this.form = ref }
+          onValidSubmit={this.onValidSubmit}
+          ref={(ref) => (this.form = ref)}
         >
           <Segment>
             <h5> Single-select </h5>
-            { dropdownSingle }
+            {dropdownSingle}
           </Segment>
 
           <Segment>
             <h5> Single-select with default value </h5>
-            { singleSelectWithDefaultValue }
+            {singleSelectWithDefaultValue}
           </Segment>
 
           <Segment>
             <h5> Multi-select (Four selections minimum)</h5>
-            { dropdownMultiple }
+            {dropdownMultiple}
           </Segment>
 
           <Segment>
             <h5> Multi-select with default values (Two selections minimum) </h5>
-            { multipleWithDefaultValues }
+            {multipleWithDefaultValues}
           </Segment>
 
-          <Button
-            content="Submit"
-            style={ styles.formElement }
-            color="orange"
-          />
+          <Button content="Submit" style={styles.formElement} color="orange" />
           <Button
             type="button"
-            onClick={ () => this.form.reset({
-              singleSelectWithDefaultValue: 'gloves',
-              multipleWithDefaultValues: ['scarf', 'jacket'],
-            })}
+            onClick={() =>
+              this.form.reset({
+                singleSelectWithDefaultValue: 'gloves',
+                multipleWithDefaultValues: ['scarf', 'jacket'],
+              })
+            }
             content="Reset"
             color="black"
           />

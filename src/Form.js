@@ -20,20 +20,28 @@ export default class Form extends Component {
     as: 'div',
   };
 
-  static Input = props => <FormsyInput inputAs={SemanticUIForm.Input} {...props} />;
-  static TextArea = props => <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />;
-  static Select = props => <FormsySelect inputAs={SemanticUIForm.Select} {...props} />;
-  static RadioGroup = props => <FormsyRadioGroup formRadioGroup {...props} />;
-  static Dropdown = props => <FormsyDropdown inputAs={SemanticUIForm.Dropdown} {...props} />;
+  static Input = (props) => (
+    <FormsyInput inputAs={SemanticUIForm.Input} {...props} />
+  );
+  static TextArea = (props) => (
+    <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />
+  );
+  static Select = (props) => (
+    <FormsySelect inputAs={SemanticUIForm.Select} {...props} />
+  );
+  static RadioGroup = (props) => <FormsyRadioGroup formRadioGroup {...props} />;
+  static Dropdown = (props) => (
+    <FormsyDropdown inputAs={SemanticUIForm.Dropdown} {...props} />
+  );
   static Checkbox = FormsyCheckbox;
   static Button = SemanticUIForm.Button;
   static Radio = SemanticUIForm.Radio;
   static Field = SemanticUIForm.Field;
   static Group = SemanticUIForm.Group;
 
-  updateInputsWithError = errors =>
+  updateInputsWithError = (errors) =>
     this.formsyForm.updateInputsWithError(errors);
-  reset = mapping => this.formsyForm.reset(mapping);
+  reset = (mapping) => this.formsyForm.reset(mapping);
   submit = (event) => this.formsyForm.submit(event);
 
   render() {
@@ -70,7 +78,7 @@ export default class Form extends Component {
     return (
       <Formsy
         noValidate
-        ref={ref => (this.formsyForm = ref)}
+        ref={(ref) => (this.formsyForm = ref)}
         onSubmit={onSubmit}
         {...nonSemanticUIFormProps}
       >

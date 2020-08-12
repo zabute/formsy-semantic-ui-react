@@ -6,7 +6,7 @@ import Form from 'formsy-react';
 import { Checkbox } from 'semantic-ui-react';
 
 const validationError = 'Please check this';
-const errorLabel = <div className="error-label"/>;
+const errorLabel = <div className="error-label" />;
 
 const TestForm = () => {
   return (
@@ -14,8 +14,8 @@ const TestForm = () => {
       <FormsyCheckbox
         name="testInput"
         validations="isTrue"
-        errorLabel={ errorLabel }
-        validationErrors = {{
+        errorLabel={errorLabel}
+        validationErrors={{
           isTrue: validationError,
         }}
       />
@@ -28,7 +28,7 @@ describe('<Checkbox/>', () => {
   let checkbox;
 
   beforeEach(() => {
-    wrapper = mount(<TestForm/>);
+    wrapper = mount(<TestForm />);
     checkbox = wrapper.find('FormsyCheckbox');
   });
 
@@ -36,12 +36,17 @@ describe('<Checkbox/>', () => {
     wrapper.find(Form).simulate('submit');
   };
 
-  it('Renders Semantic-UI-React\'s <Checkbox/>', () => {
-    assert.ok(mount(<TestForm/>).find(FormsyCheckbox).find('Checkbox').is(Checkbox));
+  it("Renders Semantic-UI-React's <Checkbox/>", () => {
+    assert.ok(
+      mount(<TestForm />)
+        .find(FormsyCheckbox)
+        .find('Checkbox')
+        .is(Checkbox)
+    );
   });
 
   context('When value is invalid', () => {
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.notOk(checkbox.props().isValid);
       assert.notOk(checkbox.find('Checkbox').props().error);
       assert.equal(checkbox.find('.error-label').length, 0);
@@ -67,13 +72,15 @@ describe('<Checkbox/>', () => {
   });
 
   context('When value is valid', () => {
-    beforeEach(() => checkbox.find('input').simulate('change', { target: { checked: true } }));
+    beforeEach(() =>
+      checkbox.find('input').simulate('change', { target: { checked: true } })
+    );
 
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
-    it('Doesn\'t show error when form is submitted', () => {
+    it("Doesn't show error when form is submitted", () => {
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 0);
     });
@@ -84,7 +91,10 @@ describe('<Checkbox/>', () => {
       checkbox.props().setValue(false);
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
-      assert.equal(wrapper.find('.error-label').props().children, validationError);
+      assert.equal(
+        wrapper.find('.error-label').props().children,
+        validationError
+      );
     });
   });
 });

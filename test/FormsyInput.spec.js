@@ -42,8 +42,13 @@ describe('<Input/>', () => {
     wrapper.find(Form).simulate('submit');
   };
 
-  it('Renders Semantic-UI-React\'s <Input/>', () => {
-    assert.ok(mount(<TestForm />).find(FormsyInput).find('Input').is(Input));
+  it("Renders Semantic-UI-React's <Input/>", () => {
+    assert.ok(
+      mount(<TestForm />)
+        .find(FormsyInput)
+        .find('Input')
+        .is(Input)
+    );
   });
 
   context('Layout structure', () => {
@@ -59,7 +64,7 @@ describe('<Input/>', () => {
       input = wrapper.find('FormsyInput');
     });
 
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.notOk(input.props().isValid);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
@@ -75,7 +80,9 @@ describe('<Input/>', () => {
     });
 
     it('Shows error when user clicks away', () => {
-      input.find('input').simulate('change', { target: { value: invalidValue } }); // changes the pristine
+      input
+        .find('input')
+        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
       input.find('input').simulate('blur');
 
       assert.equal(wrapper.find('.error-label').length, 1);
@@ -90,7 +97,10 @@ describe('<Input/>', () => {
 
     it('Shows error text passed to it', () => {
       submitForm();
-      assert.equal(wrapper.find('.error-label').props().children, validationError);
+      assert.equal(
+        wrapper.find('.error-label').props().children,
+        validationError
+      );
     });
   });
 
@@ -100,25 +110,27 @@ describe('<Input/>', () => {
       input = wrapper.find('FormsyInput');
     });
 
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.ok(input.props().isValid);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
-    it('Doesn\'t show error when form is submitted', () => {
+    it("Doesn't show error when form is submitted", () => {
       submitForm();
       assert.ok(input.props().isValid);
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
-    it('Doesn\'t show error when user clicks away', () => {
+    it("Doesn't show error when user clicks away", () => {
       input.find('input').simulate('change', { target: { value: validValue } }); // changes the pristine
       input.find('input').simulate('blur');
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
     it('Shows an error when user clicks away', () => {
-      input.find('input').simulate('change', { target: { value: invalidValue } }); // changes the pristine
+      input
+        .find('input')
+        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
       input.find('input').simulate('blur');
       assert.equal(wrapper.find('.error-label').length, 1);
     });
@@ -133,7 +145,9 @@ describe('<Input/>', () => {
     it('Shows instant validation', () => {
       assert.equal(wrapper.find('.error-label').length, 0);
 
-      input.find('input').simulate('change', { target: { value: invalidValue } }); // changes the pristine
+      input
+        .find('input')
+        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
       assert.equal(wrapper.find('.error-label').length, 1);
 
       input.find('input').simulate('change', { target: { value: validValue } }); // changes the pristine

@@ -24,14 +24,12 @@ class FormsyRadioGroup extends Component {
     children: PropTypes.node,
     validationError: PropTypes.string,
     validationErrors: PropTypes.object,
-    validations: PropTypes.oneOfType(
-      [PropTypes.string, PropTypes.object]
-    ),
-  }
+    validations: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  };
 
   static defaultProps = {
     passRequiredToField: true,
-  }
+  };
 
   componentDidMount() {
     const { defaultSelected, setValue } = this.props;
@@ -42,7 +40,7 @@ class FormsyRadioGroup extends Component {
     const { value } = data;
     this.props.setValue(value);
     if (this.props.onChange) this.props.onChange(e, data);
-  }
+  };
 
   render() {
     const {
@@ -70,17 +68,16 @@ class FormsyRadioGroup extends Component {
 
     return (
       <Form.Group as={as} {...filterSuirElementProps(this.props)}>
-        { label && <Form.Field { ...formFieldProps }/> }
-        {
-          Children.map(children, radio => {
-            const props = {
-              checked: value === radio.props.value,
-              onChange: this.handleChange,
-            }; if (formRadioGroup) props.error = error;
-            return <Form.Field> { cloneElement(radio, { ...props }) } </Form.Field>;
-          })
-        }
-        { error && errorLabel && cloneElement(errorLabel, {}, errorMessage) }
+        {label && <Form.Field {...formFieldProps} />}
+        {Children.map(children, (radio) => {
+          const props = {
+            checked: value === radio.props.value,
+            onChange: this.handleChange,
+          };
+          if (formRadioGroup) props.error = error;
+          return <Form.Field> {cloneElement(radio, { ...props })} </Form.Field>;
+        })}
+        {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Group>
     );
   }

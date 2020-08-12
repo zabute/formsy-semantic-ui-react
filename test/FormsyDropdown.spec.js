@@ -6,7 +6,7 @@ import Form from 'formsy-react';
 import { Dropdown } from 'semantic-ui-react';
 
 const validationError = 'Please select something';
-const errorLabel = <div className="error-label"/>;
+const errorLabel = <div className="error-label" />;
 
 const TestForm = () => {
   return (
@@ -27,8 +27,8 @@ const TestForm = () => {
           { text: 'Socks', value: 'socks' },
         ]}
         required
-        errorLabel={ errorLabel }
-        validationErrors = {{
+        errorLabel={errorLabel}
+        validationErrors={{
           isDefaultRequiredValue: validationError,
         }}
       />
@@ -41,7 +41,7 @@ describe('<Dropdown/>', () => {
   let dropdown;
 
   beforeEach(() => {
-    wrapper = mount(<TestForm/>);
+    wrapper = mount(<TestForm />);
     dropdown = wrapper.find('FormsyDropdown');
   });
 
@@ -49,12 +49,17 @@ describe('<Dropdown/>', () => {
     wrapper.find(Form).simulate('submit');
   };
 
-  it('Renders Semantic-UI-React\'s <Checkbox/>', () => {
-    assert.ok(mount(<TestForm/>).find(FormsyDropdown).find('Dropdown').is(Dropdown));
+  it("Renders Semantic-UI-React's <Checkbox/>", () => {
+    assert.ok(
+      mount(<TestForm />)
+        .find(FormsyDropdown)
+        .find('Dropdown')
+        .is(Dropdown)
+    );
   });
 
   context('When value is invalid', () => {
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.notOk(dropdown.props().isValid);
       assert.equal(dropdown.find('.error-label').length, 0);
     });
@@ -67,18 +72,21 @@ describe('<Dropdown/>', () => {
     it('Shows error text when form is submitted', () => {
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 1);
-      assert.equal(wrapper.find('.error-label').props().children, validationError);
+      assert.equal(
+        wrapper.find('.error-label').props().children,
+        validationError
+      );
     });
   });
 
   context('When value is valid', () => {
     beforeEach(() => dropdown.props().setValue('hat'));
 
-    it('Doesn\'t show any errors initially', () => {
+    it("Doesn't show any errors initially", () => {
       assert.equal(wrapper.find('.error-label').length, 0);
     });
 
-    it('Doesn\'t show error when form is submitted', () => {
+    it("Doesn't show error when form is submitted", () => {
       submitForm();
       assert.equal(wrapper.find('.error-label').length, 0);
     });
