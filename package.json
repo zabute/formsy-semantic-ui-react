@@ -1,6 +1,6 @@
 {
   "name": "formsy-semantic-ui-react",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Formsy-React wrappers for Semantic-Ui-React's form Components",
   "repository": {
     "type": "git",
@@ -15,7 +15,11 @@
   "bugs": {
     "url": "https://github.com/zabute/formsy-semantic-ui-react/issues"
   },
-  "files": ["lib/*.js", "types.d.ts", "LICENSE"],
+  "files": [
+    "lib/*.js",
+    "types.d.ts",
+    "LICENSE"
+  ],
   "main": "./lib/index.js",
   "types": "./types.d.ts",
   "scripts": {
