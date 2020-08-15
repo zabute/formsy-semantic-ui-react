@@ -1,4 +1,6 @@
+*.log
+.DS_Store
 node_modules
-yarn-error.log
+.cache
+dist
 .idea
-example/dist
