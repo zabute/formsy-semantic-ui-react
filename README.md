@@ -1,4 +1,4 @@
-# formsy-semantic-ui-react [![Build Status](https://travis-ci.org/zabute/formsy-semantic-ui-react.svg?branch=master)](https://travis-ci.org/zabute/formsy-semantic-ui-react) [![npm version](https://badge.fury.io/js/formsy-semantic-ui-react.svg)](https://badge.fury.io/js/formsy-semantic-ui-react)
+# formsy-semantic-ui-react ![CI](https://github.com/zabute/formsy-semantic-ui-react/workflows/CI/badge.svg) [![npm version](https://badge.fury.io/js/formsy-semantic-ui-react.svg)](https://badge.fury.io/js/formsy-semantic-ui-react)
 
 
 Quicky create  [formsy-react](https://github.com/formsy/formsy-react) forms with [Semantic-Ui-React's](https://github.com/Semantic-Org/Semantic-UI-React) Form Components.
