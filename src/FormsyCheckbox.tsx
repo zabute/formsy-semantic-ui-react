@@ -3,9 +3,9 @@ import React, { cloneElement, Component, createElement } from 'react';
 import {
   Checkbox,
   Form,
-  FormFieldProps,
   Radio,
-  RadioProps,
+  StrictRadioProps,
+  StrictFormFieldProps,
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
@@ -14,10 +14,10 @@ type CheckboxRadioValueType = boolean | number | string;
 export interface IFormsyCheckboxProps
   extends FormsyInjectedProps<CheckboxRadioValueType>,
     Pick<
-      FormFieldProps,
+      StrictFormFieldProps,
       'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
     >,
-    Omit<RadioProps, 'value' | 'name' | 'onChange'> {
+    Omit<StrictRadioProps, 'value' | 'name' | 'onChange'> {
   inputClassName?: string;
   passRequiredToField?: boolean;
   inputAs?:
@@ -29,9 +29,9 @@ export interface IFormsyCheckboxProps
   errorLabel?: React.ReactElement;
   label?: string | React.ReactNode;
 
-  onChange(
+  onChange?(
     event: React.FormEvent<HTMLInputElement>,
-    data: Omit<RadioProps, 'value'> & { value: CheckboxRadioValueType }
+    data: Omit<StrictRadioProps, 'value'> & { value: CheckboxRadioValueType }
   ): void;
 }
 
@@ -49,7 +49,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
 
   handleChange = (
     e: React.FormEvent<HTMLInputElement>,
-    data: Omit<RadioProps, 'value' | 'checked'> & {
+    data: Omit<StrictRadioProps, 'value' | 'checked'> & {
       value: CheckboxRadioValueType;
       checked: boolean;
     }

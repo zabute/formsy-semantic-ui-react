@@ -3,21 +3,21 @@ import React, { cloneElement, Component, createElement } from 'react';
 import {
   Dropdown,
   Form,
-  FormFieldProps,
   Select,
-  DropdownProps,
+  StrictDropdownProps,
+  StrictFormFieldProps,
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-type FormsyDropdownValue = DropdownProps['value'];
+type FormsyDropdownValue = StrictDropdownProps['value'];
 
 export interface IFormsyDropdownProps
   extends FormsyInjectedProps<FormsyDropdownValue>,
     Pick<
-      FormFieldProps,
+      StrictFormFieldProps,
       'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
     >,
-    Omit<DropdownProps, 'error' | 'value'> {
+    Omit<StrictDropdownProps, 'error' | 'value'> {
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;
@@ -54,7 +54,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
 
   handleChange = (
     e: React.SyntheticEvent<HTMLElement>,
-    data: DropdownProps & { value: FormsyDropdownValue }
+    data: StrictDropdownProps & { value: FormsyDropdownValue }
   ) => {
     const { multiple, value, setValue, onChange } = this.props;
 
@@ -74,7 +74,10 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
     }
   };
 
-  handleBlur = (e: React.KeyboardEvent<HTMLElement>, data: DropdownProps) => {
+  handleBlur = (
+    e: React.KeyboardEvent<HTMLElement>,
+    data: StrictDropdownProps
+  ) => {
     const { onBlur } = this.props;
     if (onBlur) {
       onBlur(e, data);

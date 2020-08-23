@@ -1,22 +1,20 @@
 import Formsy from 'formsy-react';
 import { FormsyProps } from 'formsy-react/dist/Formsy';
 import { InjectedProps } from 'formsy-react/dist/withFormsy';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Form as SemanticUIForm, FormProps } from 'semantic-ui-react';
+import { Form as SemanticUIForm, StrictFormProps } from 'semantic-ui-react';
 import FormsyCheckbox from './FormsyCheckbox';
 import FormsyDropdown, { IFormsyDropdownProps } from './FormsyDropdown';
 import FormsyInput, { IFormsyInputProps } from './FormsyInput';
 import FormsyRadioGroup, { IFormsyRadioGroupProps } from './FormsyRadioGroup';
 import FormsySelect from './FormsySelect';
 import FormsyTextArea from './FormsyTextArea';
-import hoistNonReactStatics from 'hoist-non-react-statics';
 
-interface IFormProps
-  extends Partial<FormsyProps>,
-    Omit<FormProps, 'onSubmit'> {}
+type IFormProps = Partial<FormsyProps> & Omit<StrictFormProps, 'onSubmit'>;
 
-class Form extends Component<IFormProps> {
+class Form extends Component<IFormProps & { forwardedRef: any }> {
   static propTypes = {
     as: PropTypes.any,
     children: PropTypes.node,
@@ -100,7 +98,7 @@ class Form extends Component<IFormProps> {
 }
 
 export default hoistNonReactStatics(
-  React.forwardRef((props: IFormProps, ref) => (
+  React.forwardRef<Formsy, IFormProps>((props: IFormProps, ref) => (
     <Form {...props} forwardedRef={ref} />
   )),
   Form

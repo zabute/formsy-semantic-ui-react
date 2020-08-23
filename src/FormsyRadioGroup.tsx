@@ -1,6 +1,11 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { Children, cloneElement, Component } from 'react';
-import { Form, FormFieldProps, RadioProps } from 'semantic-ui-react';
+import {
+  Form,
+  RadioProps,
+  StrictFormFieldProps,
+  StrictRadioProps,
+} from 'semantic-ui-react';
 import { CheckboxProps } from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 import { filterSuirElementProps } from './utils';
 
@@ -9,10 +14,10 @@ type RadioGroupValueType = RadioProps['value'];
 export interface IFormsyRadioGroupProps
   extends FormsyInjectedProps<RadioGroupValueType>,
     Pick<
-      FormFieldProps,
+      StrictFormFieldProps,
       'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
     >,
-    Omit<RadioProps, 'error' | 'value' | 'name'> {
+    Omit<StrictRadioProps, 'error' | 'value' | 'name'> {
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;

@@ -7,20 +7,30 @@ import React, {
 } from 'react';
 import {
   Form,
-  FormFieldProps,
   Input,
   InputOnChangeData,
-  InputProps,
+  StrictFormFieldProps,
+  StrictInputProps,
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
+type InputValueType = string | number;
+type SemanticFormField = Pick<
+  StrictFormFieldProps,
+  'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
+>;
+type SemanticInputProps = Omit<StrictInputProps, 'error'>;
 export interface IFormsyInputProps
-  extends FormsyInjectedProps<string>,
-    Pick<
-      FormFieldProps,
-      'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
-    >,
-    Omit<InputProps, 'error'> {
+  extends FormsyInjectedProps<InputValueType>,
+    SemanticFormField,
+    SemanticInputProps,
+    Omit<
+      React.InputHTMLAttributes<any>,
+      | keyof (SemanticFormField &
+          SemanticInputProps &
+          FormsyInjectedProps<InputValueType>)
+      | 'onBlur'
+    > {
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;
@@ -28,10 +38,11 @@ export interface IFormsyInputProps
   errorLabel?: React.ReactElement;
   label?: string | React.ReactNode;
   instantValidation?: boolean;
-  defaultValue?: string;
+  defaultValue?: InputValueType;
+
   onBlur?(
     event: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
+    data: StrictInputProps & { value: InputValueType }
   ): void;
 }
 

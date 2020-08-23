@@ -1,12 +1,12 @@
-import React from 'react';
-import Form from '../src/Form';
+import { mount } from 'enzyme';
+import * as React from 'react';
 import { Form as SemanticUIForm, Input } from 'semantic-ui-react';
-import FormsyInput from '../src/FormsyInput';
-import FormsyTextArea from '../src/FormsyTextArea';
+import Form from '../src/Form';
 import FormsyCheckbox from '../src/FormsyCheckbox';
 import FormsyDropdown from '../src/FormsyDropdown';
+import FormsyInput from '../src/FormsyInput';
 import FormsySelect from '../src/FormsySelect';
-import { mount } from 'enzyme';
+import FormsyTextArea from '../src/FormsyTextArea';
 
 describe('<Form/>', () => {
   const mountForm = (formElement: any) => {
@@ -17,7 +17,7 @@ describe('<Form/>', () => {
   it("Renders Semantic-UI-React's Form", () => {
     const wrapper = mount(
       <Form>
-        <Form.Input name="input" />{' '}
+        <Form.Input name="input" />
       </Form>
     );
     expect(wrapper.find(SemanticUIForm)).toBeDefined();
