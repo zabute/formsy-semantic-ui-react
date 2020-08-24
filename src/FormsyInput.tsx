@@ -14,37 +14,38 @@ import {
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-type InputValueType = string | number;
+type InputValueType = any;
 type SemanticFormField = Pick<
   StrictFormFieldProps,
   'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
 >;
 type SemanticInputProps = Omit<StrictInputProps, 'error'>;
-export interface IFormsyInputProps
-  extends FormsyInjectedProps<InputValueType>,
-    SemanticFormField,
-    SemanticInputProps,
-    Omit<
-      React.InputHTMLAttributes<any>,
-      | keyof (SemanticFormField &
-          SemanticInputProps &
-          FormsyInjectedProps<InputValueType>)
-      | 'onBlur'
-    > {
-  id?: string;
-  inputClassName?: string;
-  passRequiredToField?: boolean;
-  inputAs?: React.ReactNode | React.ReactElement;
-  errorLabel?: React.ReactElement;
-  label?: string | React.ReactNode;
-  instantValidation?: boolean;
-  defaultValue?: InputValueType;
+export type IFormsyInputProps<
+  HtmlBaseElement = React.InputHTMLAttributes<any>
+> = FormsyInjectedProps<InputValueType> &
+  SemanticFormField &
+  SemanticInputProps &
+  Omit<
+    HtmlBaseElement,
+    | keyof (SemanticFormField &
+        SemanticInputProps &
+        FormsyInjectedProps<InputValueType>)
+    | 'onBlur'
+  > & {
+    id?: string;
+    inputClassName?: string;
+    passRequiredToField?: boolean;
+    inputAs?: React.ReactNode | React.ReactElement;
+    errorLabel?: React.ReactElement;
+    label?: string | React.ReactNode;
+    instantValidation?: boolean;
+    defaultValue?: InputValueType;
 
-  onBlur?(
-    event: React.ChangeEvent<HTMLInputElement>,
-    data: StrictInputProps & { value: InputValueType }
-  ): void;
-}
+    onBlur?(
+      event: React.ChangeEvent<HTMLInputElement>,
+      data: StrictInputProps & { value: InputValueType }
+    ): void;
+  };
 
 class FormsyInput extends Component<IFormsyInputProps> {
   static defaultProps = {

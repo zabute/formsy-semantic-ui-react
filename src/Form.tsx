@@ -35,8 +35,11 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
   );
 
   static TextArea = (
-    props: Omit<IFormsyInputProps, keyof InjectedProps<any>>
-  ) => <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...(props as any)} />;
+    props: Omit<
+      IFormsyInputProps<React.TextareaHTMLAttributes<any>>,
+      keyof InjectedProps<any>
+    >
+  ) => <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />;
 
   static Select = (
     props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>

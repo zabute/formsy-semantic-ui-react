@@ -32,7 +32,7 @@ describe('<Form/>', () => {
     });
 
     it('should render <Form.TextArea/> as <FormsyTextArea/>', () => {
-      const wrapper = mountForm(<Form.TextArea name="formInput" />);
+      const wrapper = mountForm(<Form.TextArea rows={2} name="formInput" />);
       const textArea = wrapper.find(FormsyTextArea);
       expect(textArea).toHaveLength(1);
       expect(textArea.is(FormsyTextArea)).toBeTruthy();
