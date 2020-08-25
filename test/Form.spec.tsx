@@ -23,6 +23,21 @@ describe('<Form/>', () => {
     expect(wrapper.find(SemanticUIForm)).toBeDefined();
   });
 
+  it('should pass className only to Semantic Form', () => {
+    const className = 'test';
+
+    const wrapper = mount(
+      <Form className={className}>
+        <Form.Input name="input" />
+      </Form>
+    );
+
+    expect(wrapper.find(SemanticUIForm).prop('className')).toContain(className);
+    expect(wrapper.find('form').prop('className') || '').not.toContain(
+      className
+    );
+  });
+
   describe('When using shorthands', () => {
     it('should render <Form.Input/> as <FormsyInput/>', () => {
       const wrapper = mountForm(<Form.Input name="input" />);

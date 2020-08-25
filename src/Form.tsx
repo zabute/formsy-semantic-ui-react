@@ -82,6 +82,7 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
       warning,
       widths,
       forwardedRef: _forwardedRef,
+      className,
       ...nonSemanticUIFormProps
     } = this.props;
 
