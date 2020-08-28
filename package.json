@@ -26,7 +26,7 @@
     "form-validation"
   ],
   "main": "dist/index.js",
-  "module": "dist/formsy-suir.esm.js",
+  "module": "dist/formsy-semantic-ui-react.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
