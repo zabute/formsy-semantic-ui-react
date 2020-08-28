@@ -4,8 +4,8 @@ import {
   Checkbox,
   Form,
   Radio,
-  StrictRadioProps,
   StrictFormFieldProps,
+  StrictRadioProps,
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
@@ -42,9 +42,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
 
   componentDidMount() {
     const { defaultChecked, setValue } = this.props;
-    if (defaultChecked) {
-      setValue(true);
-    }
+    setValue(!!defaultChecked, false);
   }
 
   handleChange = (
