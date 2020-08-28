@@ -1,6 +1,6 @@
 {
   "name": "formsy-semantic-ui-react",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Formsy-React wrappers for Semantic-Ui-React's form Components",
   "repository": {
     "type": "git",
