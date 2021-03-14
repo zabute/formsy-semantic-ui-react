@@ -67,7 +67,7 @@
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16 || >=17"
   },
   "husky": {
     "hooks": {
