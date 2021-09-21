@@ -38,6 +38,7 @@ export function filterSuirElementProps(props: any) {
     detachFromForm,
     runValidation,
     validate,
+    inputClassName,
     ...suirProps
   } = props;
 
