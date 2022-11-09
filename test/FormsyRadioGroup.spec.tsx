@@ -1,13 +1,13 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import { RadioGroup } from '../src';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import Form from 'formsy-react';
+import React from 'react';
 import { Radio } from 'semantic-ui-react';
+import { RadioGroup } from '../src';
 
-const validationError = 'Vaidation Error';
-const errorLabel = <div className="error-label" />;
+const validationError = 'Validation Error';
+const errorLabel = <div className="error-label" data-testid="error-label" />;
 
-const mountTestForm = (defaultSelected?: string) => {
+const renderTestForm = (defaultSelected?: string) => {
   const TestForm = () => {
     return (
       <Form>
@@ -27,50 +27,57 @@ const mountTestForm = (defaultSelected?: string) => {
       </Form>
     );
   };
-  return mount(<TestForm />);
+  return render(<TestForm />);
 };
 
 describe('<RadioGroup/>', () => {
-  let wrapper: any;
-  let radioGroup: any;
+  let wrapper: RenderResult;
 
   const submitForm = () => {
-    wrapper.find(Form).simulate('submit');
+    fireEvent.submit(
+      wrapper.container.querySelector('form') as HTMLFormElement
+    );
+  };
+
+  const clickOnRadioWith = (value: string) => {
+    fireEvent.click(
+      wrapper.container.querySelector(
+        `input[type=radio][value=${value}]`
+      ) as any
+    );
   };
 
   beforeEach(() => {
-    wrapper = mountTestForm();
-    radioGroup = wrapper.find('FormsyRadioGroup');
+    wrapper = renderTestForm();
   });
 
   it('Renders Radio Buttons', () => {
-    expect(wrapper.find(Radio)).toHaveLength(3);
+    expect(
+      wrapper.container.querySelectorAll('input[type=radio]')
+    ).toHaveLength(3);
   });
 
   it('Should show a selected radio when defaultSelected is specified', () => {
-    wrapper = mountTestForm('two');
+    wrapper = renderTestForm('two');
     expect(
-      wrapper
-        .find('FormGroup')
-        .childAt(0)
-        .childAt(1)
-        .find('Radio')
-        .props().checked
-    ).toBeTruthy();
+      wrapper.container.querySelectorAll('input[type=radio]')[1]
+    ).toBeChecked();
   });
 
   describe('When value is valid', () => {
     it('Should not show errors when form is submitted', () => {
-      radioGroup.props().setValue('two');
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
+
+      clickOnRadioWith('two');
       submitForm();
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
   });
 
   describe('When value is Invalid', () => {
     it('Should show errors when form is submitted', () => {
       submitForm();
-      expect(wrapper.find('.error-label')).toHaveLength(1);
+      expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
     });
   });
 });
