@@ -55,6 +55,10 @@ describe('<Dropdown/>', () => {
     expect(wrapper.container.querySelector('.ui.dropdown')).toBeInTheDocument();
   });
 
+  it('should not pass label prop to Semantic Dropdown', () => {
+    expect(wrapper.getByRole('listbox')).not.toHaveAttribute('label');
+  });
+
   describe('When value is invalid', () => {
     it("Doesn't show any errors initially", () => {
       expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();

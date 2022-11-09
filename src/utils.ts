@@ -39,6 +39,7 @@ export function filterSuirElementProps(props: any) {
     runValidation,
     validate,
     inputClassName,
+    label,
     ...suirProps
   } = props;
 
