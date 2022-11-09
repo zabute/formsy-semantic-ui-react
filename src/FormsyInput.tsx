@@ -14,13 +14,13 @@ import {
 } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-type InputValueType = any;
 type SemanticFormField = Pick<
   StrictFormFieldProps,
   'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
 >;
 type SemanticInputProps = Omit<StrictInputProps, 'error'>;
 export type IFormsyInputProps<
+  InputValueType = any,
   HtmlBaseElement = React.InputHTMLAttributes<any>
 > = FormsyInjectedProps<InputValueType> &
   SemanticFormField &
