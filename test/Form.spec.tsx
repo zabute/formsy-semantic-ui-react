@@ -1,120 +1,127 @@
-import { mount } from 'enzyme';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import * as React from 'react';
-import { Form as SemanticUIForm, Input } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import Form from '../src/Form';
-import FormsyCheckbox from '../src/FormsyCheckbox';
-import FormsyDropdown from '../src/FormsyDropdown';
 import FormsyInput from '../src/FormsyInput';
-import FormsySelect from '../src/FormsySelect';
-import FormsyTextArea from '../src/FormsyTextArea';
 
 describe('<Form/>', () => {
-  const mountForm = (formElement: any) => {
+  const renderForm = (formElement: any) => {
     const TestForm = () => <Form> {formElement} </Form>;
-    return mount(<TestForm />);
+    return render(<TestForm />);
   };
 
   it("Renders Semantic-UI-React's Form", () => {
-    const wrapper = mount(
-      <Form>
+    const { container } = render(
+      <Form data-testid="form">
         <Form.Input name="input" />
       </Form>
     );
-    expect(wrapper.find(SemanticUIForm)).toBeDefined();
+
+    expect(container.querySelector('.ui.form')).toBeDefined();
   });
 
   it('should pass className only to Semantic Form', () => {
     const className = 'test';
 
-    const wrapper = mount(
+    const { container } = render(
       <Form className={className}>
         <Form.Input name="input" />
       </Form>
     );
 
-    expect(wrapper.find(SemanticUIForm).prop('className')).toContain(className);
-    expect(wrapper.find('form').prop('className') || '').not.toContain(
-      className
-    );
+    expect(container.querySelector('form')).not.toHaveClass(className);
+
+    expect(container.querySelector('.ui.form')).toHaveClass(className);
   });
 
   describe('When using shorthands', () => {
     it('should render <Form.Input/> as <FormsyInput/>', () => {
-      const wrapper = mountForm(<Form.Input name="input" />);
-      const input = wrapper.find(FormsyInput);
+      const { container } = renderForm(<Form.Input name="input" />);
+      const input = container.querySelectorAll('.ui.input');
       expect(input).toHaveLength(1);
-      expect(input.is(FormsyInput)).toBeTruthy();
     });
 
     it('should render <Form.TextArea/> as <FormsyTextArea/>', () => {
-      const wrapper = mountForm(<Form.TextArea rows={2} name="formInput" />);
-      const textArea = wrapper.find(FormsyTextArea);
+      const { container } = renderForm(
+        <Form.TextArea rows={2} name="formInput" />
+      );
+
+      const textArea = container.querySelectorAll('textarea');
       expect(textArea).toHaveLength(1);
-      expect(textArea.is(FormsyTextArea)).toBeTruthy();
     });
 
     it('should render <Form.Checkbox/> as <FormsyCheckbox/>', () => {
-      const wrapper = mountForm(<Form.Checkbox name="formInput" />);
-      const checkbox = wrapper.find(FormsyCheckbox);
+      const { container } = renderForm(<Form.Checkbox name="formInput" />);
+
+      const checkbox = container.querySelectorAll('input[type=checkbox]');
+      const semanticCheckbox = container.querySelectorAll('.ui.checkbox');
       expect(checkbox).toHaveLength(1);
-      expect(checkbox.is(FormsyCheckbox)).toBeTruthy();
+      expect(semanticCheckbox).toHaveLength(1);
     });
 
     it('should render <FormsyCheckbox/> as <Form.Radio/>', () => {
-      const wrapper = mountForm(<Form.Radio name="formInput" />);
-      const radio = wrapper.find('FormRadio');
+      const { container } = renderForm(<Form.Radio name="formInput" />);
+
+      const radio = container.querySelectorAll('input[type=radio]');
+      const semanticRadio = container.querySelectorAll('.ui.radio');
       expect(radio).toHaveLength(1);
-      expect(radio.is(SemanticUIForm.Radio)).toBeTruthy();
+      expect(semanticRadio).toHaveLength(1);
     });
 
     it('should render <Form.Dropdown/> as <FormsyDropdown/>', () => {
-      const wrapper = mountForm(
+      const { container } = renderForm(
         <Form.Dropdown name="formInput" options={[]} />
       );
-      const dropdown = wrapper.find(FormsyDropdown);
+
+      const dropdown = container.querySelectorAll('.ui.dropdown');
       expect(dropdown).toHaveLength(1);
-      expect(dropdown.is(FormsyDropdown)).toBeTruthy();
     });
 
     it('should render <Form.Select/> as <FormsySelect/>', () => {
-      const wrapper = mountForm(<Form.Select name="formInput" options={[]} />);
-      const select = wrapper.find(FormsySelect);
+      const { container } = renderForm(
+        <Form.Select name="formInput" options={[]} />
+      );
+
+      const select = container.querySelectorAll('.ui.selection.dropdown');
       expect(select).toHaveLength(1);
-      expect(select.is(FormsySelect)).toBeTruthy();
     });
 
     describe('Layout structure', () => {
       it('should render label for a Input', () => {
-        const wrapper = mountForm(
+        const { container } = renderForm(
           <Form.Input name="input" label="input-label" />
         );
-        const inputLabel = wrapper.find('label');
+
+        const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(1);
       });
 
       it('should not render label for a Input if none given', () => {
-        const wrapper = mountForm(<Form.Input name="input" />);
-        const inputLabel = wrapper.find('label');
+        const { container } = renderForm(<Form.Input name="input" />);
+
+        const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(0);
       });
 
       it('should render label for a DropDown', () => {
-        const wrapper = mountForm(
+        const { container } = renderForm(
           <Form.Dropdown
             name="formInput"
             options={[]}
             label="drop-down-label"
           />
         );
-        const inputLabel = wrapper.find('label');
+
+        const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(1);
       });
 
       it('should not render label for a DropDown', () => {
-        const wrapper = mountForm(
+        const { container } = renderForm(
           <Form.Dropdown name="formInput" options={[]} />
         );
-        const inputLabel = wrapper.find('label');
+
+        const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(0);
       });
     });
@@ -122,25 +129,26 @@ describe('<Form/>', () => {
 
   describe('When using custom inputAs', () => {
     it('should allow render custom input', () => {
-      const wrapper = mountForm(
+      const label = 'form field';
+      const { container } = renderForm(
         <Form.Input
           name="input"
-          label="form field"
+          label={label}
           inputAs={<Input label="prefix" />}
         />
       );
 
-      const inputLabel = wrapper.find('.field > label');
-      expect(inputLabel.text().trim()).toBe('form field');
+      const inputLabel = container.querySelector('.field > label');
+      expect(inputLabel).toHaveTextContent(label);
 
-      const prefixLabel = wrapper.find('.ui.label.label');
-      expect(prefixLabel.text().trim()).toBe('prefix');
+      const prefixLabel = container.querySelector('.ui.label.label');
+      expect(prefixLabel).toHaveTextContent('prefix');
     });
   });
 
   describe('When Submitting', () => {
-    let wrapper: any;
-    let input: any;
+    let wrapper: RenderResult;
+    let input: HTMLElement;
     let isValid = false;
     const onValidSubmit = jest.fn();
     const onInvalidSubmit = jest.fn();
@@ -173,7 +181,13 @@ describe('<Form/>', () => {
     };
 
     const submitForm = () => {
-      wrapper.find('Formsy').simulate('submit');
+      return fireEvent.submit(
+        wrapper.container.querySelector('form') as HTMLFormElement
+      );
+    };
+
+    const changeInput = (value: string) => {
+      return fireEvent.change(input, { target: { value } });
     };
 
     const validateSubmitCall = (formData: any) => {
@@ -185,13 +199,14 @@ describe('<Form/>', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<TestForm />);
-      input = wrapper.find('FormsyInput');
+      wrapper = render(<TestForm />);
+      input = wrapper.container.querySelector('input') as any;
     });
 
     describe('When form is Valid', () => {
+      beforeEach(() => changeInput(validValue));
+
       it('should call onSubmit and onValidSubmit when submitted', () => {
-        input.props().setValue(validValue);
         expect(isValid).toBeTruthy();
 
         submitForm();
@@ -201,7 +216,6 @@ describe('<Form/>', () => {
       });
 
       it('should not call onInvalidSubmit when submitted', () => {
-        input.props().setValue(validValue);
         expect(isValid).toBeTruthy();
 
         submitForm();
@@ -212,7 +226,8 @@ describe('<Form/>', () => {
     });
 
     describe('When form is Invalid', () => {
-      beforeEach(() => input.props().setValue(invalidValue));
+      beforeEach(() => changeInput(invalidValue));
+
       it('should call onSubmit and onInvalidSubmit when submitted', () => {
         expect(isValid).toBeFalsy();
 

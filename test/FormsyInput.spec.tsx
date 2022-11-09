@@ -1,19 +1,18 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import FormsyInput, { IFormsyInputProps } from '../src/FormsyInput';
-import { Input } from 'semantic-ui-react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import Form from 'formsy-react';
+import React from 'react';
+import FormsyInput, { IFormsyInputProps } from '../src/FormsyInput';
 
 const validValue = 'john.doe@test.com';
 const invalidValue = 'Invalid Input';
 const validationError = 'This is not a valid email';
-const errorLabel = <div className="error-label" />;
+const errorLabel = <div className="error-label" data-testid="error-label" />;
 
 const TestForm = ({ value, instantValidation }: Partial<IFormsyInputProps>) => {
   return (
     <Form>
       <FormsyInput
-        label={<span>Email</span>}
+        label={<span data-testid="label">Email</span>}
         name="testInput"
         validations="isEmail"
         required // without it "valid" scenario is pass without changes
@@ -29,74 +28,74 @@ const TestForm = ({ value, instantValidation }: Partial<IFormsyInputProps>) => {
 };
 
 describe('<Input/>', () => {
-  let wrapper: any;
-  let input: any;
+  let wrapper: RenderResult;
+  let input: HTMLInputElement;
 
   beforeEach(() => {
-    wrapper = mount(<TestForm />);
-    input = wrapper.find('FormsyInput');
+    wrapper = render(<TestForm />);
+    input = wrapper.container.querySelector('input') as HTMLInputElement;
   });
 
   const submitForm = () => {
-    wrapper.find(Form).simulate('submit');
+    fireEvent.submit(
+      wrapper.container.querySelector('form') as HTMLFormElement
+    );
   };
 
+  const changeInput = (value: string) =>
+    fireEvent.change(input, { target: { value } });
+
   it("Renders Semantic-UI-React's <Input/>", () => {
-    expect(
-      mount(<TestForm />)
-        .find(FormsyInput)
-        .find('Input')
-        .is(Input)
-    ).toBeTruthy();
+    expect(wrapper.container.querySelector('.ui.input')).toBeInTheDocument();
   });
 
   describe('Layout structure', () => {
     it('should not render form label', () => {
-      const formLabel = wrapper.find('.field > label');
-      expect(formLabel).toHaveLength(0);
+      const formLabel = wrapper.container.querySelector('.field > label');
+      expect(formLabel).not.toBeInTheDocument();
+    });
+
+    it('should render Semantic Form.Field', () => {
+      expect(wrapper.container.querySelector('.field')).toBeInTheDocument();
+    });
+
+    it('should render given label', () => {
+      expect(wrapper.getByTestId('label')).toBeInTheDocument();
     });
   });
 
   describe('When value is invalid', () => {
     beforeEach(() => {
-      wrapper = mount(<TestForm value={invalidValue} />);
-      input = wrapper.find('FormsyInput');
+      wrapper = render(<TestForm value={invalidValue} />);
+      input = wrapper.container.querySelector('input') as HTMLInputElement;
     });
 
     it("Doesn't show any errors initially", () => {
-      expect(input.props().isValid).toBeFalsy();
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
 
     it('Shows error text when form is submitted', () => {
       submitForm();
-      expect(wrapper.find('.error-label')).toHaveLength(1);
-    });
-
-    it('Shows the errorLabel component passed to it', () => {
-      submitForm();
-      expect(wrapper.find(errorLabel)).toBeTruthy();
+      expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
     });
 
     it('Shows error when user clicks away', () => {
-      input
-        .find('input')
-        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
-      input.find('input').simulate('blur');
+      changeInput(invalidValue + 'addition');
+      fireEvent.blur(input);
 
-      expect(wrapper.find('.error-label')).toHaveLength(1);
+      expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
     });
 
     it('Hides error when user clicks away', () => {
-      input.find('input').simulate('change', { target: { value: validValue } }); // changes the pristine
-      input.find('input').simulate('blur');
+      changeInput(validValue);
+      fireEvent.blur(input);
 
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
 
     it('Shows error text passed to it', () => {
       submitForm();
-      expect(wrapper.find('.error-label').props().children).toBe(
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
         validationError
       );
     });
@@ -104,52 +103,49 @@ describe('<Input/>', () => {
 
   describe('When value is valid', () => {
     beforeEach(() => {
-      wrapper = mount(<TestForm value={validValue} />);
-      input = wrapper.find('FormsyInput');
+      wrapper = render(<TestForm value={validValue} />);
+      input = wrapper.container.querySelector('input') as HTMLInputElement;
     });
 
     it("Doesn't show any errors initially", () => {
-      expect(input.props().isValid).toBeTruthy();
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
 
     it("Doesn't show error when form is submitted", () => {
       submitForm();
-      expect(input.props().isValid).toBeTruthy();
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
 
     it("Doesn't show error when user clicks away", () => {
-      input.find('input').simulate('change', { target: { value: validValue } }); // changes the pristine
-      input.find('input').simulate('blur');
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      changeInput(validValue);
+      fireEvent.blur(input);
+
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
 
     it('Shows an error when user clicks away', () => {
-      input
-        .find('input')
-        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
-      input.find('input').simulate('blur');
-      expect(wrapper.find('.error-label')).toHaveLength(1);
+      changeInput(invalidValue);
+      fireEvent.blur(input);
+
+      expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
     });
   });
 
   describe('instantValidation', () => {
     beforeEach(() => {
-      wrapper = mount(<TestForm instantValidation />);
-      input = wrapper.find('FormsyInput');
+      wrapper = render(<TestForm instantValidation />);
+      input = wrapper.container.querySelector('input') as HTMLInputElement;
     });
 
     it('Shows instant validation', () => {
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
 
-      input
-        .find('input')
-        .simulate('change', { target: { value: invalidValue } }); // changes the pristine
-      expect(wrapper.find('.error-label')).toHaveLength(1);
+      changeInput(invalidValue);
 
-      input.find('input').simulate('change', { target: { value: validValue } }); // changes the pristine
-      expect(wrapper.find('.error-label')).toHaveLength(0);
+      expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
+
+      changeInput(validValue);
+      expect(wrapper.queryByTestId('error-label')).not.toBeInTheDocument();
     });
   });
 });
