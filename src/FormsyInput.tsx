@@ -3,6 +3,7 @@ import React, {
   cloneElement,
   Component,
   createElement,
+  InputHTMLAttributes,
   isValidElement,
 } from 'react';
 import {
@@ -20,8 +21,8 @@ type SemanticFormField = Pick<
 >;
 type SemanticInputProps = Omit<StrictInputProps, 'error'>;
 export type IFormsyInputProps<
-  InputValueType = any,
-  HtmlBaseElement = React.InputHTMLAttributes<any>
+  HtmlBaseElement = InputHTMLAttributes<any>,
+  InputValueType = any
 > = FormsyInjectedProps<InputValueType> &
   SemanticFormField &
   SemanticInputProps &
