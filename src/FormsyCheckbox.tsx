@@ -81,6 +81,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
 
     const checkboxProps = {
       ...filterSuirElementProps(this.props),
+      label: this.props.label,
       checked: !!value,
       onChange: this.handleChange,
     };

@@ -5,6 +5,7 @@ import { Checkbox as FormsyCheckbox } from '../src';
 
 const validationError = 'Please check this';
 const errorLabel = <div className="error-label" data-testid="error-label" />;
+const labelText = 'this is checkbox label';
 
 const TestForm = ({ onSubmit, defaultChecked }: any = {}) => {
   return (
@@ -12,6 +13,7 @@ const TestForm = ({ onSubmit, defaultChecked }: any = {}) => {
       <FormsyCheckbox
         name="testInput"
         validations="isTrue"
+        label={labelText}
         errorLabel={errorLabel}
         defaultChecked={defaultChecked}
         validationErrors={{
@@ -46,6 +48,12 @@ describe('<Checkbox/>', () => {
   it("Renders Semantic-UI-React's <Checkbox/>", () => {
     const semanticCheckbox = wrapper.container.querySelectorAll('.ui.checkbox');
     expect(semanticCheckbox).toHaveLength(1);
+  });
+
+  it('should render given label', () => {
+    expect(wrapper.container.querySelector('input + label')).toHaveTextContent(
+      labelText
+    );
   });
 
   it('should set a boolean value on checkbox without value / defaultChecked', () => {
