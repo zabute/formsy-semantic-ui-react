@@ -1,6 +1,6 @@
 import { Formsy } from 'formsy-react/dist/Formsy';
 import * as React from 'react';
-import { Input, Label } from 'semantic-ui-react';
+import { Input, Label, Message } from 'semantic-ui-react';
 import { Form } from '../src';
 
 const options = [
