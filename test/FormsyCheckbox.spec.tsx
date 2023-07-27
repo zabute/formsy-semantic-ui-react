@@ -31,7 +31,9 @@ describe('<Checkbox/>', () => {
 
   beforeEach(() => {
     onSubmitSpy = jest.fn();
-    wrapper = render(<TestForm onSubmit={onSubmitSpy} />);
+    wrapper = render(
+      <TestForm onSubmit={(model: any) => onSubmitSpy(model)} />
+    );
     checkbox = wrapper.getByRole('checkbox');
   });
 
@@ -59,26 +61,21 @@ describe('<Checkbox/>', () => {
   it('should set a boolean value on checkbox without value / defaultChecked', () => {
     submitForm();
 
-    expect(onSubmitSpy).toHaveBeenCalledWith(
-      { testInput: false },
-      expect.any(Function),
-      expect.any(Function)
-    );
+    expect(onSubmitSpy).toHaveBeenCalledWith({ testInput: false });
   });
 
   it('should use defaultChecked as initial value', () => {
     const spy = jest.fn();
     const defaultChecked = true;
     wrapper = render(
-      <TestForm defaultChecked={defaultChecked} onSubmit={spy} />
+      <TestForm
+        defaultChecked={defaultChecked}
+        onSubmit={(model: any) => spy(model)}
+      />
     );
     submitForm();
 
-    expect(spy).toHaveBeenCalledWith(
-      { testInput: defaultChecked },
-      expect.any(Function),
-      expect.any(Function)
-    );
+    expect(spy).toHaveBeenCalledWith({ testInput: defaultChecked });
   });
 
   describe('When value is invalid', () => {

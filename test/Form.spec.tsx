@@ -162,9 +162,9 @@ describe('<Form/>', () => {
       // eslint-disable-line
       return (
         <Form
-          onValidSubmit={onValidSubmit}
-          onInvalidSubmit={onInvalidSubmit}
-          onSubmit={onSubmit}
+          onValidSubmit={(model) => onValidSubmit(model)}
+          onInvalidSubmit={(model) => onInvalidSubmit(model)}
+          onSubmit={(model) => onSubmit(model)}
           onValid={() => (isValid = true)}
           onInvalid={() => (isValid = false)}
         >
@@ -191,11 +191,7 @@ describe('<Form/>', () => {
     };
 
     const validateSubmitCall = (formData: any) => {
-      expect(onSubmit).toHaveBeenCalledWith(
-        formData,
-        expect.any(Function),
-        expect.any(Function)
-      );
+      expect(onSubmit).toHaveBeenCalledWith(formData);
     };
 
     beforeEach(() => {

@@ -75,7 +75,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
   };
 
   handleBlur = (
-    e: React.KeyboardEvent<HTMLElement>,
+    e: React.FocusEvent<HTMLElement>,
     data: StrictDropdownProps
   ) => {
     const { onBlur } = this.props;
