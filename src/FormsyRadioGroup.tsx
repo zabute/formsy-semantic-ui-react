@@ -22,7 +22,6 @@ export interface IFormsyRadioGroupProps
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;
-  formRadioGroup?: boolean;
   defaultSelected?: string;
   label?: string | React.ReactNode;
   errorLabel?: React.ReactElement;
@@ -56,7 +55,6 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
       as,
       label,
       required,
-      formRadioGroup,
       children,
       name,
       value,
@@ -107,9 +105,6 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
             disabled,
           };
 
-          if (formRadioGroup) {
-            props.error = error;
-          }
           return (
             <Form.Field {...fieldProps}>
               {cloneElement(radio, { ...props })}

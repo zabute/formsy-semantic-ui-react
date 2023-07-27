@@ -47,7 +47,7 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
 
   static RadioGroup = (
     props: Omit<IFormsyRadioGroupProps, keyof InjectedProps<any>>
-  ) => <FormsyRadioGroup formRadioGroup {...(props as any)} />;
+  ) => <FormsyRadioGroup {...(props as any)} />;
 
   static Dropdown = (
     props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>
