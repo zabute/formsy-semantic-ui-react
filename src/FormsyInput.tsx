@@ -32,6 +32,9 @@ export type IFormsyInputProps<
         SemanticInputProps &
         FormsyInjectedProps<InputValueType>)
     | 'onBlur'
+    | 'rel'
+    | 'rev'
+    | 'content'
   > & {
     id?: string;
     inputClassName?: string;
