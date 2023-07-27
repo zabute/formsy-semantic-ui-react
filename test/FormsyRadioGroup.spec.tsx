@@ -114,18 +114,6 @@ describe('<RadioGroup/>', () => {
       expect(labelField).toHaveClass('error');
       expect(labelField).toHaveTextContent('LABEL');
     });
-
-    it('should be disabled', () => {
-      wrapper = renderTestForm({
-        label: 'LABEL',
-        disabled: true,
-      });
-
-      const labelField = wrapper.container.querySelector('.field:first-child');
-
-      expect(labelField).toHaveClass('disabled');
-      expect(labelField).toHaveTextContent('LABEL');
-    });
   });
 
   describe('Field', () => {
@@ -151,6 +139,19 @@ describe('<RadioGroup/>', () => {
 
       expect(fields).toHaveLength(3);
       Array.from(fields).forEach((field) => expect(field).toHaveClass('ten'));
+    });
+
+    it('should not apply disabled on the field it self, prevent double disable', () => {
+      wrapper = renderTestForm({
+        disabled: true,
+      });
+
+      const fields = wrapper.container.querySelectorAll('.field');
+
+      expect(fields).toHaveLength(3);
+      Array.from(fields).forEach((field) =>
+        expect(field).not.toHaveClass('disabled')
+      );
     });
   });
 

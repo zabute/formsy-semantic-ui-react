@@ -88,7 +88,6 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
     };
 
     const fieldProps = {
-      disabled,
       width,
       error: !disabled && error,
     };
