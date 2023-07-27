@@ -8,7 +8,7 @@ import {
   Divider,
   Message,
 } from 'semantic-ui-react';
-import { Input } from '../src';
+import { Input, Form } from '../src';
 
 const styles = {
   root: {
@@ -102,11 +102,7 @@ export default class InputExamples extends React.Component {
 
     return (
       <Container style={styles.root}>
-        <Formsy
-          noValidate
-          onValidSubmit={this.onValidSubmit}
-          ref={this.formRef}
-        >
+        <Form onValidSubmit={this.onValidSubmit} ref={this.formRef}>
           <Segment>
             <h5> Input With Error Label </h5>
             {inputWithLabel}
@@ -140,7 +136,7 @@ export default class InputExamples extends React.Component {
             content="Reset"
             color="black"
           />
-        </Formsy>
+        </Form>
         {!!this.state.result && (
           <Message>
             <pre>{this.state.result}</pre>

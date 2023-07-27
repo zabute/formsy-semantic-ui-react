@@ -6,8 +6,8 @@ import {
   StrictFormFieldProps,
   StrictRadioProps,
 } from 'semantic-ui-react';
+import { StrictFormGroupProps } from 'semantic-ui-react/dist/commonjs/collections/Form/FormGroup';
 import { CheckboxProps } from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
-import { filterSuirElementProps } from './utils';
 
 type RadioGroupValueType = RadioProps['value'];
 
@@ -15,9 +15,10 @@ export interface IFormsyRadioGroupProps
   extends FormsyInjectedProps<RadioGroupValueType>,
     Pick<
       StrictFormFieldProps,
-      'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
+      'as' | 'className' | 'error' | 'width' | 'disabled'
     >,
-    Omit<StrictRadioProps, 'error' | 'value' | 'name'> {
+    Omit<StrictRadioProps, 'error' | 'value' | 'name'>,
+    Pick<StrictFormGroupProps, 'inline' | 'unstackable'> {
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;
@@ -57,6 +58,7 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
       required,
       formRadioGroup,
       children,
+      name,
       value,
       errorLabel,
       isValid,
@@ -64,31 +66,56 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
       errorMessage,
       passRequiredToField,
       disabled,
+      className,
+      unstackable,
+      inline = true,
+      width,
     } = this.props;
 
     const error = !isPristine && !isValid;
-    const formFieldProps = {
+    const formGroupProps = {
+      as,
+      className,
+      unstackable,
+      inline,
+      grouped: !inline,
+    };
+    const labelProps = {
       required: required && passRequiredToField,
       error: !disabled && error,
       label,
+      disabled,
+    };
+
+    const fieldProps = {
+      disabled,
+      width,
+      error: !disabled && error,
     };
 
     return (
-      <Form.Group as={as} {...filterSuirElementProps(this.props)}>
-        {label && <Form.Field {...formFieldProps} />}
+      <Form.Group {...formGroupProps}>
+        {label && <Form.Field {...labelProps} />}
         {Children.map(children, (radio: any) => {
           if (!radio) {
             return null;
           }
 
           const props: RadioProps = {
+            name,
             checked: value === radio.props.value,
             onChange: this.handleChange,
+            disabled,
           };
+
           if (formRadioGroup) {
             props.error = error;
           }
-          return <Form.Field> {cloneElement(radio, { ...props })} </Form.Field>;
+          return (
+            <Form.Field {...fieldProps}>
+              {cloneElement(radio, { ...props })}
+            </Form.Field>
+          );
         })}
         {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Group>

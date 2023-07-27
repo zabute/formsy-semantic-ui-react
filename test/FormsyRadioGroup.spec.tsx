@@ -3,30 +3,29 @@ import Form from 'formsy-react';
 import React from 'react';
 import { Radio } from 'semantic-ui-react';
 import { RadioGroup } from '../src';
+import { IFormsyRadioGroupProps } from '../src/FormsyRadioGroup';
 
 const validationError = 'Validation Error';
 const errorLabel = <div className="error-label" data-testid="error-label" />;
 
-const renderTestForm = (defaultSelected?: string) => {
-  const TestForm = () => {
-    return (
-      <Form>
-        <RadioGroup
-          name="radioGroup"
-          required
-          defaultSelected={defaultSelected}
-          errorLabel={errorLabel}
-          validationErrors={{
-            isDefaultRequiredValue: validationError,
-          }}
-        >
-          <Radio label="One" value="one" />
-          <Radio label="Two" value="two" />
-          <Radio label="Three" value="three" />
-        </RadioGroup>
-      </Form>
-    );
-  };
+const renderTestForm = (override: Partial<IFormsyRadioGroupProps> = {}) => {
+  const TestForm = () => (
+    <Form>
+      <RadioGroup
+        name="radioGroup"
+        required
+        errorLabel={errorLabel}
+        validationErrors={{
+          isDefaultRequiredValue: validationError,
+        }}
+        {...override}
+      >
+        <Radio label="One" value="one" />
+        <Radio label="Two" value="two" />
+        <Radio label="Three" value="three" />
+      </RadioGroup>
+    </Form>
+  );
   return render(<TestForm />);
 };
 
@@ -58,10 +57,123 @@ describe('<RadioGroup/>', () => {
   });
 
   it('Should show a selected radio when defaultSelected is specified', () => {
-    wrapper = renderTestForm('two');
+    wrapper = renderTestForm({ defaultSelected: 'two' });
     expect(
       wrapper.container.querySelectorAll('input[type=radio]')[1]
     ).toBeChecked();
+  });
+
+  it('should pass name attribute to Input, bug #138', () => {
+    wrapper = renderTestForm({ defaultSelected: 'two' });
+    expect(
+      wrapper.container.querySelectorAll(`input[name='radioGroup']`)
+    ).toHaveLength(3);
+  });
+
+  it('should apply disabled properly', () => {
+    wrapper = renderTestForm({ defaultSelected: 'two', disabled: true });
+    expect(wrapper.container.querySelectorAll(`input[disabled]`)).toHaveLength(
+      3
+    );
+  });
+
+  describe('Label', () => {
+    it('should not render a the label field element if label is not given', () => {
+      wrapper = renderTestForm({ required: true, label: null });
+      expect(wrapper.container.querySelectorAll('.field')).toHaveLength(3);
+    });
+
+    it('should support required field', () => {
+      wrapper = renderTestForm({ required: true, label: 'LABEL' });
+      const labelField = wrapper.container.querySelector('.field:first-child');
+      expect(labelField).toHaveClass('required');
+      expect(labelField).toHaveTextContent('LABEL');
+    });
+
+    it('should apply disabled on the label as well', () => {
+      wrapper = renderTestForm({
+        defaultSelected: 'two',
+        label: 'LABEL',
+        disabled: true,
+      });
+      const labelField = wrapper.container.querySelector('.field:first-child');
+      expect(labelField).toHaveClass('disabled');
+      expect(labelField).toHaveTextContent('LABEL');
+    });
+
+    it('should show error', () => {
+      wrapper = renderTestForm({
+        label: 'LABEL',
+        required: true,
+      });
+
+      submitForm();
+
+      const labelField = wrapper.container.querySelector('.field:first-child');
+
+      expect(labelField).toHaveClass('error');
+      expect(labelField).toHaveTextContent('LABEL');
+    });
+
+    it('should be disabled', () => {
+      wrapper = renderTestForm({
+        label: 'LABEL',
+        disabled: true,
+      });
+
+      const labelField = wrapper.container.querySelector('.field:first-child');
+
+      expect(labelField).toHaveClass('disabled');
+      expect(labelField).toHaveTextContent('LABEL');
+    });
+  });
+
+  describe('Field', () => {
+    it('should show error', () => {
+      wrapper = renderTestForm({
+        required: true,
+      });
+
+      submitForm();
+
+      const fields = wrapper.container.querySelectorAll('.field');
+
+      expect(fields).toHaveLength(3);
+      Array.from(fields).forEach((field) => expect(field).toHaveClass('error'));
+    });
+
+    it('should pass down width prop', () => {
+      wrapper = renderTestForm({
+        width: 10,
+      });
+
+      const fields = wrapper.container.querySelectorAll('.field');
+
+      expect(fields).toHaveLength(3);
+      Array.from(fields).forEach((field) => expect(field).toHaveClass('ten'));
+    });
+  });
+
+  describe('Field.Group', () => {
+    it('should not pass name attribute to form.group element div, bug #138', () => {
+      wrapper = renderTestForm({ defaultSelected: 'two' });
+      expect(wrapper.container.querySelector('.fields')).not.toHaveAttribute(
+        'name'
+      );
+    });
+
+    it('should be inline by default', () => {
+      wrapper = renderTestForm({ defaultSelected: 'two' });
+      expect(wrapper.container.querySelector('.fields')).toHaveClass('inline');
+    });
+
+    it('should be grouped when inline=false', () => {
+      wrapper = renderTestForm({ inline: false });
+      expect(wrapper.container.querySelector('.fields')).not.toHaveClass(
+        'inline'
+      );
+      expect(wrapper.container.querySelector('.fields')).toHaveClass('grouped');
+    });
   });
 
   describe('When value is valid', () => {

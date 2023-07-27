@@ -22,10 +22,19 @@ const tabs = {
 };
 
 export default class App extends React.Component {
-  state = { selectedTab: 'Form' };
+  state = {
+    selectedTab:
+      new URLSearchParams(window.location.search).get('tab') || 'Form',
+  };
 
-  handleChangeTab = (e, { name }) => {
-    this.setState({ selectedTab: name });
+  handleChangeTab = (_e, { name }) => {
+    this.setState({ selectedTab: name }, () =>
+      history.pushState(
+        null,
+        '',
+        '?' + new URLSearchParams({ tab: name }).toString()
+      )
+    );
   };
 
   render() {

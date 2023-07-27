@@ -1,5 +1,5 @@
-import * as React from 'react';
 import Formsy from 'formsy-react';
+import * as React from 'react';
 import {
   Container,
   Button,
@@ -9,7 +9,7 @@ import {
   Checkbox,
   Message,
 } from 'semantic-ui-react';
-import { RadioGroup } from '../src';
+import { RadioGroup, Form } from '../src';
 
 const styles = {
   root: {
@@ -19,11 +19,6 @@ const styles = {
   radioGroup: {
     display: 'flex',
     marginBottom: 18,
-  },
-
-  radio: {
-    marginLeft: 4,
-    marginRight: 12,
   },
 };
 
@@ -42,15 +37,32 @@ export default class RadioGroupExamples extends React.Component {
       <RadioGroup
         name="radioGroup"
         required
+        label="Label"
         validationErrors={{
           isDefaultRequiredValue: 'Please select one of these',
         }}
         errorLabel={errorLabel}
         style={styles.radioGroup}
       >
-        <Radio label="one" value="one" style={styles.radio} />
-        <Radio label="two" value="two" style={styles.radio} />
-        <Radio label="three" value="three" style={styles.radio} />
+        <Radio label="one" value="one" />
+        <Radio label="two" value="two" />
+        <Radio label="three" value="three" />
+      </RadioGroup>
+    );
+
+    const disabledRadioGroup = (
+      <RadioGroup
+        name="radioGroup"
+        required
+        validationErrors={{
+          isDefaultRequiredValue: 'Please select one of these',
+        }}
+        errorLabel={errorLabel}
+        style={styles.radioGroup}
+      >
+        <Radio label="one" value="one" />
+        <Radio label="two" value="two" />
+        <Radio label="three" value="three" />
       </RadioGroup>
     );
 
@@ -64,9 +76,9 @@ export default class RadioGroupExamples extends React.Component {
         errorLabel={errorLabel}
         style={styles.radioGroup}
       >
-        <Checkbox label="one" value="one" style={styles.radio} />
-        <Checkbox label="two" value="two" style={styles.radio} />
-        <Checkbox label="three" value="three" style={styles.radio} />
+        <Checkbox label="one" value="one" />
+        <Checkbox label="two" value="two" />
+        <Checkbox label="three" value="three" />
       </RadioGroup>
     );
 
@@ -81,10 +93,10 @@ export default class RadioGroupExamples extends React.Component {
         errorLabel={errorLabel}
         style={styles.radioGroup}
       >
-        <Checkbox label="one" value="one" style={styles.radio} />
-        <Radio toggle label="two" value="two" style={styles.radio} />
-        <Radio slider label="three" value="three" style={styles.radio} />
-        <Radio label="four" value="four" style={styles.radio} />
+        <Checkbox label="one" value="one" />
+        <Radio toggle label="two" value="two" />
+        <Radio slider label="three" value="three" />
+        <Radio label="four" value="four" />
       </RadioGroup>
     );
 
@@ -99,22 +111,52 @@ export default class RadioGroupExamples extends React.Component {
         errorLabel={errorLabel}
         style={styles.radioGroup}
       >
-        <Checkbox label="one" value="one" style={styles.radio} />
-        <Checkbox label="two" value="two" style={styles.radio} />
-        <Checkbox label="three" value="three" style={styles.radio} />
+        <Checkbox label="one" value="one" />
+        <Checkbox label="two" value="two" />
+        <Checkbox label="three" value="three" />
       </RadioGroup>
     );
 
     return (
       <Container style={styles.root}>
-        <Formsy
-          noValidate={true}
-          onValidSubmit={this.onValidSubmit}
-          ref={this.formRef}
-        >
+        <Form onValidSubmit={this.onValidSubmit} ref={this.formRef}>
           <Segment>
             <h5> RadioGroup </h5>
             {radioGroup}
+
+            <h5>Grouped</h5>
+            <RadioGroup
+              name="radioGroup"
+              required
+              inline={false}
+              label="Label"
+              validationErrors={{
+                isDefaultRequiredValue: 'Please select one of these',
+              }}
+              errorLabel={errorLabel}
+              style={styles.radioGroup}
+            >
+              <Radio label="one" value="one" />
+              <Radio label="two" value="two" />
+              <Radio label="three" value="three" />
+            </RadioGroup>
+
+            <h5>Disabled</h5>
+            <RadioGroup
+              name="radioGroup"
+              required
+              disabled={true}
+              label="Label"
+              validationErrors={{
+                isDefaultRequiredValue: 'Please select one of these',
+              }}
+              errorLabel={errorLabel}
+              style={styles.radioGroup}
+            >
+              <Radio label="one" value="one" />
+              <Radio label="two" value="two" />
+              <Radio label="three" value="three" />
+            </RadioGroup>
           </Segment>
 
           <Segment>
@@ -143,7 +185,7 @@ export default class RadioGroupExamples extends React.Component {
             content="Reset"
             color="black"
           />
-        </Formsy>
+        </Form>
         {!!this.state.result && (
           <Message>
             <pre>{this.state.result}</pre>
