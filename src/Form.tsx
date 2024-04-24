@@ -101,11 +101,9 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
   }
 }
 
-const HoistedForm = hoistNonReactStatics(
+export default hoistNonReactStatics(
   React.forwardRef<Formsy, IFormProps>((props: IFormProps, ref) => (
     <Form {...props} forwardedRef={ref} />
   )),
   Form
 );
-
-export default HoistedForm;
