@@ -80,7 +80,7 @@ npm/yarn run example-app
 ```
 Then go to ```localhost:8080```
 
-For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Dcoumentaion](https://github.com/formsy/formsy-react/blob/master/API.md)
+For more information on building and validating ```formsy-react``` forms, take a look at [Formsy-React's Documentation](https://github.com/formsy/formsy-react/blob/master/API.md)
 
 ## Tests
 Tests are done using Mocha, chai, sinon, and enzyme on jsdom.
