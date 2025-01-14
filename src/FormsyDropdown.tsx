@@ -116,6 +116,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
       value: value || defaultValue || (multiple && []) || '',
       error: !disabled && error,
       id,
+      name: undefined,
     };
 
     const dropdownNode = shortHandMode

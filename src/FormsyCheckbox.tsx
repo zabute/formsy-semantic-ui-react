@@ -83,7 +83,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
     };
 
     if (inputAs === Checkbox || inputAs === Radio) {
-      delete checkboxProps.error;
+      checkboxProps.error = undefined;
     }
 
     return (

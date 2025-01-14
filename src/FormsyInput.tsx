@@ -130,8 +130,10 @@ class FormsyInput extends Component<IFormsyInputProps> {
       : inputAs;
 
     if (isFormField) {
-      delete inputProps.label;
-      if (inputAs === Form.TextArea) delete inputProps.error;
+      inputProps.label = undefined;
+      if (inputAs === Form.TextArea) {
+        inputProps.error = undefined;
+      }
     }
 
     const inputElement =
