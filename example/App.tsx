@@ -47,34 +47,14 @@ export default class App extends React.Component {
 
         <Container style={{ marginTop: 24 }}>
           <Menu pointing secondary>
-            <Menu.Item
-              name="Form"
-              active={selectedTab === 'Form'}
-              onClick={this.handleChangeTab}
-            />
-
-            <Menu.Item
-              name="Input"
-              active={selectedTab === 'Input'}
-              onClick={this.handleChangeTab}
-            />
-
-            <Menu.Item
-              name="Checkbox"
-              active={selectedTab === 'Checkbox'}
-              onClick={this.handleChangeTab}
-            />
-
-            <Menu.Item
-              name="RadioGroup"
-              active={selectedTab === 'RadioGroup'}
-              onClick={this.handleChangeTab}
-            />
-            <Menu.Item
-              name="Dropdown"
-              active={selectedTab === 'Dropdown'}
-              onClick={this.handleChangeTab}
-            />
+            {Object.keys(tabs).map((key) => (
+              <Menu.Item
+                name={key}
+                key={key}
+                active={selectedTab === key}
+                onClick={this.handleChangeTab}
+              />
+            ))}
           </Menu>
           {tabs[selectedTab]}
         </Container>

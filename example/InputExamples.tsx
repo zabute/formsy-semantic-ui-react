@@ -8,7 +8,7 @@ import {
   Divider,
   Message,
 } from 'semantic-ui-react';
-import { Input, Form } from '../src';
+import { Input, Select, Form } from '../src';
 
 const styles = {
   root: {
@@ -100,6 +100,28 @@ export default class InputExamples extends React.Component {
       />
     );
 
+    const inputWithAction = (
+      <Input
+        name="input-with-action"
+        placeholder="Customer name"
+        required={true}
+        action={
+          <Select
+            basic
+            compact
+            name="title"
+            as={({ children }) => <>{children}</>}
+            options={[
+              { text: 'Mr', value: 'Mr' },
+              { text: 'Ms', value: 'Ms' },
+            ]}
+            defaultValue="Mr"
+          />
+        }
+        actionPosition="left"
+      />
+    );
+
     return (
       <Container style={styles.root}>
         <Form onValidSubmit={this.onValidSubmit} ref={this.formRef}>
@@ -114,8 +136,13 @@ export default class InputExamples extends React.Component {
           </Segment>
 
           <Segment>
-            <h5> Input With Custorm Error Label </h5>
+            <h5> Input With Custom Error Label </h5>
             {inputWithCustomErrorLabel}
+          </Segment>
+
+          <Segment>
+            <h5> Input With Action </h5>
+            {inputWithAction}
           </Segment>
 
           <Segment>

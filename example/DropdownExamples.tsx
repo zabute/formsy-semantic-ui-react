@@ -1,7 +1,7 @@
 import Formsy from 'formsy-react';
 import * as React from 'react';
 import { Button, Container, Label, Message, Segment } from 'semantic-ui-react';
-import { Dropdown } from '../src';
+import { Dropdown, Select } from '../src';
 
 const styles = {
   root: {
@@ -101,6 +101,22 @@ export default class CheckboxExamples extends React.Component {
       />
     );
 
+    const asSelect = (
+      <Select
+        name="as-select"
+        id="as-select"
+        options={options}
+        required
+        validationErrors={{
+          isDefaultRequiredValue: 'You need to select a product',
+        }}
+        errorLabel={errorLabel}
+        compact={true}
+        basic={true}
+        defaultValue={options[0].value}
+      />
+    );
+
     return (
       <Container style={styles.root}>
         <Formsy
@@ -109,13 +125,18 @@ export default class CheckboxExamples extends React.Component {
           ref={this.formRef}
         >
           <Segment>
-            <h5> Single-select </h5>
+            <h5>Single-select</h5>
             {dropdownSingle}
           </Segment>
 
           <Segment>
-            <h5> Single-select with default value </h5>
+            <h5>Single-select with default value</h5>
             {singleSelectWithDefaultValue}
+          </Segment>
+
+          <Segment>
+            <h5>As Select</h5>
+            {asSelect}
           </Segment>
 
           <Segment>
