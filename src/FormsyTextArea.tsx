@@ -1,6 +1,6 @@
 import { InjectedProps } from 'formsy-react/dist/withFormsy';
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { TextArea } from 'semantic-ui-react';
 import Input, { IFormsyInputProps } from './FormsyInput';
 
 export default (
@@ -8,4 +8,4 @@ export default (
     IFormsyInputProps<React.TextareaHTMLAttributes<any>>,
     keyof InjectedProps<any>
   >
-) => <Input inputAs={Form.TextArea} {...props} />;
+) => <Input inputAs={TextArea} {...props} />;

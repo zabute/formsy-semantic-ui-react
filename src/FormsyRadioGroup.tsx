@@ -29,10 +29,6 @@ export interface IFormsyRadioGroupProps
 }
 
 class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
-  static defaultProps = {
-    passRequiredToField: true,
-  };
-
   componentDidMount() {
     const { defaultSelected, setValue } = this.props;
     if (defaultSelected) setValue(defaultSelected);
@@ -62,7 +58,7 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
       isValid,
       isPristine,
       errorMessage,
-      passRequiredToField,
+      passRequiredToField = true,
       disabled,
       className,
       unstackable,

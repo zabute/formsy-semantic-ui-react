@@ -52,11 +52,6 @@ export type IFormsyInputProps<
   };
 
 class FormsyInput extends Component<IFormsyInputProps> {
-  static defaultProps = {
-    inputAs: Input,
-    passRequiredToField: true,
-  };
-
   state = { allowError: false };
 
   componentDidMount() {
@@ -96,7 +91,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
   render() {
     const {
       id,
-      inputAs,
+      inputAs = Input,
       inputClassName,
       required,
       label,
@@ -112,7 +107,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
       className,
       disabled,
       inline,
-      passRequiredToField,
+      passRequiredToField = true,
     } = this.props;
 
     const { allowError } = this.state;
@@ -156,7 +151,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
         inline={inline}
         disabled={disabled}
       >
-        {shouldShowFormLabel && label && <label htmlFor={id}> {label} </label>}
+        {shouldShowFormLabel && label && <label htmlFor={id}>{label}</label>}
         {inputElement}
         {!disabled &&
           error &&

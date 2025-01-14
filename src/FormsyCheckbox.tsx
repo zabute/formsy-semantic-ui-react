@@ -36,10 +36,6 @@ export interface IFormsyCheckboxProps
 }
 
 class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
-  static defaultProps = {
-    inputAs: Checkbox,
-  };
-
   componentDidMount() {
     const { defaultChecked, setValue } = this.props;
     setValue(!!defaultChecked, false);
@@ -61,7 +57,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
 
   render() {
     const {
-      inputAs,
+      inputAs = Checkbox,
       required,
       isValid,
       isPristine,

@@ -31,11 +31,6 @@ export interface IFormsyDropdownProps
 }
 
 class FormsyDropdown extends Component<IFormsyDropdownProps> {
-  static defaultProps = {
-    inputAs: Dropdown,
-    passRequiredToField: true,
-  };
-
   state = { allowError: false };
 
   componentDidMount() {
@@ -90,7 +85,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
 
   render() {
     const {
-      inputAs,
+      inputAs = Dropdown,
       id,
       required,
       label,
@@ -107,7 +102,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
       className,
       disabled,
       inline,
-      passRequiredToField,
+      passRequiredToField = true,
     } = this.props;
 
     const shortHandMode = inputAs === Form.Dropdown || inputAs === Form.Select;
@@ -137,7 +132,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
         inline={inline}
         disabled={disabled}
       >
-        {shortHandMode && label && <label htmlFor={id}> {label} </label>}
+        {shortHandMode && label && <label htmlFor={id}>{label}</label>}
         {createElement(dropdownNode, { ...dropdownProps })}
         {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Field>

@@ -2,7 +2,6 @@ import Formsy from 'formsy-react';
 import { FormsyProps } from 'formsy-react/dist/Formsy';
 import { InjectedProps } from 'formsy-react/dist/withFormsy';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Form as SemanticUIForm, StrictFormProps } from 'semantic-ui-react';
 import FormsyCheckbox from './FormsyCheckbox';
@@ -15,20 +14,11 @@ import FormsyTextArea from './FormsyTextArea';
 type IFormProps = Partial<FormsyProps> & Omit<StrictFormProps, 'onSubmit'>;
 
 class Form extends Component<IFormProps & { forwardedRef: any }> {
-  static propTypes = {
-    as: PropTypes.any,
-    children: PropTypes.node,
-    onSubmit: PropTypes.func,
-  };
-
-  static defaultProps = {
-    as: 'div',
-  };
-  static Checkbox = FormsyCheckbox;
   static Button = SemanticUIForm.Button;
   static Radio = SemanticUIForm.Radio;
   static Field = SemanticUIForm.Field;
   static Group = SemanticUIForm.Group;
+  static Checkbox = FormsyCheckbox;
 
   static Input = (props: Omit<IFormsyInputProps, keyof InjectedProps<any>>) => (
     <FormsyInput inputAs={SemanticUIForm.Input} {...props} />
@@ -72,7 +62,7 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
     } = this.props;
 
     const {
-      as,
+      as = 'div',
       error,
       inverted,
       loading,
