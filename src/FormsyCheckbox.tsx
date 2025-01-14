@@ -75,7 +75,7 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
 
     const error = !isPristine && !isValid;
 
-    const checkboxProps = {
+    const checkboxProps: Record<string, any> = {
       ...filterSuirElementProps(this.props),
       label: this.props.label,
       checked: !!value,

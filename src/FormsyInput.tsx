@@ -113,7 +113,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
     const { allowError } = this.state;
     const error = !isPristine && !isValid && allowError;
 
-    const inputProps = {
+    const inputProps: Record<string, any> = {
       ...filterSuirElementProps(this.props),
       value: value || (isPristine && defaultValue) || '',
       onChange: this.handleChange,
