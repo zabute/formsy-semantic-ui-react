@@ -51,7 +51,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
     e: React.SyntheticEvent<HTMLElement>,
     data: StrictDropdownProps & { value: FormsyDropdownValue }
   ) => {
-    const { multiple, value, setValue, onChange } = this.props;
+    const { multiple, value, setValue, onChange, name } = this.props;
 
     if (
       multiple &&
@@ -65,7 +65,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
     setValue(data.value);
 
     if (onChange) {
-      onChange(e, data);
+      onChange(e, { ...data, name });
     }
   };
 

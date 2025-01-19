@@ -19,7 +19,7 @@ const options = [
   { text: 'Socks', value: 'socks' },
 ];
 
-const TestForm = () => (
+const TestForm = ({ onChange }: { onChange: any }) => (
   <Form>
     <FormsyDropdown
       label={<span data-testid="label">Clothing</span>}
@@ -30,15 +30,18 @@ const TestForm = () => (
       validationErrors={{
         isDefaultRequiredValue: validationError,
       }}
+      onChange={onChange}
     />
   </Form>
 );
 
 describe('<Dropdown/>', () => {
   let wrapper: RenderResult;
+  let onChangeSpy: jest.Mock;
 
   beforeEach(() => {
-    wrapper = render(<TestForm />);
+    onChangeSpy = jest.fn();
+    wrapper = render(<TestForm onChange={onChangeSpy} />);
   });
 
   const submitForm = () => {
@@ -59,6 +62,14 @@ describe('<Dropdown/>', () => {
     it(`should not pass label ${prop} to Semantic Dropdown`, () => {
       expect(wrapper.getByRole('listbox')).not.toHaveAttribute(prop);
     });
+  });
+
+  it('should add `name` prop to onChange dropdown props', () => {
+    selectOptionAt(1);
+    expect(onChangeSpy).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ name: 'testInput', value: options[1].value })
+    );
   });
 
   describe('When value is invalid', () => {
