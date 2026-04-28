@@ -45,9 +45,7 @@ describe('<Dropdown/>', () => {
   });
 
   const submitForm = () => {
-    fireEvent.submit(
-      wrapper.container.querySelector('form') as HTMLFormElement
-    );
+    fireEvent.submit(wrapper.container.querySelector('form') as HTMLFormElement);
   };
 
   const selectOptionAt = (index: number) => {
@@ -85,9 +83,7 @@ describe('<Dropdown/>', () => {
     it('Shows error text when form is submitted', () => {
       submitForm();
       expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
-      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
-        validationError
-      );
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(validationError);
     });
   });
 

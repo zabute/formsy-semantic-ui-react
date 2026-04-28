@@ -1,30 +1,18 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { cloneElement, Component, createElement } from 'react';
-import {
-  Checkbox,
-  Form,
-  Radio,
-  StrictFormFieldProps,
-  StrictRadioProps,
-} from 'semantic-ui-react';
+import { Checkbox, Form, Radio, StrictFormFieldProps, StrictRadioProps } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
 type CheckboxRadioValueType = boolean | number | string;
 
 export interface IFormsyCheckboxProps
-  extends FormsyInjectedProps<CheckboxRadioValueType>,
-    Pick<
-      StrictFormFieldProps,
-      'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
-    >,
+  extends
+    FormsyInjectedProps<CheckboxRadioValueType>,
+    Pick<StrictFormFieldProps, 'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'>,
     Omit<StrictRadioProps, 'value' | 'name' | 'onChange'> {
   inputClassName?: string;
   passRequiredToField?: boolean;
-  inputAs?:
-    | typeof Form.Checkbox
-    | typeof Form.Radio
-    | typeof Checkbox
-    | typeof Radio;
+  inputAs?: typeof Form.Checkbox | typeof Form.Radio | typeof Checkbox | typeof Radio;
   defaultChecked?: boolean;
   errorLabel?: React.ReactElement;
   label?: string | React.ReactNode;

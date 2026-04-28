@@ -142,21 +142,7 @@ export default class RadioGroupExamples extends React.Component {
             </RadioGroup>
 
             <h5>Disabled</h5>
-            <RadioGroup
-              name="radioGroup"
-              required
-              disabled={true}
-              label="Label"
-              validationErrors={{
-                isDefaultRequiredValue: 'Please select one of these',
-              }}
-              errorLabel={errorLabel}
-              style={styles.radioGroup}
-            >
-              <Radio label="one" value="one" />
-              <Radio label="two" value="two" />
-              <Radio label="three" value="three" />
-            </RadioGroup>
+            {disabledRadioGroup}
           </Segment>
 
           <Segment>

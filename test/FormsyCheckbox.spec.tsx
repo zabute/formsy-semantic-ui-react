@@ -31,16 +31,12 @@ describe('<Checkbox/>', () => {
 
   beforeEach(() => {
     onSubmitSpy = jest.fn();
-    wrapper = render(
-      <TestForm onSubmit={(model: any) => onSubmitSpy(model)} />
-    );
+    wrapper = render(<TestForm onSubmit={(model: any) => onSubmitSpy(model)} />);
     checkbox = wrapper.getByRole('checkbox');
   });
 
   const submitForm = () => {
-    return fireEvent.submit(
-      wrapper.container.querySelector('form') as HTMLFormElement
-    );
+    return fireEvent.submit(wrapper.container.querySelector('form') as HTMLFormElement);
   };
 
   const clickOnCheckbox = (checked: boolean) => {
@@ -53,9 +49,7 @@ describe('<Checkbox/>', () => {
   });
 
   it('should render given label', () => {
-    expect(wrapper.container.querySelector('input + label')).toHaveTextContent(
-      labelText
-    );
+    expect(wrapper.container.querySelector('input + label')).toHaveTextContent(labelText);
   });
 
   it('should set a boolean value on checkbox without value / defaultChecked', () => {
@@ -67,12 +61,7 @@ describe('<Checkbox/>', () => {
   it('should use defaultChecked as initial value', () => {
     const spy = jest.fn();
     const defaultChecked = true;
-    wrapper = render(
-      <TestForm
-        defaultChecked={defaultChecked}
-        onSubmit={(model: any) => spy(model)}
-      />
-    );
+    wrapper = render(<TestForm defaultChecked={defaultChecked} onSubmit={(model: any) => spy(model)} />);
     submitForm();
 
     expect(spy).toHaveBeenCalledWith({ testInput: defaultChecked });
@@ -86,9 +75,7 @@ describe('<Checkbox/>', () => {
     it('Shows the errorLabel component passed to it', () => {
       submitForm();
       expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
-      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
-        validationError
-      );
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(validationError);
     });
 
     it('Shows error text when form is submitted', () => {
@@ -96,9 +83,7 @@ describe('<Checkbox/>', () => {
 
       submitForm();
       expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
-      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
-        validationError
-      );
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(validationError);
     });
   });
 
@@ -119,9 +104,7 @@ describe('<Checkbox/>', () => {
       submitForm();
 
       expect(wrapper.queryByTestId('error-label')).toBeInTheDocument();
-      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
-        validationError
-      );
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(validationError);
     });
   });
 });

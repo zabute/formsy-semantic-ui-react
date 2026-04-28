@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html --watch-dir=../",
+    "dev": "parcel index.html --watch-dir=../",
     "build": "parcel build index.html"
   },
   "dependencies": {

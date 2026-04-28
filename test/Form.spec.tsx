@@ -42,9 +42,7 @@ describe('<Form/>', () => {
     });
 
     it('should render <Form.TextArea/> as <FormsyTextArea/>', () => {
-      const { container } = renderForm(
-        <Form.TextArea rows={2} name="formInput" />
-      );
+      const { container } = renderForm(<Form.TextArea rows={2} name="formInput" />);
 
       const textArea = container.querySelectorAll('textarea');
       expect(textArea).toHaveLength(1);
@@ -69,18 +67,14 @@ describe('<Form/>', () => {
     });
 
     it('should render <Form.Dropdown/> as <FormsyDropdown/>', () => {
-      const { container } = renderForm(
-        <Form.Dropdown name="formInput" options={[]} />
-      );
+      const { container } = renderForm(<Form.Dropdown name="formInput" options={[]} />);
 
       const dropdown = container.querySelectorAll('.ui.dropdown');
       expect(dropdown).toHaveLength(1);
     });
 
     it('should render <Form.Select/> as <FormsySelect/>', () => {
-      const { container } = renderForm(
-        <Form.Select name="formInput" options={[]} />
-      );
+      const { container } = renderForm(<Form.Select name="formInput" options={[]} />);
 
       const select = container.querySelectorAll('.ui.selection.dropdown');
       expect(select).toHaveLength(1);
@@ -88,9 +82,7 @@ describe('<Form/>', () => {
 
     describe('Layout structure', () => {
       it('should render label for a Input', () => {
-        const { container } = renderForm(
-          <Form.Input name="input" label="input-label" />
-        );
+        const { container } = renderForm(<Form.Input name="input" label="input-label" />);
 
         const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(1);
@@ -104,22 +96,14 @@ describe('<Form/>', () => {
       });
 
       it('should render label for a DropDown', () => {
-        const { container } = renderForm(
-          <Form.Dropdown
-            name="formInput"
-            options={[]}
-            label="drop-down-label"
-          />
-        );
+        const { container } = renderForm(<Form.Dropdown name="formInput" options={[]} label="drop-down-label" />);
 
         const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(1);
       });
 
       it('should not render label for a DropDown', () => {
-        const { container } = renderForm(
-          <Form.Dropdown name="formInput" options={[]} />
-        );
+        const { container } = renderForm(<Form.Dropdown name="formInput" options={[]} />);
 
         const inputLabel = container.querySelectorAll('label');
         expect(inputLabel).toHaveLength(0);
@@ -130,13 +114,7 @@ describe('<Form/>', () => {
   describe('When using custom inputAs', () => {
     it('should allow render custom input', () => {
       const label = 'form field';
-      const { container } = renderForm(
-        <Form.Input
-          name="input"
-          label={label}
-          inputAs={<Input label="prefix" />}
-        />
-      );
+      const { container } = renderForm(<Form.Input name="input" label={label} inputAs={<Input label="prefix" />} />);
 
       const inputLabel = container.querySelector('.field > label');
       expect(inputLabel).toHaveTextContent(label);
@@ -181,9 +159,7 @@ describe('<Form/>', () => {
     };
 
     const submitForm = () => {
-      return fireEvent.submit(
-        wrapper.container.querySelector('form') as HTMLFormElement
-      );
+      return fireEvent.submit(wrapper.container.querySelector('form') as HTMLFormElement);
     };
 
     const changeInput = (value: string) => {
@@ -216,7 +192,7 @@ describe('<Form/>', () => {
 
         submitForm();
         expect(onSubmit).toHaveBeenCalledTimes(2);
-        expect(onInvalidSubmit).not.toBeCalled();
+        expect(onInvalidSubmit).not.toHaveBeenCalled();
         validateSubmitCall({ testInput: validValue });
       });
     });

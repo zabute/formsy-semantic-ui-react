@@ -33,17 +33,11 @@ describe('<RadioGroup/>', () => {
   let wrapper: RenderResult;
 
   const submitForm = () => {
-    fireEvent.submit(
-      wrapper.container.querySelector('form') as HTMLFormElement
-    );
+    fireEvent.submit(wrapper.container.querySelector('form') as HTMLFormElement);
   };
 
   const clickOnRadioWith = (value: string) => {
-    fireEvent.click(
-      wrapper.container.querySelector(
-        `input[type=radio][value=${value}]`
-      ) as any
-    );
+    fireEvent.click(wrapper.container.querySelector(`input[type=radio][value=${value}]`) as any);
   };
 
   beforeEach(() => {
@@ -51,30 +45,22 @@ describe('<RadioGroup/>', () => {
   });
 
   it('Renders Radio Buttons', () => {
-    expect(
-      wrapper.container.querySelectorAll('input[type=radio]')
-    ).toHaveLength(3);
+    expect(wrapper.container.querySelectorAll('input[type=radio]')).toHaveLength(3);
   });
 
   it('Should show a selected radio when defaultSelected is specified', () => {
     wrapper = renderTestForm({ defaultSelected: 'two' });
-    expect(
-      wrapper.container.querySelectorAll('input[type=radio]')[1]
-    ).toBeChecked();
+    expect(wrapper.container.querySelectorAll('input[type=radio]')[1]).toBeChecked();
   });
 
   it('should pass name attribute to Input, bug #138', () => {
     wrapper = renderTestForm({ defaultSelected: 'two' });
-    expect(
-      wrapper.container.querySelectorAll(`input[name='radioGroup']`)
-    ).toHaveLength(3);
+    expect(wrapper.container.querySelectorAll(`input[name='radioGroup']`)).toHaveLength(3);
   });
 
   it('should apply disabled properly', () => {
     wrapper = renderTestForm({ defaultSelected: 'two', disabled: true });
-    expect(wrapper.container.querySelectorAll(`input[disabled]`)).toHaveLength(
-      3
-    );
+    expect(wrapper.container.querySelectorAll(`input[disabled]`)).toHaveLength(3);
   });
 
   describe('Label', () => {
@@ -149,18 +135,14 @@ describe('<RadioGroup/>', () => {
       const fields = wrapper.container.querySelectorAll('.field');
 
       expect(fields).toHaveLength(3);
-      Array.from(fields).forEach((field) =>
-        expect(field).not.toHaveClass('disabled')
-      );
+      Array.from(fields).forEach((field) => expect(field).not.toHaveClass('disabled'));
     });
   });
 
   describe('Field.Group', () => {
     it('should not pass name attribute to form.group element div, bug #138', () => {
       wrapper = renderTestForm({ defaultSelected: 'two' });
-      expect(wrapper.container.querySelector('.fields')).not.toHaveAttribute(
-        'name'
-      );
+      expect(wrapper.container.querySelector('.fields')).not.toHaveAttribute('name');
     });
 
     it('should be inline by default', () => {
@@ -170,9 +152,7 @@ describe('<RadioGroup/>', () => {
 
     it('should be grouped when inline=false', () => {
       wrapper = renderTestForm({ inline: false });
-      expect(wrapper.container.querySelector('.fields')).not.toHaveClass(
-        'inline'
-      );
+      expect(wrapper.container.querySelector('.fields')).not.toHaveClass('inline');
       expect(wrapper.container.querySelector('.fields')).toHaveClass('grouped');
     });
   });

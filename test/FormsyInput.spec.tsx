@@ -37,13 +37,10 @@ describe('<Input/>', () => {
   });
 
   const submitForm = () => {
-    fireEvent.submit(
-      wrapper.container.querySelector('form') as HTMLFormElement
-    );
+    fireEvent.submit(wrapper.container.querySelector('form') as HTMLFormElement);
   };
 
-  const changeInput = (value: string) =>
-    fireEvent.change(input, { target: { value } });
+  const changeInput = (value: string) => fireEvent.change(input, { target: { value } });
 
   it("Renders Semantic-UI-React's <Input/>", () => {
     expect(wrapper.container.querySelector('.ui.input')).toBeInTheDocument();
@@ -95,9 +92,7 @@ describe('<Input/>', () => {
 
     it('Shows error text passed to it', () => {
       submitForm();
-      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(
-        validationError
-      );
+      expect(wrapper.queryByTestId('error-label')).toHaveTextContent(validationError);
     });
   });
 

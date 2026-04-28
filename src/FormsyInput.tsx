@@ -1,36 +1,19 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
-import React, {
-  cloneElement,
-  Component,
-  createElement,
-  InputHTMLAttributes,
-  isValidElement,
-} from 'react';
-import {
-  Form,
-  Input,
-  InputOnChangeData,
-  StrictFormFieldProps,
-  StrictInputProps,
-} from 'semantic-ui-react';
+import React, { cloneElement, Component, createElement, InputHTMLAttributes, isValidElement } from 'react';
+import { Form, Input, InputOnChangeData, StrictFormFieldProps, StrictInputProps } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
-type SemanticFormField = Pick<
-  StrictFormFieldProps,
-  'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
->;
+type SemanticFormField = Pick<StrictFormFieldProps, 'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'>;
 type SemanticInputProps = Omit<StrictInputProps, 'error'>;
 export type IFormsyInputProps<
   HtmlBaseElement = InputHTMLAttributes<any>,
-  InputValueType = any
+  InputValueType = any,
 > = FormsyInjectedProps<InputValueType> &
   SemanticFormField &
   SemanticInputProps &
   Omit<
     HtmlBaseElement,
-    | keyof (SemanticFormField &
-        SemanticInputProps &
-        FormsyInjectedProps<InputValueType>)
+    | keyof (SemanticFormField & SemanticInputProps & FormsyInjectedProps<InputValueType>)
     | 'onBlur'
     | 'rel'
     | 'rev'
@@ -39,16 +22,13 @@ export type IFormsyInputProps<
     id?: string;
     inputClassName?: string;
     passRequiredToField?: boolean;
-    inputAs?: React.ReactNode | React.ReactElement;
+    inputAs?: React.ReactNode | React.ElementType;
     errorLabel?: React.ReactElement;
     label?: string | React.ReactNode;
     instantValidation?: boolean;
     defaultValue?: InputValueType;
 
-    onBlur?(
-      event: React.ChangeEvent<HTMLInputElement>,
-      data: StrictInputProps & { value: InputValueType }
-    ): void;
+    onBlur?(event: React.ChangeEvent<HTMLInputElement>, data: StrictInputProps & { value: InputValueType }): void;
   };
 
 class FormsyInput extends Component<IFormsyInputProps> {
@@ -60,28 +40,19 @@ class FormsyInput extends Component<IFormsyInputProps> {
   }
 
   componentDidUpdate(prevProps: IFormsyInputProps) {
-    if (
-      prevProps.isFormSubmitted !== this.props.isFormSubmitted &&
-      this.props.isFormSubmitted
-    ) {
+    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
       this.showError();
     }
   }
 
-  handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
-  ) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
     const { value } = data;
     this.props.setValue(value);
     if (this.props.onChange) this.props.onChange(e, data);
     if (this.props.instantValidation) this.showError();
   };
 
-  handleBlur = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    data: InputOnChangeData
-  ) => {
+  handleBlur = (e: React.ChangeEvent<HTMLInputElement>, data: InputOnChangeData) => {
     this.showError();
     if (this.props.onBlur) this.props.onBlur(e, data);
   };
@@ -125,9 +96,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
     };
 
     const isFormField = inputAs === Form.Input || inputAs === Form.TextArea;
-    const inputNode = isFormField
-      ? (createElement(inputAs as any).props as any).control
-      : inputAs;
+    const inputNode = isFormField ? (createElement(inputAs as any).props as any).control : inputAs;
 
     if (isFormField) {
       inputProps.label = undefined;
@@ -155,10 +124,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
       >
         {shouldShowFormLabel && label && <label htmlFor={id}>{label}</label>}
         {inputElement}
-        {!disabled &&
-          error &&
-          errorLabel &&
-          cloneElement(errorLabel, {}, errorMessage)}
+        {!disabled && error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Field>
     );
   }

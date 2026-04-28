@@ -31,7 +31,7 @@ export default class InputExamples extends React.Component {
     this.setState({ result: JSON.stringify(formData, null, 2) });
 
   render() {
-    const errorLabel = <Label color="red" pointing="left" />;
+    const errorLabel = <Label color="red" pointing="above" basic />;
 
     // Shows errros with the <Label/> component
     const inputWithLabel = (

@@ -1,0 +1,9 @@
+{
+  "arrowParens": "always",
+  "printWidth": 120,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "sortPackageJson": true,
+  "ignorePatterns": ["dist/**", "example/**"]
+}

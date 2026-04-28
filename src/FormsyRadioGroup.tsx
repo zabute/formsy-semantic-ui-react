@@ -1,22 +1,15 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { Children, cloneElement, Component } from 'react';
-import {
-  Form,
-  RadioProps,
-  StrictFormFieldProps,
-  StrictRadioProps,
-} from 'semantic-ui-react';
+import { Form, RadioProps, StrictFormFieldProps, StrictRadioProps } from 'semantic-ui-react';
 import { StrictFormGroupProps } from 'semantic-ui-react/dist/commonjs/collections/Form/FormGroup';
 import { CheckboxProps } from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 
 type RadioGroupValueType = RadioProps['value'];
 
 export interface IFormsyRadioGroupProps
-  extends FormsyInjectedProps<RadioGroupValueType>,
-    Pick<
-      StrictFormFieldProps,
-      'as' | 'className' | 'error' | 'width' | 'disabled'
-    >,
+  extends
+    FormsyInjectedProps<RadioGroupValueType>,
+    Pick<StrictFormFieldProps, 'as' | 'className' | 'error' | 'width' | 'disabled'>,
     Omit<StrictRadioProps, 'error' | 'value' | 'name'>,
     Pick<StrictFormGroupProps, 'inline' | 'unstackable'> {
   id?: string;
@@ -34,10 +27,7 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
     if (defaultSelected) setValue(defaultSelected);
   }
 
-  handleChange = (
-    e: React.FormEvent<HTMLInputElement>,
-    data: CheckboxProps
-  ) => {
+  handleChange = (e: React.FormEvent<HTMLInputElement>, data: CheckboxProps) => {
     const { value } = data;
     this.props.setValue(value);
 
@@ -101,11 +91,7 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
             disabled,
           };
 
-          return (
-            <Form.Field {...fieldProps}>
-              {cloneElement(radio, { ...props })}
-            </Form.Field>
-          );
+          return <Form.Field {...fieldProps}>{cloneElement(radio, { ...props })}</Form.Field>;
         })}
         {error && errorLabel && cloneElement(errorLabel, {}, errorMessage)}
       </Form.Group>

@@ -1,5 +1,4 @@
 {
-  "include": ["src", "types"],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],
@@ -13,11 +12,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "*": ["src/*", "node_modules/*"]
-    },
     "jsx": "react",
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "types": ["jest", "@testing-library/jest-dom"]
+  },
+  "include": ["src", "types"]
 }

@@ -1,31 +1,19 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { cloneElement, Component, createElement } from 'react';
-import {
-  Dropdown,
-  Form,
-  Select,
-  StrictDropdownProps,
-  StrictFormFieldProps,
-} from 'semantic-ui-react';
+import { Dropdown, Form, Select, StrictDropdownProps, StrictFormFieldProps } from 'semantic-ui-react';
 import { filterSuirElementProps } from './utils';
 
 type FormsyDropdownValue = StrictDropdownProps['value'];
 
 export interface IFormsyDropdownProps
-  extends FormsyInjectedProps<FormsyDropdownValue>,
-    Pick<
-      StrictFormFieldProps,
-      'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'
-    >,
+  extends
+    FormsyInjectedProps<FormsyDropdownValue>,
+    Pick<StrictFormFieldProps, 'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'>,
     Omit<StrictDropdownProps, 'error' | 'value'> {
   id?: string;
   inputClassName?: string;
   passRequiredToField?: boolean;
-  inputAs?:
-    | typeof Dropdown
-    | typeof Select
-    | typeof Form.Dropdown
-    | typeof Form.Select;
+  inputAs?: typeof Dropdown | typeof Select | typeof Form.Dropdown | typeof Form.Select;
   label?: string | React.ReactNode;
   errorLabel?: React.ReactElement;
 }
@@ -39,26 +27,15 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
   }
 
   componentDidUpdate(prevProps: IFormsyDropdownProps) {
-    if (
-      prevProps.isFormSubmitted !== this.props.isFormSubmitted &&
-      this.props.isFormSubmitted
-    ) {
+    if (prevProps.isFormSubmitted !== this.props.isFormSubmitted && this.props.isFormSubmitted) {
       this.showError();
     }
   }
 
-  handleChange = (
-    e: React.SyntheticEvent<HTMLElement>,
-    data: StrictDropdownProps & { value: FormsyDropdownValue }
-  ) => {
+  handleChange = (e: React.SyntheticEvent<HTMLElement>, data: StrictDropdownProps & { value: FormsyDropdownValue }) => {
     const { multiple, value, setValue, onChange, name } = this.props;
 
-    if (
-      multiple &&
-      Array.isArray(value) &&
-      Array.isArray(data.value) &&
-      value.length > data.value.length
-    ) {
+    if (multiple && Array.isArray(value) && Array.isArray(data.value) && value.length > data.value.length) {
       this.showError();
     }
 
@@ -69,10 +46,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
     }
   };
 
-  handleBlur = (
-    e: React.FocusEvent<HTMLElement>,
-    data: StrictDropdownProps
-  ) => {
+  handleBlur = (e: React.FocusEvent<HTMLElement>, data: StrictDropdownProps) => {
     const { onBlur } = this.props;
     if (onBlur) {
       onBlur(e, data);
@@ -119,9 +93,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
       name: undefined,
     };
 
-    const dropdownNode = shortHandMode
-      ? (createElement(inputAs as any, dropdownProps).props as any).control
-      : inputAs;
+    const dropdownNode = shortHandMode ? (createElement(inputAs as any, dropdownProps).props as any).control : inputAs;
 
     return (
       <Form.Field

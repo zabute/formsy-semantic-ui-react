@@ -24,24 +24,21 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
     <FormsyInput inputAs={SemanticUIForm.Input} {...props} />
   );
 
-  static TextArea = (
-    props: Omit<
-      IFormsyInputProps<React.TextareaHTMLAttributes<any>>,
-      keyof InjectedProps<any>
-    >
-  ) => <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />;
+  static TextArea = (props: Omit<IFormsyInputProps<React.TextareaHTMLAttributes<any>>, keyof InjectedProps<any>>) => (
+    <FormsyTextArea inputAs={SemanticUIForm.TextArea} {...props} />
+  );
 
-  static Select = (
-    props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>
-  ) => <FormsySelect inputAs={SemanticUIForm.Select} {...(props as any)} />;
+  static Select = (props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>) => (
+    <FormsySelect inputAs={SemanticUIForm.Select} {...(props as any)} />
+  );
 
-  static RadioGroup = (
-    props: Omit<IFormsyRadioGroupProps, keyof InjectedProps<any>>
-  ) => <FormsyRadioGroup {...(props as any)} />;
+  static RadioGroup = (props: Omit<IFormsyRadioGroupProps, keyof InjectedProps<any>>) => (
+    <FormsyRadioGroup {...(props as any)} />
+  );
 
-  static Dropdown = (
-    props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>
-  ) => <FormsyDropdown inputAs={SemanticUIForm.Dropdown} {...(props as any)} />;
+  static Dropdown = (props: Omit<IFormsyDropdownProps, keyof InjectedProps<any>>) => (
+    <FormsyDropdown inputAs={SemanticUIForm.Dropdown} {...(props as any)} />
+  );
 
   render() {
     const { children } = this.props;
@@ -77,12 +74,7 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
     } = this.props;
 
     return (
-      <Formsy
-        noValidate
-        ref={forwardedRef}
-        onSubmit={onSubmit}
-        {...nonSemanticUIFormProps}
-      >
+      <Formsy noValidate ref={forwardedRef} onSubmit={onSubmit} {...nonSemanticUIFormProps}>
         <SemanticUIForm as={as} {...nonFormsyReactFormProps}>
           {children}
         </SemanticUIForm>
@@ -92,8 +84,6 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
 }
 
 export default hoistNonReactStatics(
-  React.forwardRef<Formsy, IFormProps>((props: IFormProps, ref) => (
-    <Form {...props} forwardedRef={ref} />
-  )),
+  React.forwardRef<Formsy, IFormProps>((props: IFormProps, ref) => <Form {...props} forwardedRef={ref} />),
   Form
 );
