@@ -1,8 +1,7 @@
+import type { InjectedProps } from 'formsy-react';
 import Formsy from 'formsy-react';
-import { FormsyProps } from 'formsy-react/dist/Formsy';
-import { InjectedProps } from 'formsy-react/dist/withFormsy';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import React, { Component } from 'react';
+import React, { Component, ComponentProps } from 'react';
 import { Form as SemanticUIForm, StrictFormProps } from 'semantic-ui-react';
 import FormsyCheckbox from './FormsyCheckbox';
 import FormsyDropdown, { IFormsyDropdownProps } from './FormsyDropdown';
@@ -11,7 +10,7 @@ import FormsyRadioGroup, { IFormsyRadioGroupProps } from './FormsyRadioGroup';
 import FormsySelect from './FormsySelect';
 import FormsyTextArea from './FormsyTextArea';
 
-type IFormProps = Partial<FormsyProps> & Omit<StrictFormProps, 'onSubmit'>;
+type IFormProps = Partial<ComponentProps<typeof Formsy>> & Omit<StrictFormProps, 'onSubmit'>;
 
 class Form extends Component<IFormProps & { forwardedRef: any }> {
   static Button = SemanticUIForm.Button;

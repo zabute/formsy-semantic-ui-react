@@ -1,4 +1,4 @@
-import { Formsy } from 'formsy-react/dist/Formsy';
+import Formsy from 'formsy-react';
 import * as React from 'react';
 import { Input, Label, Message } from 'semantic-ui-react';
 import { Form } from '../src';

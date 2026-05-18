@@ -1,6 +1,6 @@
-import { InjectedProps } from 'formsy-react/dist/withFormsy';
+import type { InjectedProps } from 'formsy-react';
 import React from 'react';
 import { Radio } from 'semantic-ui-react';
-import Checkbox, { IFormsyCheckboxProps } from './FormsyCheckbox';
+import Checkbox, { type IFormsyCheckboxProps } from './FormsyCheckbox';
 
 export default (props: Omit<IFormsyCheckboxProps, keyof InjectedProps<any>>) => <Checkbox inputAs={Radio} {...props} />;

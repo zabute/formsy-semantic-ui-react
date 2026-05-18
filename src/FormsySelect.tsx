@@ -1,4 +1,4 @@
-import { InjectedProps } from 'formsy-react/dist/withFormsy';
+import { InjectedProps } from 'formsy-react';
 import React from 'react';
 import { Select } from 'semantic-ui-react';
 import FormsyDropdown, { IFormsyDropdownProps } from './FormsyDropdown';
