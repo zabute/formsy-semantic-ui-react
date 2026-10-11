@@ -1,6 +1,7 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { Children, cloneElement, Component } from 'react';
 import { Form, RadioProps, StrictFormFieldProps, StrictRadioProps } from 'semantic-ui-react';
+import type { FormsyComponent } from './types';
 import { StrictFormGroupProps } from 'semantic-ui-react/dist/commonjs/collections/Form/FormGroup';
 import { CheckboxProps } from 'semantic-ui-react/dist/commonjs/modules/Checkbox/Checkbox';
 
@@ -99,4 +100,4 @@ class FormsyRadioGroup extends Component<IFormsyRadioGroupProps> {
   }
 }
 
-export default withFormsy(FormsyRadioGroup);
+export default withFormsy(FormsyRadioGroup) as FormsyComponent<IFormsyRadioGroupProps, RadioGroupValueType>;

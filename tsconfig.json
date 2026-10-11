@@ -7,11 +7,12 @@
     "sourceMap": true,
     "rootDir": "./src",
     "strict": true,
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "jsx": "react",
     "esModuleInterop": true,
     "types": ["jest", "@testing-library/jest-dom"]

@@ -24,12 +24,13 @@ jobs:
         env:
           CI: true
 
-      - name: Test
-        run: yarn test --ci --coverage --maxWorkers=2
+      # Build first: the Types spec type-checks the emitted dist/*.d.ts files.
+      - name: Build
+        run: yarn build
         env:
           CI: true
 
-      - name: Build
-        run: yarn build
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
         env:
           CI: true

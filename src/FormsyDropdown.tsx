@@ -1,7 +1,8 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { cloneElement, Component, createElement } from 'react';
 import { Dropdown, Form, Select, StrictDropdownProps, StrictFormFieldProps } from 'semantic-ui-react';
-import { filterSuirElementProps } from './utils';
+import type { FormsyComponent } from './types';
+import { filterSuirElementProps, resolveControlComponent } from './utils';
 
 type FormsyDropdownValue = StrictDropdownProps['value'];
 
@@ -93,7 +94,7 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
       name: undefined,
     };
 
-    const dropdownNode = shortHandMode ? (createElement(inputAs as any, dropdownProps).props as any).control : inputAs;
+    const dropdownNode = shortHandMode ? resolveControlComponent(inputAs) : inputAs;
 
     return (
       <Form.Field
@@ -113,4 +114,4 @@ class FormsyDropdown extends Component<IFormsyDropdownProps> {
   }
 }
 
-export default withFormsy(FormsyDropdown);
+export default withFormsy(FormsyDropdown) as FormsyComponent<IFormsyDropdownProps, FormsyDropdownValue>;

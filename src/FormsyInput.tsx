@@ -1,7 +1,8 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { cloneElement, Component, createElement, InputHTMLAttributes, isValidElement } from 'react';
 import { Form, Input, InputOnChangeData, StrictFormFieldProps, StrictInputProps } from 'semantic-ui-react';
-import { filterSuirElementProps } from './utils';
+import type { FormsyComponent } from './types';
+import { filterSuirElementProps, resolveControlComponent } from './utils';
 
 type SemanticFormField = Pick<StrictFormFieldProps, 'as' | 'className' | 'error' | 'width' | 'inline' | 'disabled'>;
 type SemanticInputProps = Omit<StrictInputProps, 'error'>;
@@ -96,7 +97,7 @@ class FormsyInput extends Component<IFormsyInputProps> {
     };
 
     const isFormField = inputAs === Form.Input || inputAs === Form.TextArea;
-    const inputNode = isFormField ? (createElement(inputAs as any).props as any).control : inputAs;
+    const inputNode = isFormField ? resolveControlComponent(inputAs) : inputAs;
 
     if (isFormField) {
       inputProps.label = undefined;
@@ -130,4 +131,4 @@ class FormsyInput extends Component<IFormsyInputProps> {
   }
 }
 
-export default withFormsy(FormsyInput);
+export default withFormsy(FormsyInput) as FormsyComponent<IFormsyInputProps, any>;

@@ -1,9 +1,10 @@
 import type { InjectedProps } from 'formsy-react';
 import Formsy from 'formsy-react';
+import type { FormsyComponent } from './types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { Component, ComponentProps } from 'react';
 import { Form as SemanticUIForm, StrictFormProps } from 'semantic-ui-react';
-import FormsyCheckbox from './FormsyCheckbox';
+import FormsyCheckbox, { type CheckboxRadioValueType, type IFormsyCheckboxProps } from './FormsyCheckbox';
 import FormsyDropdown, { IFormsyDropdownProps } from './FormsyDropdown';
 import FormsyInput, { IFormsyInputProps } from './FormsyInput';
 import FormsyRadioGroup, { IFormsyRadioGroupProps } from './FormsyRadioGroup';
@@ -17,7 +18,7 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
   static Radio = SemanticUIForm.Radio;
   static Field = SemanticUIForm.Field;
   static Group = SemanticUIForm.Group;
-  static Checkbox = FormsyCheckbox;
+  static Checkbox: FormsyComponent<IFormsyCheckboxProps, CheckboxRadioValueType> = FormsyCheckbox;
 
   static Input = (props: Omit<IFormsyInputProps, keyof InjectedProps<any>>) => (
     <FormsyInput inputAs={SemanticUIForm.Input} {...props} />
@@ -82,7 +83,20 @@ class Form extends Component<IFormProps & { forwardedRef: any }> {
   }
 }
 
-export default hoistNonReactStatics(
+const FormComponent = hoistNonReactStatics(
   React.forwardRef<Formsy, IFormProps>((props: IFormProps, ref) => <Form {...props} forwardedRef={ref} />),
   Form
 );
+
+/**
+ * Only the static sub-components are re-exported. Intersecting with `typeof Form` instead
+ * would preserve the class's *construct* signature, which makes JSX treat `Form` as a class
+ * component whose props include the internal `forwardedRef` prop — surfacing as a required
+ * prop for every consumer.
+ */
+type FormStatics = Pick<
+  typeof Form,
+  'Button' | 'Radio' | 'Field' | 'Group' | 'Checkbox' | 'Input' | 'TextArea' | 'Select' | 'RadioGroup' | 'Dropdown'
+>;
+
+export default FormComponent as React.ForwardRefExoticComponent<IFormProps & React.RefAttributes<Formsy>> & FormStatics;

@@ -1,9 +1,10 @@
 import { FormsyInjectedProps, withFormsy } from 'formsy-react';
 import React, { cloneElement, Component, createElement } from 'react';
 import { Checkbox, Form, Radio, StrictFormFieldProps, StrictRadioProps } from 'semantic-ui-react';
+import type { FormsyComponent } from './types';
 import { filterSuirElementProps } from './utils';
 
-type CheckboxRadioValueType = boolean | number | string;
+export type CheckboxRadioValueType = boolean | number | string;
 
 export interface IFormsyCheckboxProps
   extends
@@ -91,4 +92,4 @@ class FormsyCheckbox extends Component<IFormsyCheckboxProps> {
   }
 }
 
-export default withFormsy(FormsyCheckbox);
+export default withFormsy(FormsyCheckbox) as FormsyComponent<IFormsyCheckboxProps, CheckboxRadioValueType>;
